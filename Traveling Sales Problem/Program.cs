@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using Travling_sales_problem.Solution_Stratergies;
 
 namespace Travling_sales_problem
 {
@@ -39,10 +40,35 @@ namespace Travling_sales_problem
             Console.WriteLine($"Parsing graph from {fileName}");
             Graph graph = ParseGraphFromFile(fileName);
 
-            Console.WriteLine(graph.Compute().ToString());
+            while(true)
+            {
+
+            
+            ISolution? solutionStratergy = null;
+
+            while(solutionStratergy == null)
+            {
+                Console.WriteLine($"Select solution stratergy:\n" +
+                                $"Exhaustive (e)\n" +
+                                $"Random (r)\n");
+                string s = Console.ReadLine();
+                switch (s)
+                {
+                    case "e":
+                        solutionStratergy = new Exhaustive();
+                        break;
+                    case "r":
+                        solutionStratergy = new RandomSearch();
+                        break;
+                    default:
+                        Console.WriteLine($"Invalid Option \"{s}\"");
+                        break;
+                }
+            }
 
 
-            Console.ReadLine();
+            Console.WriteLine(graph.Compute(solutionStratergy).ToString());
+            }
 
         }
 
