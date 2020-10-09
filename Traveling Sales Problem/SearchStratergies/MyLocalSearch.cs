@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Travling_sales_problem.SearchStratergies.LocalSearch;
+﻿using Travling_sales_problem.SearchStratergies.LocalSearch;
 using Travling_sales_problem.SearchStratergies.LocalSearch.Initilisation;
 using Travling_sales_problem.SearchStratergies.LocalSearch.Neighbourhood;
 using Travling_sales_problem.SearchStratergies.LocalSearch.StepFunction;

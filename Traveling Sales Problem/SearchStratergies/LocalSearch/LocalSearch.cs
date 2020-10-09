@@ -29,7 +29,7 @@ namespace Travling_sales_problem.SearchStratergies.LocalSearch
 
         public Log Compute(Graph graph)
         {
-            Route bestRoute;
+            Route bestRoute = default;
             float bestDistance = float.MaxValue;
 
             DateTime startTime = DateTime.Now;
@@ -46,17 +46,24 @@ namespace Travling_sales_problem.SearchStratergies.LocalSearch
             }
             DateTime endTime = DateTime.Now;
 
+            if (bestRoute.IsCompleted)
+            {
+                Console.Write("{");
+                foreach (Node n in bestRoute.RouteNodes)
+                    Console.Write(n.id + ", ");
+                Console.WriteLine("}");
+            }
 
             return new Log()
             {
                 ValidRoutes = numberOfRoutes,
-                FastestRoute = bestDistance,
+                bestDistance = bestDistance,
                 TimeToCompute = (float)endTime.Subtract(startTime).TotalMilliseconds
             };
 
         }
 
-        public (Route best, float distance) Search(Route parent, float parentDistance)
+        private (Route best, float distance) Search(Route parent, float parentDistance)
         {
 
             List<Route> neighbourhood = this.Neighbourhood(parent);

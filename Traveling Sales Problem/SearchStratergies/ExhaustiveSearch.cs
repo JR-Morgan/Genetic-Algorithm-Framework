@@ -12,7 +12,7 @@ namespace Travling_sales_problem.Solution_Stratergies
 
             List<Route> routes = this.CalculateAllValidRoutes(graph);
 
-            Route bestRoute;
+            Route bestRoute = default;
             float bestDistance = float.MaxValue;
             foreach (Route route in routes)
             {
@@ -25,9 +25,17 @@ namespace Travling_sales_problem.Solution_Stratergies
             }
             DateTime endTime = DateTime.Now;
 
+            if (bestRoute.IsCompleted)
+            {
+                Console.Write("{");
+                foreach (Node n in bestRoute.RouteNodes)
+                    Console.Write(n.id + ", ");
+                Console.WriteLine("}");
+            }
+            
             return new Log()
             {
-                FastestRoute = bestDistance,
+                bestDistance = bestDistance,
                 TimeToCompute = (float)endTime.Subtract(startTime).TotalMilliseconds,
                 ValidRoutes = routes.Count
             };

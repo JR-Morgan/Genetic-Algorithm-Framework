@@ -14,7 +14,8 @@ namespace Travling_sales_problem
             this.position = position;
         }
 
-        public float DistanceTo(Vector2 position) => (this.position - position).Length();
+        //public float DistanceTo(Vector2 position) => (this.position - position).Length();
+        public float DistanceTo(Vector2 position) => Vector2.Distance(this.position, position);
         public float DistanceTo(Node node) => this.DistanceTo(node.position);
     }
 }
