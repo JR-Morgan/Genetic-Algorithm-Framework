@@ -16,7 +16,7 @@ namespace Travling_sales_problem
         }
 
 
-        public Log Compute(ISolution solutionStratergy)
+        public Log Compute(ISearchStratergy solutionStratergy)
         {
             return solutionStratergy.Compute(this);
         }

@@ -5,42 +5,42 @@ namespace Travling_sales_problem
     struct Route
     {
 
-        private List<Node> routeNodes;
-        private int expectedFinalNodeCount;
+        public List<Node> RouteNodes { get; init; }
+        public int ExpectedFinalNodeCount { private get; init; }
 
         public Route(Node startNode, int expectedFinalNodeCount)
         {
-            routeNodes = new List<Node>(expectedFinalNodeCount)
+            RouteNodes = new List<Node>(expectedFinalNodeCount)
             {
                 startNode
             };
-            this.expectedFinalNodeCount = expectedFinalNodeCount;
+            this.ExpectedFinalNodeCount = expectedFinalNodeCount;
         }
 
         public readonly Route Copy()
         {
             return new Route()
             {
-                routeNodes = new List<Node>(this.routeNodes),
-                expectedFinalNodeCount = this.expectedFinalNodeCount
+                RouteNodes = new List<Node>(this.RouteNodes),
+                ExpectedFinalNodeCount = this.ExpectedFinalNodeCount
             };
         }
 
         public void AddUnchecked(Node node)
         {
-            routeNodes.Add(node);
+            RouteNodes.Add(node);
         }
 
         public bool AddCheck(Node node)
         {
-            return !IsCompleted && !routeNodes.Contains(node);
+            return !IsCompleted && !RouteNodes.Contains(node);
         }
 
         public bool Add(Node node)
         {
             if(AddCheck(node))
             {
-                routeNodes.Add(node);
+                RouteNodes.Add(node);
                 return true;
             }
 
@@ -48,11 +48,11 @@ namespace Travling_sales_problem
         }
 
         
-        public readonly bool IsCompleted => routeNodes.Count == expectedFinalNodeCount;
+        public readonly bool IsCompleted => RouteNodes.Count == ExpectedFinalNodeCount;
 
         public readonly float EvaluateDistance()
         {
-            return EvaluateDistance(routeNodes, expectedFinalNodeCount) + routeNodes[^1].DistanceTo(routeNodes[0]);
+            return EvaluateDistance(RouteNodes, ExpectedFinalNodeCount) + RouteNodes[^1].DistanceTo(RouteNodes[0]);
         }
 
         private static float EvaluateDistance(List<Node> routeNodes, int counter)

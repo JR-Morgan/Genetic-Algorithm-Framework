@@ -1,16 +1,13 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Travling_sales_problem.Solution_Stratergies
 {
-    class Exhaustive : ISolution
+    class ExhaustiveSearch : ISearchStratergy
     {
-
         public Log Compute(Graph graph)
         {
-
-
             DateTime startTime = DateTime.Now;
 
             List<Route> routes = this.CalculateAllValidRoutes(graph);
@@ -69,27 +66,5 @@ namespace Travling_sales_problem.Solution_Stratergies
             }
 
         }
-
-        /*private static void _CalculateRoute(Route lastRoute, List<Route> routes, IEnumerable<Node> neighbours)
-        {
-            if (lastRoute.IsCompleted)
-            {
-                routes.Add(lastRoute);
-            }
-            else
-            {
-                foreach (Node node in neighbours)
-                {
-                    Route currentRoute = lastRoute.Copy();
-                    if (currentRoute.Add(node))
-                    {
-                        CalculateRoute(currentRoute, routes, neighbours);
-                    }
-
-                }
-            }
-
-        }*/
-
     }
 }

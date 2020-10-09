@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Numerics;
 using Travling_sales_problem.Solution_Stratergies;
 
@@ -43,22 +41,22 @@ namespace Travling_sales_problem
             while(true)
             {
 
-            
-            ISolution? solutionStratergy = null;
+
+            ISearchStratergy? solutionStratergy = null;
 
             while(solutionStratergy == null)
             {
                 Console.WriteLine($"Select solution stratergy:\n" +
                                 $"Exhaustive (e)\n" +
-                                $"Random (r)\n");
-                string s = Console.ReadLine();
+                                $"MyLocalSearch (m)");
+                string? s = Console.ReadLine();
                 switch (s)
                 {
                     case "e":
-                        solutionStratergy = new Exhaustive();
+                        solutionStratergy = new ExhaustiveSearch();
                         break;
-                    case "r":
-                        solutionStratergy = new RandomSearch();
+                    case "m":
+                        solutionStratergy = new MyLocalSearch();
                         break;
                     default:
                         Console.WriteLine($"Invalid Option \"{s}\"");
