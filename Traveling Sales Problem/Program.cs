@@ -46,21 +46,25 @@ namespace Travling_sales_problem
 
             while(solutionStratergy == null)
             {
-                Console.WriteLine($"Select solution stratergy:\n" +
-                                $"Exhaustive (e)\n" +
-                                $"MyLocalSearch (m)");
+                Console.WriteLine($"Select search stratergy:\n" +
+                                $"{nameof(ExhaustiveSearch)} (e)\n" +
+                                $"{nameof(MyLocalSearches.LS1)}(rand, 2opt, best, timeout) (1)\n" +
+                                $"{nameof(MyLocalSearches.LS2)}(greed, 2opt, best, allways) (2)");
                 string? s = Console.ReadLine();
                 switch (s)
                 {
                     case "e":
                         solutionStratergy = new ExhaustiveSearch();
                         break;
-                    case "m":
-                        solutionStratergy = new MyLocalSearch();
+                    case "1":
+                        solutionStratergy = MyLocalSearches.LS1();
+                        break;
+                    case "2":
+                        solutionStratergy = MyLocalSearches.LS2();
                         break;
                     default:
-                        Console.WriteLine($"Invalid Option \"{s}\"");
-                        break;
+                    Console.WriteLine($"Invalid Option \"{s}\"");
+                    break;
                 }
             }
 

@@ -7,13 +7,21 @@ using Travling_sales_problem.SearchStratergies.LocalSearch.TerminalConditions;
 namespace Travling_sales_problem.Solution_Stratergies
 {
 
-    class MyLocalSearch : LocalSearch
+    static class MyLocalSearches
     {
 
-        public MyLocalSearch()
-            :base(RandomInitalise.Initalise, TwoOptNeighbourhood.GenerateNeighbourhood, BestNeighbourhoodStep.Step, TimeOut.SetTimeOut(1000f))
-        {
-            
-        }
+        public static LocalSearch LS1() => new LocalSearch(
+            initalise: RandomInitalise.Initalise,
+            neighbourhood: TwoOptNeighbourhood.GenerateNeighbourhood,
+            step: BestNeighbourhoodStep.Step,
+            terminate: TerminateCondition.TimeOut(1000f)
+            );
+
+        public static LocalSearch LS2() => new LocalSearch(
+            initalise: GreedyInitalise.Initalise,
+            neighbourhood: TwoOptNeighbourhood.GenerateNeighbourhood,
+            step: BestNeighbourhoodStep.Step,
+            terminate: TerminateCondition.FixedItterations(1)
+            );
     }
 }

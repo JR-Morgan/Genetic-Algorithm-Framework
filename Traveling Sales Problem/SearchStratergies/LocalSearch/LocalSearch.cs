@@ -9,7 +9,7 @@ namespace Travling_sales_problem.SearchStratergies.LocalSearch
     internal delegate (Route best, float distance) Step(IEnumerable<Route> neighbourhood);
     internal delegate bool Terminate();
 
-    abstract class LocalSearch : ISearchStratergy
+    class LocalSearch : ISearchStratergy
     {
 
         private readonly Initalise Initalise;
@@ -33,6 +33,7 @@ namespace Travling_sales_problem.SearchStratergies.LocalSearch
             float bestDistance = float.MaxValue;
 
             DateTime startTime = DateTime.Now;
+
             while (!Terminate())
             {
                 Route parent = Initalise(graph.nodes);
@@ -43,10 +44,11 @@ namespace Travling_sales_problem.SearchStratergies.LocalSearch
                     bestRoute = best;
                     bestDistance = distance;
                 };
-            }
+            } 
+
             DateTime endTime = DateTime.Now;
 
-            if (bestRoute.IsCompleted)
+            if (bestDistance != float.MaxValue)
             {
                 Console.Write("{");
                 foreach (Node n in bestRoute.RouteNodes)
