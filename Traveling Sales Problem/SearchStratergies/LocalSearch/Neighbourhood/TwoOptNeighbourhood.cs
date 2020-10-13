@@ -2,7 +2,7 @@
 
 namespace Travling_sales_problem.SearchStratergies.LocalSearch.Neighbourhood
 {
-    static class TwoOptNeighbourhood
+    public static class TwoOptNeighbourhood
     {
         public static List<Route> GenerateNeighbourhood(Route parent)
         {

@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Travling_sales_problem
 {
-    struct Route
+    public struct Route
     {
 
         public List<Node> RouteNodes { get; init; }
@@ -63,6 +67,9 @@ namespace Travling_sales_problem
                 return routeNodes[counter-- -1].DistanceTo(routeNodes[counter -1]) + EvaluateDistance(routeNodes, counter);
         }
 
+        public bool Equals(Route? other) => other != null
+                && ((Route)other).RouteNodes.SequenceEqual(RouteNodes)
+                && ((Route)other).ExpectedFinalNodeCount.Equals(ExpectedFinalNodeCount);
 
     }
 }

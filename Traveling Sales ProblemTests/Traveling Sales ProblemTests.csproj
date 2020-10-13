@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Traveling_Sales_ProblemTests</RootNamespace>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Moq" Version="4.14.6" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Traveling Sales Problem\Traveling Sales Problem.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SearchStratergies\LocalSearch\Initilisation\" />
+    <Folder Include="SearchStratergies\LocalSearch\StepFunctions\" />
+  </ItemGroup>
+
+</Project>

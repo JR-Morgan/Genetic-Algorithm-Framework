@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Travling_sales_problem.SearchStratergies.LocalSearch.StepFunction
 {
-    static class BestNeighbourhoodStep
+    public static class BestNeighbourhoodStep
     {
         
         public static (Route, float) Step(IEnumerable<Route> neighbourhood)

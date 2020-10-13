@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Travling_sales_problem.SearchStratergies.LocalSearch.Initilisation
 {
-    class GreedyInitalise
+    public class GreedyInitalise : IInitalise
     {
-        public static Route Initalise(List<Node> nodes)
+
+        public Route Initalise(List<Node> nodes)
         {
             List<Node> possibleNodes = new List<Node>(nodes);
             possibleNodes.Remove(nodes[0]);

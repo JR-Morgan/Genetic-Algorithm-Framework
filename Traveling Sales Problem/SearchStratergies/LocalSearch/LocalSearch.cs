@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Travling_sales_problem.SearchStratergies.LocalSearch.Initilisation;
 using Travling_sales_problem.Solution_Stratergies;
 
 namespace Travling_sales_problem.SearchStratergies.LocalSearch
 {
-    internal delegate Route Initalise(List<Node> nodes);
     internal delegate List<Route> GenerateNeighbourhood(Route parent);
     internal delegate (Route best, float distance) Step(IEnumerable<Route> neighbourhood);
     internal delegate bool Terminate();
@@ -12,16 +12,16 @@ namespace Travling_sales_problem.SearchStratergies.LocalSearch
     class LocalSearch : ISearchStratergy
     {
 
-        private readonly Initalise Initalise;
+        private readonly IInitalise InitalisationStratergy;
         private readonly GenerateNeighbourhood Neighbourhood;
         private readonly Step Step;
         private readonly Terminate Terminate;
 
         private int numberOfRoutes;
 
-        public LocalSearch(Initalise initalise, GenerateNeighbourhood neighbourhood, Step step, Terminate terminate)
+        public LocalSearch(IInitalise initalise, GenerateNeighbourhood neighbourhood, Step step, Terminate terminate)
         {
-            this.Initalise = initalise;
+            this.InitalisationStratergy = initalise;
             this.Neighbourhood = neighbourhood;
             this.Step = step;
             this.Terminate = terminate;
@@ -36,7 +36,7 @@ namespace Travling_sales_problem.SearchStratergies.LocalSearch
 
             while (!Terminate())
             {
-                Route parent = Initalise(graph.nodes);
+                Route parent = InitalisationStratergy.Initalise(graph.nodes);
                 var (best, distance) = Search(parent, parent.EvaluateDistance());
                 //TODO use step function
                 if (distance < bestDistance)

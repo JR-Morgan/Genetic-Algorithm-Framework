@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 
 namespace Travling_sales_problem.SearchStratergies.LocalSearch.Initilisation
 {
-    static class RandomInitalise
+    class RandomInitalise : IInitalise
     {
 
-        public static Route Initalise(List<Node> nodes)
+        public Route Initalise(List<Node> nodes)
         {
             List<Node> routes = new List<Node>(nodes);
             routes.RemoveAt(0);

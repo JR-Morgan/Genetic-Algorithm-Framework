@@ -11,14 +11,14 @@ namespace Travling_sales_problem.Solution_Stratergies
     {
 
         public static LocalSearch LS1() => new LocalSearch(
-            initalise: RandomInitalise.Initalise,
+            initalise: new RandomInitalise(),
             neighbourhood: TwoOptNeighbourhood.GenerateNeighbourhood,
             step: BestNeighbourhoodStep.Step,
             terminate: TerminateCondition.TimeOut(1000f)
             );
 
         public static LocalSearch LS2() => new LocalSearch(
-            initalise: GreedyInitalise.Initalise,
+            initalise: new GreedyInitalise(),
             neighbourhood: TwoOptNeighbourhood.GenerateNeighbourhood,
             step: BestNeighbourhoodStep.Step,
             terminate: TerminateCondition.FixedItterations(1)
