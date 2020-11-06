@@ -5,7 +5,7 @@ using Travling_sales_problem.Solution_Stratergies;
 
 namespace Travling_sales_problem
 {
-    class Graph
+    public class Graph
     {
         public readonly List<Node> nodes;
         public Node StartNode => nodes.First();
@@ -13,12 +13,6 @@ namespace Travling_sales_problem
         public Graph(List<Node> nodes)
         {
             this.nodes = nodes;
-        }
-
-
-        public Log Compute(ISearchStratergy solutionStratergy)
-        {
-            return solutionStratergy.Compute(this);
         }
 
     }

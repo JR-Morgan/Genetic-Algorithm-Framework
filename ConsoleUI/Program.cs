@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
-using Travling_sales_problem;
-using Travling_sales_problem.Solution_Stratergies;
-using Travling_sales_problem.Solution_Stratergies.LocalSearch;
 
 namespace ConsoleUI
 {
@@ -33,13 +30,6 @@ namespace ConsoleUI
         }
 
 
-
-        private static void ItterationEventHandler(ISearchStratergy s, Log log)
-        {
-            Console.WriteLine(log.ToString());
-        }
-
-
         static void Main(string[] args)
         {
             string fileName = "graph.csv";
@@ -58,8 +48,7 @@ namespace ConsoleUI
                 Console.WriteLine($"Select search stratergy:\n" +
                                 $"{nameof(ExhaustiveSearch)} (e)\n" +
                                 $"{nameof(MyLocalSearches.LS1)}(rand, 2opt, best, timeout) (1)\n" +
-                                $"{nameof(MyLocalSearches.LS2)}(greed, 2opt, best, allways) (2)\n" +
-                                $"{nameof(MyLocalSearches.GN1)}(genetic) (3)");
+                                $"{nameof(MyLocalSearches.LS2)}(greed, 2opt, best, allways) (2)");
                 string? s = Console.ReadLine();
                 switch (s)
                 {
@@ -72,18 +61,14 @@ namespace ConsoleUI
                     case "2":
                         solutionStratergy = MyLocalSearches.LS2();
                         break;
-                    case "3":
-                        solutionStratergy = MyLocalSearches.GN1(100, 5);
-                        break;
-                        default:
+                    default:
                     Console.WriteLine($"Invalid Option \"{s}\"");
                     break;
                 }
             }
-                solutionStratergy.OnItterationComplete += ItterationEventHandler;
-                solutionStratergy.Compute(graph);
 
 
+            Console.WriteLine(graph.Compute(solutionStratergy).ToString());
             }
 
         }

@@ -16,12 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Traveling Sales Problem\Traveling Sales Problem.csproj" />
+    <Folder Include="SearchStratergies\LocalSearch\Initilisation\" />
+    <Folder Include="SearchStratergies\LocalSearch\StepFunctions\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SearchStratergies\LocalSearch\Initilisation\" />
-    <Folder Include="SearchStratergies\LocalSearch\StepFunctions\" />
+    <ProjectReference Include="..\Travling_sales_problem\Travling_sales_problem.csproj" />
   </ItemGroup>
 
 </Project>

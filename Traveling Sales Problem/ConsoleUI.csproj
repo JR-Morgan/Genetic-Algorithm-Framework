@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -7,6 +7,10 @@
     <RootNamespace>Travling_sales_problem</RootNamespace>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Travling_sales_problem\Travling_sales_problem.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Update="graph.csv">

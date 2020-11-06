@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Travling_sales_problem.Solution_Stratergies
 {
-    interface ISearchStratergy
+    public interface ISearchStratergy
     {
         public Log Compute(Graph graph);
     }

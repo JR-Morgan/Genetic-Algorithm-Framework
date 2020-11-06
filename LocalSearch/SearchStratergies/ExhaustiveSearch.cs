@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Travling_sales_problem.Solution_Stratergies
 {
-    class ExhaustiveSearch : ISearchStratergy
+    public class ExhaustiveSearch : ISearchStratergy
     {
         public Log Compute(Graph graph)
         {

@@ -7,17 +7,17 @@ using Travling_sales_problem.SearchStratergies.LocalSearch.TerminalConditions;
 namespace Travling_sales_problem.Solution_Stratergies
 {
 
-    static class MyLocalSearches
+    public static class MyLocalSearches
     {
 
-        public static LocalSearch LS1() => new LocalSearch(
+        public static ISearchStratergy LS1(float timeout = 1000f) => new LocalSearch(
             initalise: new RandomInitalise(),
             neighbourhood: TwoOptNeighbourhood.GenerateNeighbourhood,
             step: BestNeighbourhoodStep.Step,
-            terminate: TerminateCondition.TimeOut(1000f)
+            terminate: TerminateCondition.TimeOut(timeout)
             );
 
-        public static LocalSearch LS2() => new LocalSearch(
+        public static ISearchStratergy LS2() => new LocalSearch(
             initalise: new GreedyInitalise(),
             neighbourhood: TwoOptNeighbourhood.GenerateNeighbourhood,
             step: BestNeighbourhoodStep.Step,
