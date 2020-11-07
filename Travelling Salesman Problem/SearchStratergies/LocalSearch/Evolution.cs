@@ -8,10 +8,10 @@ using TSP.Solution_Stratergies;
 namespace TSP.SearchStratergies.LocalSearch
 {
 
-    class Evolution : ISearchStratergy
+    class Evolution : ISearchStrategy
     {
 
-        private readonly IInitalise InitalisationStratergy;
+        private readonly IInitalise InitalisationStrategy;
         private readonly ISelectionStrategy selectionStrategy;
         private readonly IStepFunction step;
         private readonly NeighbourhoodGenerator Neighbourhood;
@@ -20,19 +20,19 @@ namespace TSP.SearchStratergies.LocalSearch
         private uint selectionSize; //TODO set and might not need
         private Route[] population;
 
-        public Evolution(IInitalise initalise, ISelectionStrategy selectionStrategy, NeighbourhoodGenerator neighbourhood, Terminate terminate, IStepFunction stepFunction, uint populationSize)
+        public Evolution(IInitalise initalise, ISelectionStrategy selectionStrategy, NeighbourhoodGenerator neighbourhood, Terminate terminate, IStepFunction stepFunction, uint populationSize, string name = "Evolution Search")
         {
-            this.InitalisationStratergy = initalise;
+            this.InitalisationStrategy = initalise;
             this.selectionStrategy = selectionStrategy;
             this.step = stepFunction;
             this.Neighbourhood = neighbourhood;
             this.Terminate = terminate;
-
+            this.name = name;
             population = new Route[populationSize];
 
-        }
+        } 
 
-        public event ISearchStratergy.ItterationCompleteEventHandler? OnItterationComplete;
+        public event ISearchStrategy.ItterationCompleteEventHandler? OnItterationComplete;
 
         public Log Compute(Graph graph)
         {
@@ -40,7 +40,7 @@ namespace TSP.SearchStratergies.LocalSearch
             //Initalise population
             for (int i = 0; i < population.Length; i++)
             {
-                population[i] = InitalisationStratergy.Initalise(graph.nodes);
+                population[i] = InitalisationStrategy.Initalise(graph.nodes);
             }
 
 
@@ -96,9 +96,12 @@ namespace TSP.SearchStratergies.LocalSearch
             throw new NotImplementedException();
         }
 
-        void ISearchStratergy.Compute(Graph graph)
+        void ISearchStrategy.Compute(Graph graph)
         {
             throw new NotImplementedException();
         }
+
+        private string name;
+        public override string ToString() => name;
     }
 }

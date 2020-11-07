@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TSP.SearchStratergies.LocalSearch.Initilisation;
 using TSP.SearchStratergies.LocalSearch.StepFunctions;
 using TSP.SearchStratergies.LocalSearch.TerminalConditions;
@@ -10,25 +11,27 @@ namespace TSP.SearchStratergies.LocalSearch
     internal delegate List<Route> NeighbourhoodGenerator(Route parent);
 
 
-    class LocalSearch : ISearchStratergy
+    class LocalSearch : ISearchStrategy
     {
 
-        private readonly IInitalise initalisationStratergy;
+        private readonly IInitalise initalisationStrategy;
         private readonly NeighbourhoodGenerator neighbourhood;
         private readonly IStepFunction step;
         private readonly Terminate terminate;
 
         private int numberOfRoutes;
-
-        public LocalSearch(IInitalise initalise, NeighbourhoodGenerator neighbourhood, IStepFunction step, Terminate terminate)
+        
+        
+        public LocalSearch(IInitalise initalise, NeighbourhoodGenerator neighbourhood, IStepFunction step, Terminate terminate, string name = "Local Search")
         {
-            this.initalisationStratergy = initalise;
+            this.initalisationStrategy = initalise;
             this.neighbourhood = neighbourhood;
             this.step = step;
             this.terminate = terminate;
+            this.name = name;
         }
 
-        public event ISearchStratergy.ItterationCompleteEventHandler? OnItterationComplete;
+        public event ISearchStrategy.ItterationCompleteEventHandler? OnItterationComplete;
 
         public void Compute(Graph graph)
         {
@@ -38,7 +41,7 @@ namespace TSP.SearchStratergies.LocalSearch
 
             while (!terminate())
             {
-                Route parent = initalisationStratergy.Initalise(graph.nodes);
+                Route parent = initalisationStrategy.Initalise(graph.nodes);
                 var candidate = Search(parent);
                 //TODO use step function
 
@@ -71,5 +74,8 @@ namespace TSP.SearchStratergies.LocalSearch
             }
 
         }
+
+        private string name;
+        public override string ToString() => name;
     }
 }

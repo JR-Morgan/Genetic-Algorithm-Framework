@@ -34,7 +34,7 @@ namespace ConsoleUI
 
 
 
-        private static void ItterationEventHandler(ISearchStratergy s, Log log)
+        private static void ItterationEventHandler(ISearchStrategy s, Log log)
         {
             Console.WriteLine(log.ToString());
         }
@@ -51,11 +51,11 @@ namespace ConsoleUI
             {
 
 
-            ISearchStratergy? solutionStratergy = null;
+            ISearchStrategy? solutionStrategy = null;
 
-            while(solutionStratergy == null)
+            while(solutionStrategy == null)
             {
-                Console.WriteLine($"Select search stratergy:\n" +
+                Console.WriteLine($"Select search strategy:\n" +
                                 $"{nameof(ExhaustiveSearch)} (e)\n" +
                                 $"{nameof(MyLocalSearches.LS1)}(rand, 2opt, best, timeout) (1)\n" +
                                 $"{nameof(MyLocalSearches.LS2)}(greed, 2opt, best, allways) (2)\n" +
@@ -64,24 +64,24 @@ namespace ConsoleUI
                 switch (s)
                 {
                     case "e":
-                        solutionStratergy = new ExhaustiveSearch();
+                        solutionStrategy = new ExhaustiveSearch();
                         break;
                     case "1":
-                        solutionStratergy = MyLocalSearches.LS1();
+                        solutionStrategy = MyLocalSearches.LS1();
                         break;
                     case "2":
-                        solutionStratergy = MyLocalSearches.LS2();
+                        solutionStrategy = MyLocalSearches.LS2();
                         break;
                     case "3":
-                        solutionStratergy = MyLocalSearches.GN1(100, 5);
+                        solutionStrategy = MyLocalSearches.GN1(100, 5);
                         break;
                         default:
                     Console.WriteLine($"Invalid Option \"{s}\"");
                     break;
                 }
             }
-                solutionStratergy.OnItterationComplete += ItterationEventHandler;
-                solutionStratergy.Compute(graph);
+                solutionStrategy.OnItterationComplete += ItterationEventHandler;
+                solutionStrategy.Compute(graph);
 
 
             }

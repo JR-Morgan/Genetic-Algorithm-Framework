@@ -6,9 +6,10 @@ using TSP.SearchStratergies.LocalSearch.StepFunctions;
 
 namespace TSP.Solution_Stratergies
 {
-    public class ExhaustiveSearch : ISearchStratergy
+    public class ExhaustiveSearch : ISearchStrategy
     {
-        public event ISearchStratergy.ItterationCompleteEventHandler? OnItterationComplete;
+        public event ISearchStrategy.ItterationCompleteEventHandler? OnItterationComplete;
+        public override string ToString() => "Exhaustive Search";
 
 
         IStepFunction step;
@@ -51,7 +52,7 @@ namespace TSP.Solution_Stratergies
             return routes;
         }
 
-
+        
         private static void CalculateRoute(Route lastRoute, List<Route> routes, IEnumerable<Node> neighbours)
         {
             if (lastRoute.IsCompleted)
