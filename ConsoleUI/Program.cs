@@ -73,7 +73,7 @@ namespace ConsoleUI
                         solutionStrategy = MyLocalSearches.LS2();
                         break;
                     case "3":
-                        solutionStrategy = MyLocalSearches.GN1(100, 5);
+                        solutionStrategy = MyLocalSearches.GN1(50, 5);
                         break;
                         default:
                     Console.WriteLine($"Invalid Option \"{s}\"");

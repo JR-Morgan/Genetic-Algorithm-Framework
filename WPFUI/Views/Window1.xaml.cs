@@ -28,7 +28,7 @@ namespace WPFUI.Views
                 new ExhaustiveSearch(),
                 MyLocalSearches.LS1(),
                 MyLocalSearches.LS2(),
-                MyLocalSearches.GN1(100, 5),
+                MyLocalSearches.GN1(50, 5, mutationRate: 0.01f),
             };
 
             cboOptions.ItemsSource = strategies;

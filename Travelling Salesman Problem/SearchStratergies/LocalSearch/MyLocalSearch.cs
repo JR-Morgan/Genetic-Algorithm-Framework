@@ -12,7 +12,7 @@ namespace TSP.Solution_Stratergies.LocalSearch
 
     public static class MyLocalSearches
     {
-        private const float DEFAULT_TIMEOUT = 1000f;
+        private const float DEFAULT_TIMEOUT = 10000f;
 
         public static ISearchStrategy LS1(float timeout = DEFAULT_TIMEOUT) => new LS(
             initalise: new RandomInitalise(),
@@ -31,7 +31,7 @@ namespace TSP.Solution_Stratergies.LocalSearch
             name: "Greedy Local Search"
             );
 
-        public static ISearchStrategy GN1(uint populationSize, uint k, float elitism = 0.1f, float mutationRate = 0.1f, float timeout = DEFAULT_TIMEOUT) => new Evolution(
+        public static ISearchStrategy GN1(uint populationSize, uint k, float elitism = 0.1f, float mutationRate = 0.01f, float timeout = DEFAULT_TIMEOUT) => new Evolution(
             initalise: new RandomInitalise(),
             selectionStrategy: new TournamentSelection(k),
             crossoverStratergy: new OrderedCrossover(),
