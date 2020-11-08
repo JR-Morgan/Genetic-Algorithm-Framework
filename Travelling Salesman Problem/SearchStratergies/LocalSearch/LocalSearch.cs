@@ -2,27 +2,26 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TSP.SearchStratergies.LocalSearch.Initilisation;
+using TSP.SearchStratergies.LocalSearch.Neighbourhood;
 using TSP.SearchStratergies.LocalSearch.StepFunctions;
 using TSP.SearchStratergies.LocalSearch.TerminalConditions;
 using TSP.Solution_Stratergies;
 
 namespace TSP.SearchStratergies.LocalSearch
 {
-    internal delegate List<Route> NeighbourhoodGenerator(Route parent);
-
 
     class LocalSearch : ISearchStrategy
     {
 
         private readonly IInitalise initalisationStrategy;
-        private readonly NeighbourhoodGenerator neighbourhood;
+        private readonly INeighbourhood neighbourhood;
         private readonly IStepFunction step;
         private readonly Terminate terminate;
 
         private int numberOfRoutes;
         
         
-        public LocalSearch(IInitalise initalise, NeighbourhoodGenerator neighbourhood, IStepFunction step, Terminate terminate, string name = "Local Search")
+        public LocalSearch(IInitalise initalise, INeighbourhood neighbourhood, IStepFunction step, Terminate terminate, string name = "Local Search")
         {
             this.initalisationStrategy = initalise;
             this.neighbourhood = neighbourhood;
@@ -43,7 +42,6 @@ namespace TSP.SearchStratergies.LocalSearch
             {
                 Route parent = initalisationStrategy.Initalise(graph.nodes);
                 var candidate = Search(parent);
-                //TODO use step function
 
                 bestRoute = bestRoute == null? candidate : step.StepP(candidate, bestRoute);
 
@@ -59,7 +57,7 @@ namespace TSP.SearchStratergies.LocalSearch
         private Route Search(Route parent)
         {
 
-            List<Route> neighbourhood = this.neighbourhood(parent);
+            List<Route> neighbourhood = this.neighbourhood.GenerateNeighbourhood(parent);
             numberOfRoutes += neighbourhood.Count;
 
             Route best = step.Step(neighbourhood);
@@ -75,7 +73,7 @@ namespace TSP.SearchStratergies.LocalSearch
 
         }
 
-        private string name;
+        private readonly string name;
         public override string ToString() => name;
     }
 }

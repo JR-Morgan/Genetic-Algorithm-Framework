@@ -1,6 +1,6 @@
 ﻿using OxyPlot;
+using OxyPlot.Series;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
 using TSP;
 using TSP.Solution_Stratergies;
 
@@ -10,8 +10,21 @@ namespace WPFUI.ViewModels
     {
         private ISearchStrategy? searchStrategy;
 
-        public string Title { get; set; }
-        public IList<DataPoint> Points { get; private set; }
+        public string Title => searchStrategy != null? searchStrategy.ToString() : "";
+        public PlotModel Model { get; private set; }
+        public LineSeries series;
+
+        public RunViewModel()
+        {
+            var tmp = new PlotModel { Title = Title, Subtitle = "Travling Salesman Problem" };
+
+            series = new LineSeries { Title = "Series 1", MarkerType = MarkerType.Circle };
+
+            tmp.Series.Add(series);
+
+            this.Model = tmp;
+        }
+
 
 
         public ISearchStrategy? SearchStrategy
@@ -25,16 +38,11 @@ namespace WPFUI.ViewModels
         public Graph? graph { get; set; }
 
         public bool IsReady => SearchStrategy != null && graph != null;
-        public RunViewModel()
-        {
-            Title = "";
-            Points = new List<DataPoint>();
-        }
 
 
         public void Add(float time, float cost)
         {
-            Points.Add(new DataPoint(time, cost));
+            series.Points.Add(new DataPoint(time, cost));
         }
     }
 }

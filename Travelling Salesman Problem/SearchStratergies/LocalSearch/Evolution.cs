@@ -1,5 +1,7 @@
 ﻿using System;
+using TSP.SearchStratergies.LocalSearch.Crossover;
 using TSP.SearchStratergies.LocalSearch.Initilisation;
+using TSP.SearchStratergies.LocalSearch.Neighbourhood;
 using TSP.SearchStratergies.LocalSearch.Selection;
 using TSP.SearchStratergies.LocalSearch.StepFunctions;
 using TSP.SearchStratergies.LocalSearch.TerminalConditions;
@@ -10,31 +12,56 @@ namespace TSP.SearchStratergies.LocalSearch
 
     class Evolution : ISearchStrategy
     {
-
+        private static readonly Random random = new Random();
         private readonly IInitalise InitalisationStrategy;
         private readonly ISelectionStrategy selectionStrategy;
+        private readonly ICrossover crossoverStratergy;
         private readonly IStepFunction step;
-        private readonly NeighbourhoodGenerator Neighbourhood;
+        private readonly ISwap swap;
         private readonly Terminate Terminate;
 
-        private uint selectionSize; //TODO set and might not need
         private Route[] population;
+        private float eliteism;
+        private float mutationRate;
 
-        public Evolution(IInitalise initalise, ISelectionStrategy selectionStrategy, NeighbourhoodGenerator neighbourhood, Terminate terminate, IStepFunction stepFunction, uint populationSize, string name = "Evolution Search")
+        public Evolution(IInitalise initalise, ISelectionStrategy selectionStrategy, ICrossover crossoverStratergy, ISwap swap, Terminate terminate, IStepFunction stepFunction, uint populationSize, float eliteism, float mutationRate, string name = "Evolution Search")
         {
             this.InitalisationStrategy = initalise;
             this.selectionStrategy = selectionStrategy;
+            this.crossoverStratergy = crossoverStratergy;
             this.step = stepFunction;
-            this.Neighbourhood = neighbourhood;
+            this.swap = swap;
             this.Terminate = terminate;
             this.name = name;
+            this.eliteism = eliteism;
+            this.mutationRate = mutationRate;
             population = new Route[populationSize];
 
         } 
 
         public event ISearchStrategy.ItterationCompleteEventHandler? OnItterationComplete;
 
-        public Log Compute(Graph graph)
+        private Route[] Recombine(Route[] parents, int eliteCount)
+        {
+            Route[] children = new Route[parents.Length];
+
+            Route[] pool = (Route[])parents.Clone();
+            pool.Shuffle();
+
+            for (int i = 0; i < eliteCount; i++)
+            {
+                children[i] = parents[i];
+            }
+
+            for (int i = eliteCount; i < parents.Length; i++)
+            {
+                children[i] = crossoverStratergy.CrossOver(parents[i], pool[parents.Length - i - 1]);
+            }
+
+            return children;
+
+        }
+        public void Compute(Graph graph)
         {
             int numberOfRoutes = 0;
             //Initalise population
@@ -47,24 +74,28 @@ namespace TSP.SearchStratergies.LocalSearch
             Route? bestRoute = default;
 
             DateTime startTime = DateTime.Now;
+            int counter = 0;
 
             while (!Terminate())
             {
-                Route[] parents = selectionStrategy.Select(population, selectionSize, step);
+                Route[] parents = selectionStrategy.Select(population, 20, step);
 
                 //Recombine pairs of parents
-
-
+                Route[] children = Recombine(parents, (int)eliteism * parents.Length);
 
                 //Mutate the resulting offsprint
+                for (int i = 0; i < children.Length; i++)
+                {
+                    if (random.NextDouble() < mutationRate)
+                    {
+                        children[i] = swap.Swap(children[i]);
+                    }
 
-                //Evaluate new candidates
-
-                //Select individuals for the next generation
-
-
-
-
+                    bestRoute = bestRoute == null ? children[i] : step.StepP(children[i], bestRoute);
+                    population[counter] = children[i];
+                    counter = (counter + 1) % population.Length;
+                }
+                
 
 
                 OnItterationComplete?.Invoke(this, new Log()
@@ -76,29 +107,6 @@ namespace TSP.SearchStratergies.LocalSearch
 
             }
 
-            DateTime endTime = DateTime.Now;
-
-            /*
-            if (bestDistance != float.MaxValue)
-            {
-                Console.Write("{");
-                foreach (Node n in bestRoute.RouteNodes)
-                    Console.Write(n.id + ", ");
-                Console.WriteLine("}");
-            }
-
-            return new Log()
-            {
-                ValidRoutes = numberOfRoutes,
-                bestDistance = bestDistance,
-                TimeToCompute = (float)endTime.Subtract(startTime).TotalMilliseconds
-            };*/
-            throw new NotImplementedException();
-        }
-
-        void ISearchStrategy.Compute(Graph graph)
-        {
-            throw new NotImplementedException();
         }
 
         private string name;

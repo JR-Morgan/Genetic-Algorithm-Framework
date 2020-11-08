@@ -18,40 +18,39 @@ namespace TSP.SearchStratergies.LocalSearch.Selection
             this.k = k;
         }
 
-        public Route[] Select(IEnumerable<Route> population, uint selectionSize, IStepFunction step)
+        public Route[] Select(IEnumerable<Route> population, int selectionSize, IStepFunction step)
         {
-            List<Route> workingPopulation = new List<Route>(population);
+            
 
             Route[] selection = new Route[selectionSize];
 
 
             for (int i = 0; i < selectionSize; i++) //For each Round
             {
-                
+                List<Route> workingPopulation = new List<Route>(population);
                 Route? bestCandidate = null;
 
                 for (int j = 0; j < k; j++)
                 {
-                    Route candidate = workingPopulation[random.Next(workingPopulation.Count + 1)];
+                    Route candidate = workingPopulation[random.Next(workingPopulation.Count)];
                     workingPopulation.Remove(candidate);
 
                     bestCandidate = bestCandidate == null ? candidate : step.StepP(new Route[] { candidate, bestCandidate });
+                    
                 }
 
 
 
                 if (bestCandidate == null) throw new Exception();
+
                 selection[i] = bestCandidate;
 
             }
-
-            
-
-
 
 
             return selection;
 
         }
+
     }
 }

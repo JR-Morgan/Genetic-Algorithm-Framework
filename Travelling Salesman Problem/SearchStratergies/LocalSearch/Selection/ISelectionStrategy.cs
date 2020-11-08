@@ -5,6 +5,6 @@ namespace TSP.SearchStratergies.LocalSearch.Selection
 {
     interface ISelectionStrategy
     {
-        Route[] Select(IEnumerable<Route> population, uint selectionSize, IStepFunction stepFunction);
+        Route[] Select(IEnumerable<Route> population, int selectionSize, IStepFunction stepFunction);
     }
 }

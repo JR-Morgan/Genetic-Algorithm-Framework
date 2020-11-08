@@ -3,6 +3,7 @@
     public struct Log
     {
         public int numberOfRoutesEvaluated;
+        public int itteration;
         public float bestRouteCost;
         public float timeToCompute;
 

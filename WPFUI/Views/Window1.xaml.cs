@@ -54,8 +54,9 @@ namespace WPFUI.Views
         private void btnNewGraph_Click(object sender, RoutedEventArgs e)
         {
             var graphDialog = new NewGraphDialogue(graphViewModel);
-            
-            if ((bool)graphDialog.ShowDialog())
+
+            bool? r = graphDialog.ShowDialog();
+            if (r != null && (bool)r)
             {
                 runViewModel.graph = graphDialog.graphViewModel.ToGraph();
                 ReadyToComputeCheck();
