@@ -1,4 +1,5 @@
 ﻿using OxyPlot;
+using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.Collections.Generic;
 using TSP;
@@ -8,33 +9,42 @@ namespace WPFUI.ViewModels
 {
     public class RunViewModel
     {
-        private ISearchStrategy? searchStrategy;
-
-        public string Title => searchStrategy != null? searchStrategy.ToString() : "";
+        public string Title => "";
         public PlotModel Model { get; private set; }
-        public LineSeries series;
+        private LineSeries series;
 
         public RunViewModel()
         {
             var tmp = new PlotModel { Title = Title, Subtitle = "Travling Salesman Problem" };
 
-            series = new LineSeries { Title = "Series 1", MarkerType = MarkerType.Circle };
+            var xAxis = new LinearAxis
+            {
+                Position = AxisPosition.Bottom,
+                Title = "Time to Compute (ms)",
+            };
 
-            tmp.Series.Add(series);
+            var yAxis = new LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Title = "Route Cost (a.u.)",
+            };
+
+            tmp.Axes.Add(xAxis);
+            tmp.Axes.Add(yAxis);
 
             this.Model = tmp;
         }
 
-
-
-        public ISearchStrategy? SearchStrategy
+        public void NewSeries()
         {
-            get => searchStrategy;
-            set
+            if(SearchStrategy != null)
             {
-                searchStrategy = value;
+                series = new LineSeries { Title = SearchStrategy.ToString(), MarkerType = MarkerType.Circle };
+                Model.Series.Add(series);
             }
         }
+
+        public ISearchStrategy? SearchStrategy { get; set; }
         public Graph? graph { get; set; }
 
         public bool IsReady => SearchStrategy != null && graph != null;

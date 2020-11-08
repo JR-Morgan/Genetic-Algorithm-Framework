@@ -16,17 +16,17 @@ namespace TSP.SearchStratergies.LocalSearch
         private readonly IInitalise initalisationStrategy;
         private readonly INeighbourhood neighbourhood;
         private readonly IStepFunction step;
-        private readonly Terminate terminate;
+        private readonly TerminateStrategy terminateCondition;
 
         private int numberOfRoutes;
         
         
-        public LocalSearch(IInitalise initalise, INeighbourhood neighbourhood, IStepFunction step, Terminate terminate, string name = "Local Search")
+        public LocalSearch(IInitalise initalise, INeighbourhood neighbourhood, IStepFunction step, TerminateStrategy terminate, string name = "Local Search")
         {
             this.initalisationStrategy = initalise;
             this.neighbourhood = neighbourhood;
             this.step = step;
-            this.terminate = terminate;
+            this.terminateCondition = terminate;
             this.name = name;
         }
 
@@ -34,6 +34,8 @@ namespace TSP.SearchStratergies.LocalSearch
 
         public void Compute(Graph graph)
         {
+            TerminateCondition terminate = terminateCondition();
+
             Route? bestRoute = default;
 
             DateTime startTime = DateTime.Now;

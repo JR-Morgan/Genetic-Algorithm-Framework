@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using TSP;
@@ -15,6 +16,7 @@ namespace WPFUI.Views
     {
         private RunViewModel runViewModel;
         private GraphViewModel graphViewModel;
+
         public Window1()
         {
             InitializeComponent();
@@ -35,7 +37,7 @@ namespace WPFUI.Views
             {
                 BoundX = 100,
                 BoundY = 100,
-                NodeCount = 15,
+                NodeCount = 25,
                 Seed = 255
             };
             runViewModel.graph = graphViewModel.ToGraph();
@@ -44,11 +46,21 @@ namespace WPFUI.Views
         }
 
 
+        private void Compute()
+        {
+            if (runViewModel.SearchStrategy != null && runViewModel.graph != null)
+            {
+                runViewModel.NewSeries();
+                Task.Run(() => runViewModel.SearchStrategy.Compute(runViewModel.graph));
+            }
+                
+        }
+
+
 
         private void btnCompute_Click(object sender, RoutedEventArgs e)
         {
-            if(runViewModel.SearchStrategy != null && runViewModel.graph != null)
-                runViewModel.SearchStrategy.Compute(runViewModel.graph);
+            Compute();
         }
 
         private void btnNewGraph_Click(object sender, RoutedEventArgs e)

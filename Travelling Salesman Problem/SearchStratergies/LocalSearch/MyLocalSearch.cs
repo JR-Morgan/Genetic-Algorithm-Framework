@@ -12,12 +12,13 @@ namespace TSP.Solution_Stratergies.LocalSearch
 
     public static class MyLocalSearches
     {
+        private const float DEFAULT_TIMEOUT = 1000f;
 
-        public static ISearchStrategy LS1(float timeout = 1000f) => new LS(
+        public static ISearchStrategy LS1(float timeout = DEFAULT_TIMEOUT) => new LS(
             initalise: new RandomInitalise(),
             neighbourhood: new TwoOpt(),
             step: new LowestCost(),
-            terminate: TerminateCondition.FixedItterations(100), //TerminateCondition.TimeOut(timeout),
+            terminate: TerminateConditions.TimeOut(timeout),
             name: "Random Local Search"
             );
 
@@ -26,17 +27,17 @@ namespace TSP.Solution_Stratergies.LocalSearch
             initalise: new GreedyInitalise(),
             neighbourhood: new TwoOpt(),
             step: new LowestCost(),
-            terminate: TerminateCondition.FixedItterations(1),
+            terminate: TerminateConditions.FixedItterations(1),
             name: "Greedy Local Search"
             );
 
-        public static ISearchStrategy GN1(uint populationSize, uint k, float elitism = 0.1f, float mutationRate = 0.1f, float timeout = 1000f) => new Evolution(
+        public static ISearchStrategy GN1(uint populationSize, uint k, float elitism = 0.1f, float mutationRate = 0.1f, float timeout = DEFAULT_TIMEOUT) => new Evolution(
             initalise: new RandomInitalise(),
             selectionStrategy: new TournamentSelection(k),
             crossoverStratergy: new OrderedCrossover(),
             swap: new TwoOpt(),
             stepFunction: new LowestCost(),
-            terminate: TerminateCondition.FixedItterations(100), //TerminateCondition.TimeOut(timeout),
+            terminate: TerminateConditions.TimeOut(timeout),
             populationSize: populationSize,
             eliteism: elitism,
             mutationRate: mutationRate,

@@ -18,20 +18,20 @@ namespace TSP.SearchStratergies.LocalSearch
         private readonly ICrossover crossoverStratergy;
         private readonly IStepFunction step;
         private readonly ISwap swap;
-        private readonly Terminate Terminate;
+        private readonly TerminateStrategy terminateStrategy;
 
         private Route[] population;
         private float eliteism;
         private float mutationRate;
 
-        public Evolution(IInitalise initalise, ISelectionStrategy selectionStrategy, ICrossover crossoverStratergy, ISwap swap, Terminate terminate, IStepFunction stepFunction, uint populationSize, float eliteism, float mutationRate, string name = "Evolution Search")
+        public Evolution(IInitalise initalise, ISelectionStrategy selectionStrategy, ICrossover crossoverStratergy, ISwap swap, TerminateStrategy terminate, IStepFunction stepFunction, uint populationSize, float eliteism, float mutationRate, string name = "Evolution Search")
         {
             this.InitalisationStrategy = initalise;
             this.selectionStrategy = selectionStrategy;
             this.crossoverStratergy = crossoverStratergy;
             this.step = stepFunction;
             this.swap = swap;
-            this.Terminate = terminate;
+            this.terminateStrategy = terminate;
             this.name = name;
             this.eliteism = eliteism;
             this.mutationRate = mutationRate;
@@ -63,6 +63,7 @@ namespace TSP.SearchStratergies.LocalSearch
         }
         public void Compute(Graph graph)
         {
+            TerminateCondition Terminate = this.terminateStrategy();
             int numberOfRoutes = 0;
             //Initalise population
             for (int i = 0; i < population.Length; i++)
