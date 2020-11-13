@@ -14,7 +14,7 @@ namespace TSP.Solution_Stratergies.LocalSearch
 
     public static class MyLocalSearches
     {
-        private const float DEFAULT_TIMEOUT = 10000f;
+        private const float DEFAULT_TIMEOUT = 2000f;
         private const int DEFAULT_ITTERATIONS = 100;
 
         internal static List<ISearchStrategy> GenerateSearches(TerminateStrategy ts)

@@ -25,6 +25,10 @@ namespace TSP
             return message.ToString();
         }
 
+        public Route(int expectedFinalNodeCount)
+            : this(new List<Node>(expectedFinalNodeCount), expectedFinalNodeCount)
+        { }
+
         public Route(Node startNode, int expectedFinalNodeCount)
             : this(new List<Node>(expectedFinalNodeCount){startNode}, expectedFinalNodeCount)
         { }

@@ -28,18 +28,38 @@ namespace ConsoleUI
             {
                 fileName = args[0];
             }
+
             
 
-            Console.WriteLine($"Parsing graph from {fileName}");
+            Console.WriteLine($"\nParsing graph from {fileName}");
             Graph graph = Graph.ParseGraphFromFile(fileName);
 
-            while(true)
+            if (args.Length > 1)
+            {
+                Route route = new Route(args.Length - 1);
+
+                for (int i = 1; i < args.Length; i++)
+                {
+                    if(!route.Add(graph.nodes[Int32.Parse(args[i]) - 1]))
+                    {
+                        Console.WriteLine("\nRoute is invalid\n");
+                        return;
+                    }
+                }
+                if(route.IsCompleted)
+                {
+                    Console.WriteLine($"\nRoute has a cost of {route.Cost()}\n");
+                    return;
+                }
+            }
+
+            while (true)
             {
 
                 ISearchStrategy? solutionStrategy = null;
 
                 StringBuilder message = new StringBuilder();
-                message.Append("Select search strategy:\n");
+                message.Append("\nSelect search strategy:\n");
                     
                 List<ISearchStrategy> searches = MyLocalSearches.GenerateSearchesTimeOut();
                 for(int i = 0; i < searches.Count; i++)
