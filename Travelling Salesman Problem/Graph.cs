@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Text.RegularExpressions;
 
 namespace TSP
 {
@@ -15,6 +17,29 @@ namespace TSP
             this.nodes = nodes;
         }
 
+        public static Graph ParseGraphFromFile(string file)
+        {
+            var nodes = new List<Node>();
+            StreamReader reader = File.OpenText(file);
+            string? line;
+
+            var pattern = @"^\d+,-?\d+\.\d*,-?\d+\.\d*$";
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (Regex.IsMatch(line, pattern))
+                {
+                    string[] elements = line.Split(",");
+                    nodes.Add(new Node(
+                        id: int.Parse(elements[0]),
+                        position: new Vector2(float.Parse(elements[1]),
+                                              float.Parse(elements[2]))
+                        ));
+
+                }
+            }
+
+            return new Graph(nodes);
+        }
 
         public static Graph RandomGraph(uint numberOfNodes, Vector2 bounds, int seed)
         {

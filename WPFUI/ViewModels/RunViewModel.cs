@@ -1,5 +1,6 @@
 ﻿using OxyPlot;
 using OxyPlot.Axes;
+using OxyPlot.Legends;
 using OxyPlot.Series;
 using System.Collections.Generic;
 using TSP;
@@ -11,22 +12,32 @@ namespace WPFUI.ViewModels
     {
         public string Title => "";
         public PlotModel Model { get; private set; }
-        private LineSeries series;
+        private LineSeries? series;
 
         public RunViewModel()
         {
-            var tmp = new PlotModel { Title = Title, Subtitle = "Travling Salesman Problem" };
+
+            var tmp = new PlotModel {
+                Title = Title,
+                Subtitle = "Travling Salesman Problem",
+                IsLegendVisible = true,           
+                };
+            tmp.Legends.Add(new Legend());
 
             var xAxis = new LinearAxis
             {
                 Position = AxisPosition.Bottom,
                 Title = "Time to Compute (ms)",
+                Minimum = 0d,
+                ExtraGridlines = new double[] { 0 },
             };
 
             var yAxis = new LinearAxis
             {
                 Position = AxisPosition.Left,
                 Title = "Route Cost (a.u.)",
+                Minimum = 0d,
+                ExtraGridlines = new double[] { 0 },
             };
 
             tmp.Axes.Add(xAxis);
@@ -39,7 +50,7 @@ namespace WPFUI.ViewModels
         {
             if(SearchStrategy != null)
             {
-                series = new LineSeries { Title = SearchStrategy.ToString(), MarkerType = MarkerType.Circle };
+                series = new LineSeries { Title = SearchStrategy.ToString(), MarkerType = MarkerType.Circle};
                 Model.Series.Add(series);
             }
         }
@@ -52,7 +63,7 @@ namespace WPFUI.ViewModels
 
         public void Add(float time, float cost)
         {
-            series.Points.Add(new DataPoint(time, cost));
+            series?.Points.Add(new DataPoint(time, cost));
         }
     }
 }

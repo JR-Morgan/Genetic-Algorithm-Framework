@@ -61,7 +61,7 @@ namespace TSP.SearchStratergies.LocalSearch
             return children;
 
         }
-        public void Compute(Graph graph)
+        public Log Compute(Graph graph)
         {
             TerminateCondition Terminate = this.terminateStrategy();
             int numberOfRoutes = 0;
@@ -75,8 +75,8 @@ namespace TSP.SearchStratergies.LocalSearch
             Route? bestRoute = default;
 
             DateTime startTime = DateTime.Now;
-            int counter = 0;
-
+            int generationCounter = 0;
+            int itterationCounter = 0;
             while (!Terminate())
             {
                 Route[] parents = selectionStrategy.Select(population, 20, step);
@@ -91,23 +91,33 @@ namespace TSP.SearchStratergies.LocalSearch
                     {
                         children[i] = swap.Swap(children[i]);
                     }
-
+                    numberOfRoutes++;
                     bestRoute = bestRoute == null ? children[i] : step.StepP(children[i], bestRoute);
-                    population[counter] = children[i];
-                    counter = (counter + 1) % population.Length;
+                    population[generationCounter] = children[i];
+                    generationCounter = (generationCounter + 1) % population.Length;
                 }
                 
 
 
                 OnItterationComplete?.Invoke(this, new Log()
                 {
+                    timeToCompute = (float)DateTime.Now.Subtract(startTime).TotalMilliseconds,
                     numberOfRoutesEvaluated = numberOfRoutes,
-                    bestRouteCost = bestRoute != null? bestRoute.Cost() : float.MaxValue,
-                    timeToCompute = (float)DateTime.Now.Subtract(startTime).TotalMilliseconds
+                    itteration = itterationCounter,
+                    bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
+                    bestRoute = bestRoute != null ? bestRoute.ToIdArray() : Array.Empty<int>(),
                 });
 
             }
 
+            return new Log()
+            {
+                timeToCompute = (float)DateTime.Now.Subtract(startTime).TotalMilliseconds,
+                numberOfRoutesEvaluated = numberOfRoutes,
+                itteration = itterationCounter,
+                bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
+                bestRoute = bestRoute != null ? bestRoute.ToIdArray() : Array.Empty<int>(),
+            };
         }
 
         private string name;

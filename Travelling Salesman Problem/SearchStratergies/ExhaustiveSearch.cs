@@ -20,26 +20,39 @@ namespace TSP.Solution_Stratergies
         }
 
 
-        public void Compute(Graph graph)
+        public Log Compute(Graph graph)
         {
             DateTime startTime = DateTime.Now;
 
             List<Route> routes = CalculateAllValidRoutes(graph);
+            int routesEvaluated = 0;
+
 
             Route? bestRoute = default;
             foreach (Route route in routes)
             {
-
+                routesEvaluated++;
                 bestRoute = bestRoute == null? route : step.StepP(bestRoute, route);
 
 
                 OnItterationComplete?.Invoke(this, new Log()
                 {
-                    bestRouteCost = bestRoute.Cost(),
                     timeToCompute = (float)DateTime.Now.Subtract(startTime).TotalMilliseconds,
-                    numberOfRoutesEvaluated = routes.Count
+                    numberOfRoutesEvaluated = routesEvaluated,
+                    itteration = routesEvaluated,
+                    bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
+                    bestRoute = bestRoute != null ? bestRoute.ToIdArray() : Array.Empty<int>(),
                 });
             }
+
+            return new Log()
+            {
+                timeToCompute = (float)DateTime.Now.Subtract(startTime).TotalMilliseconds,
+                numberOfRoutesEvaluated = routesEvaluated,
+                itteration = routesEvaluated,
+                bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
+                bestRoute = bestRoute != null ? bestRoute.ToIdArray() : Array.Empty<int>(),
+            };
 
         }
 

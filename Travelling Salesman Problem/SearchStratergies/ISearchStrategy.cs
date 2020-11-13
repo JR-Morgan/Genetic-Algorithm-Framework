@@ -5,6 +5,6 @@
         public delegate void ItterationCompleteEventHandler(ISearchStrategy sender, Log log);
 
         public event ItterationCompleteEventHandler? OnItterationComplete;
-        public void Compute(Graph graph);
+        public Log Compute(Graph graph);
     }
 }

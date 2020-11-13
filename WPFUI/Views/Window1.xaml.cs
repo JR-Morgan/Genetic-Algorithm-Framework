@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
- using System.Threading.Tasks;
+﻿using Microsoft.Win32;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using TSP;
@@ -14,8 +16,8 @@ namespace WPFUI.Views
     /// </summary>
     public partial class Window1 : Window
     {
-        private RunViewModel runViewModel;
-        private GraphViewModel graphViewModel;
+        private readonly RunViewModel runViewModel;
+        private readonly GraphViewModel graphViewModel;
 
         public Window1()
         {
@@ -23,16 +25,10 @@ namespace WPFUI.Views
             runViewModel = new RunViewModel();
             DataContext = runViewModel;
 
-            List<ISearchStrategy> strategies = new List<ISearchStrategy>
-            {
-                new ExhaustiveSearch(),
-                MyLocalSearches.LS1(),
-                MyLocalSearches.LS2(),
-                MyLocalSearches.GN1(50, 5, mutationRate: 0.01f),
-            };
+            List<ISearchStrategy> strategies = MyLocalSearches.GenerateSearchesTimeOut();
 
             cboOptions.ItemsSource = strategies;
-            cboOptions.SelectedIndex = 1;
+            cboOptions.SelectedIndex = strategies.Count - 1;
             graphViewModel = new GraphViewModel()
             {
                 BoundX = 100,
@@ -90,13 +86,27 @@ namespace WPFUI.Views
             ReadyToComputeCheck();
 
             void ItterationCompleteHandler(ISearchStrategy sender, Log log)
-            {
-                runViewModel.Add(log.timeToCompute, log.bestRouteCost);;
+            { 
+                //TODO console 
+                runViewModel.Add(log.timeToCompute, log.bestRouteCost); ;
                 pltPlot.InvalidatePlot(true);
             }
         }
 
+        private void btnLoadGraphFromFile(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "comma seperated values (*.csv)|*.csv|All files (*.*)|*.*";
+                openFileDialog.RestoreDirectory = true;
 
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    runViewModel.graph = Graph.ParseGraphFromFile(openFileDialog.FileName);
+                }
+            }
+        }
         private void cboOptions_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             ChangeSearchStrategy((ISearchStrategy)cboOptions.SelectedItem);

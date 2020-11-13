@@ -12,6 +12,16 @@ namespace TSP
         public List<Node> RouteNodes { get; init; }
         public int ExpectedFinalNodeCount { private get; init; }
 
+        public int[] ToIdArray()
+        {
+            int[] temp = new int[RouteNodes.Count];
+            for(int i = 0; i < RouteNodes.Count; i++)
+            {
+                temp[i] = RouteNodes[i].id;
+            }
+            return temp;
+        }
+
         public Route(Node startNode, int expectedFinalNodeCount)
             : this(new List<Node>(expectedFinalNodeCount){startNode}, expectedFinalNodeCount)
         { }

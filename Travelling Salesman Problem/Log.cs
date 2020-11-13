@@ -6,12 +6,14 @@
         public int itteration;
         public float bestRouteCost;
         public float timeToCompute;
+        public int[] bestRoute;
 
         public override string ToString()
         {
-            return $"{numberOfRoutesEvaluated} valid routes found\n" +
-                $"Took {timeToCompute}ms to compute\n" +
-                $"fastest route is {bestRouteCost}\n";
+            return $"Routes evaluated: {numberOfRoutesEvaluated}\n" +
+                $"Time to compute: {timeToCompute}ms\n" +
+                $"Best route cost: {bestRouteCost}\n" + 
+                $"Best Route : {bestRoute}";
                 
         }
 

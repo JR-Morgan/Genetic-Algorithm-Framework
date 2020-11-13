@@ -16,9 +16,9 @@ namespace TSP.SearchStratergies.LocalSearch
         private readonly IInitalise initalisationStrategy;
         private readonly INeighbourhood neighbourhood;
         private readonly IStepFunction step;
-        private readonly TerminateStrategy terminateCondition;
+        private readonly TerminateStrategy terminateStrategy;
 
-        private int numberOfRoutes;
+        private int routesEvaluated;
         
         
         public LocalSearch(IInitalise initalise, INeighbourhood neighbourhood, IStepFunction step, TerminateStrategy terminate, string name = "Local Search")
@@ -26,15 +26,15 @@ namespace TSP.SearchStratergies.LocalSearch
             this.initalisationStrategy = initalise;
             this.neighbourhood = neighbourhood;
             this.step = step;
-            this.terminateCondition = terminate;
+            this.terminateStrategy = terminate;
             this.name = name;
         }
 
         public event ISearchStrategy.ItterationCompleteEventHandler? OnItterationComplete;
 
-        public void Compute(Graph graph)
+        public Log Compute(Graph graph)
         {
-            TerminateCondition terminate = terminateCondition();
+            TerminateCondition terminate = terminateStrategy();
 
             Route? bestRoute = default;
 
@@ -43,16 +43,24 @@ namespace TSP.SearchStratergies.LocalSearch
             while (!terminate())
             {
                 Route parent = initalisationStrategy.Initalise(graph.nodes);
-                var candidate = Search(parent);
+                Route candidate = Search(parent);
 
                 bestRoute = bestRoute == null? candidate : step.StepP(candidate, bestRoute);
 
-                OnItterationComplete?.Invoke(this, new Log() {  numberOfRoutesEvaluated = numberOfRoutes,
+                OnItterationComplete?.Invoke(this, new Log() {  numberOfRoutesEvaluated = routesEvaluated,
                                                                 bestRouteCost = bestRoute.Cost(),
                                                                 timeToCompute = (float)DateTime.Now.Subtract(startTime).TotalMilliseconds
                                                               });
             }
 
+
+            return new Log()
+            {
+                timeToCompute = (float)DateTime.Now.Subtract(startTime).TotalMilliseconds,
+                numberOfRoutesEvaluated = routesEvaluated,
+                bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
+                bestRoute = bestRoute != null ? bestRoute.ToIdArray() : Array.Empty<int>(),
+            };
 
         }
 
@@ -60,7 +68,7 @@ namespace TSP.SearchStratergies.LocalSearch
         {
 
             List<Route> neighbourhood = this.neighbourhood.GenerateNeighbourhood(parent);
-            numberOfRoutes += neighbourhood.Count;
+            routesEvaluated += neighbourhood.Count;
 
             Route best = step.Step(neighbourhood);
 

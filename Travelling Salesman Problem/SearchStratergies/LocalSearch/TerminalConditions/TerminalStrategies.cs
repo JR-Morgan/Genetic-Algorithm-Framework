@@ -4,7 +4,7 @@ namespace TSP.SearchStratergies.LocalSearch.TerminalConditions
 {
     internal delegate bool TerminateCondition();
     internal delegate TerminateCondition TerminateStrategy();
-    static class TerminateConditions
+    static class TerminalStrategies
     {
 
 
