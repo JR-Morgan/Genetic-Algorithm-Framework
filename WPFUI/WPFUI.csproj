@@ -6,6 +6,17 @@
 	  <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <StartupObject>WPFUI.App</StartupObject>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>JRMKey.pfx</AssemblyOriginatorKeyFile>
+    <Version>0.1.0</Version>
+    <Authors>Jedd Morgan</Authors>
+    <Company />
+    <Product>TSP</Product>
+    <RepositoryUrl>https://github.com/JR-Morgan/Travelling-Salesman-Problem.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/JR-Morgan/Travelling-Salesman-Problem</PackageProjectUrl>
+    <PackageLicenseFile></PackageLicenseFile>
+    <PackageLicenseExpression>MIT Licence</PackageLicenseExpression>
+    <Copyright>© Jedd Morgan 2020</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

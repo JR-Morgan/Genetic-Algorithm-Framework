@@ -2,7 +2,6 @@
 https://en.wikipedia.org/wiki/Travelling_salesman_problem
 
 ### Console UI
-<img src="https://user-images.githubusercontent.com/45512892/99120792-5a779880-25f3-11eb-82af-0879a582ee93.png" width="50%">.
 
 To run the console user interface simply run. This will load the default graph.
 ```
@@ -32,6 +31,8 @@ ConsoleUI.exe "GraphFiles\test.csv 1 2 3 4 5 6 7 8 9 10 11 12"
 All returns are in human readable format.
 
 ### WPFUI
+<img src="https://user-images.githubusercontent.com/45512892/99120792-5a779880-25f3-11eb-82af-0879a582ee93.png" width="50%">
+
 The WPF UI is functionally similar to the console UI, however, will plot the results on a graph.
 
 Run the `WPFUI.exe`

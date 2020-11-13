@@ -98,7 +98,7 @@ namespace WPFUI.Views
             OpenFileDialog openFileDialog = new OpenFileDialog();
             {
                 openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "comma seperated values (*.csv)|*.csv|All files (*.*)|*.*";
+                openFileDialog.Filter = "comma separated values (*.csv)|*.csv|All files (*.*)|*.*";
                 openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == true)
