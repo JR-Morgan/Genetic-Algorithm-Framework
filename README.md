@@ -2,12 +2,12 @@
 https://en.wikipedia.org/wiki/Travelling_salesman_problem
 
 ### Console UI
+<img src="https://user-images.githubusercontent.com/45512892/99120792-5a779880-25f3-11eb-82af-0879a582ee93.png" width="50%">.
 
 To run the console user interface simply run. This will load the default graph.
 ```
 ConsoleUI.exe
 ```
-
 To specify your own graph, simply append the file path to the above command. For example:
 ```
 ConsoleUI.exe "GraphFiles\test.csv"
