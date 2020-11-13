@@ -1,9 +1,12 @@
 ﻿namespace TSP
 {
+    /// <summary>
+    /// Encapsulates the results of an search iteration
+    /// </summary>
     public struct Log
     {
         public int numberOfRoutesEvaluated;
-        public int itteration;
+        public int iteration;
         public float bestRouteCost;
         public float timeToCompute;
         public string bestRoute;

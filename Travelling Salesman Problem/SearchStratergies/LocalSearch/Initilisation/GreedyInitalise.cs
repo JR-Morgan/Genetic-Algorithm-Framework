@@ -22,7 +22,7 @@ namespace TSP.SearchStratergies.LocalSearch.Initilisation
             return greedyRoute;
         }
 
-        public static Node ClosestNode(Node startNode, IEnumerable<Node> neighbours)
+        private static Node ClosestNode(Node startNode, IEnumerable<Node> neighbours)
         {
             Node? bestNode = null;
             float bestDistance = float.MaxValue;

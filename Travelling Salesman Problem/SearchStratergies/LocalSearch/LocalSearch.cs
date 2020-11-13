@@ -49,11 +49,11 @@ namespace TSP.SearchStratergies.LocalSearch
                 Route parent = initalisationStrategy.Initalise(graph.nodes);
                 Route candidate = Search(parent);
 
-                bestRoute = bestRoute == null? candidate : step.StepP(candidate, bestRoute);
+                bestRoute = bestRoute == null? candidate : step.CostP(candidate, bestRoute);
 
                 OnItterationComplete?.Invoke(this, new Log() {  numberOfRoutesEvaluated = routesEvaluated,
-                                                                bestRouteCost = bestRoute.Cost(),
-                                                                itteration = itterationCounter++,
+                                                                bestRouteCost = bestRoute.Distance(),
+                                                                iteration = itterationCounter++,
                                                                 bestRoute = bestRoute != null ? bestRoute.ToString() : String.Empty,
                                                                 timeToCompute = timer.ElapsedMilliseconds,
                 });
@@ -64,8 +64,8 @@ namespace TSP.SearchStratergies.LocalSearch
             {
                 timeToCompute = timer.ElapsedMilliseconds,
                 numberOfRoutesEvaluated = routesEvaluated,
-                itteration = itterationCounter,
-                bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.PositiveInfinity,
+                iteration = itterationCounter,
+                bestRouteCost = bestRoute != null ? bestRoute.Distance() : float.PositiveInfinity,
                 bestRoute = bestRoute != null ? bestRoute.ToString() : String.Empty,
             };
 
@@ -77,9 +77,9 @@ namespace TSP.SearchStratergies.LocalSearch
             List<Route> neighbourhood = this.neighbourhood.GenerateNeighbourhood(parent);
             routesEvaluated += neighbourhood.Count;
 
-            Route best = step.Step(neighbourhood);
+            Route best = step.Cost(neighbourhood);
 
-            if (best.Cost() < parent.Cost()) //TODO this violates step function delegation.
+            if (best.Distance() < parent.Distance()) //TODO this violates step function delegation.
             {
                 return Search(best);
             }

@@ -35,7 +35,7 @@ namespace TSP.SearchStratergies.LocalSearch.Selection
                     Route candidate = workingPopulation[random.Next(workingPopulation.Count)];
                     workingPopulation.Remove(candidate);
 
-                    bestCandidate = bestCandidate == null ? candidate : step.StepP(new Route[] { candidate, bestCandidate });
+                    bestCandidate = bestCandidate == null ? candidate : step.CostP(new Route[] { candidate, bestCandidate });
                     
                 }
 

@@ -17,7 +17,10 @@ namespace ConsoleUI
             Console.WriteLine(log.ToString());
         }
 
-
+        /// <param name="args">
+        /// 0 - file path
+        /// 1-N - node indexes for cost evaluation 
+        /// </param>
         static void Main(string[] args)
         {
             string fileName;
@@ -48,7 +51,7 @@ namespace ConsoleUI
                 }
                 if(route.IsCompleted)
                 {
-                    Console.WriteLine($"\nRoute has a cost of {route.Cost()}\n");
+                    Console.WriteLine($"\nRoute has a cost of {route.Distance()}\n");
                     return;
                 }
             }

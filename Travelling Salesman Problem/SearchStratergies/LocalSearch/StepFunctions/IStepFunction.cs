@@ -4,8 +4,8 @@ namespace TSP.SearchStratergies.LocalSearch.StepFunctions
 {
     interface IStepFunction
     {
-        Route Step(IEnumerable<Route> routes);
+        Route Cost(IEnumerable<Route> routes);
 
-        Route StepP(params Route[] routes) => Step(routes);
+        Route CostP(params Route[] routes) => Cost(routes);
     }
 }

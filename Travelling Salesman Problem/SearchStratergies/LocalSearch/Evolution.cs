@@ -94,7 +94,7 @@ namespace TSP.SearchStratergies.LocalSearch
                         children[i] = swap.Swap(children[i]);
                     }
                     numberOfRoutes++;
-                    bestRoute = bestRoute == null ? children[i] : step.StepP(children[i], bestRoute);
+                    bestRoute = bestRoute == null ? children[i] : step.CostP(children[i], bestRoute);
                     population[generationCounter] = children[i];
                     generationCounter = (generationCounter + 1) % population.Length;
                 }
@@ -104,8 +104,8 @@ namespace TSP.SearchStratergies.LocalSearch
                 OnItterationComplete?.Invoke(this, new Log()
                 {
                     numberOfRoutesEvaluated = numberOfRoutes,
-                    itteration = itterationCounter,
-                    bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
+                    iteration = itterationCounter,
+                    bestRouteCost = bestRoute != null ? bestRoute.Distance() : float.MaxValue,
                     bestRoute = bestRoute != null ? bestRoute.ToString() : string.Empty,
                     timeToCompute = timer.ElapsedMilliseconds,
                 });
@@ -116,8 +116,8 @@ namespace TSP.SearchStratergies.LocalSearch
             {
                 timeToCompute = timer.ElapsedMilliseconds,
                 numberOfRoutesEvaluated = numberOfRoutes,
-                itteration = itterationCounter,
-                bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
+                iteration = itterationCounter,
+                bestRouteCost = bestRoute != null ? bestRoute.Distance() : float.MaxValue,
                 bestRoute = bestRoute != null ? bestRoute.ToString() : string.Empty,
             };
         }

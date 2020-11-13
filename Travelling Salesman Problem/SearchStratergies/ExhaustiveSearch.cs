@@ -6,6 +6,9 @@ using TSP.SearchStratergies.LocalSearch.StepFunctions;
 
 namespace TSP.Solution_Stratergies
 {
+    /// <summary>
+    /// Exhaustive search will check all possible permutations for the <see cref="Route"/> with the lowest cost.
+    /// </summary>
     public class ExhaustiveSearch : ISearchStrategy
     {
         public event ISearchStrategy.ItterationCompleteEventHandler? OnItterationComplete;
@@ -34,15 +37,15 @@ namespace TSP.Solution_Stratergies
             foreach (Route route in routes)
             {
                 routesEvaluated++;
-                bestRoute = bestRoute == null? route : step.StepP(bestRoute, route);
+                bestRoute = bestRoute == null? route : step.CostP(bestRoute, route);
 
 
                 OnItterationComplete?.Invoke(this, new Log()
                 {
                     timeToCompute = (float)DateTime.Now.Subtract(startTime).TotalMilliseconds,
                     numberOfRoutesEvaluated = routesEvaluated,
-                    itteration = routesEvaluated,
-                    bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
+                    iteration = routesEvaluated,
+                    bestRouteCost = bestRoute != null ? bestRoute.Distance() : float.MaxValue,
                     bestRoute = bestRoute != null ? bestRoute.ToString() : string.Empty,
                 });
             }
@@ -51,8 +54,8 @@ namespace TSP.Solution_Stratergies
             {
                 timeToCompute = (float)DateTime.Now.Subtract(startTime).TotalMilliseconds,
                 numberOfRoutesEvaluated = routesEvaluated,
-                itteration = routesEvaluated,
-                bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
+                iteration = routesEvaluated,
+                bestRouteCost = bestRoute != null ? bestRoute.Distance() : float.MaxValue,
                 bestRoute = bestRoute != null ? bestRoute.ToString() : string.Empty,
             };
 

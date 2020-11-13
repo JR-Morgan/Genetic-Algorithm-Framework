@@ -17,6 +17,11 @@ namespace TSP.Solution_Stratergies.LocalSearch
         private const float DEFAULT_TIMEOUT = 2000f;
         private const int DEFAULT_ITTERATIONS = 100;
 
+        /// <summary>
+        /// Generates a list of available searches with a given <see cref="TerminateStrategy"/>
+        /// </summary>
+        /// <param name="ts">The <see cref="TerminateStrategy"/> that is to be used (may be ignored by some searches eg Greedy Search)</param>
+        /// <returns>A list of searches</returns>
         internal static List<ISearchStrategy> GenerateSearches(TerminateStrategy ts)
         {
             return new List<ISearchStrategy>()
@@ -29,8 +34,18 @@ namespace TSP.Solution_Stratergies.LocalSearch
             };
         }
 
+        /// <summary>
+        /// Generates a list of available searches
+        /// </summary>
+        /// <param name="TimeOut">Time in ms that each search should run (may be ignored by some searches eg Greedy Search)</param>
+        /// <returns>A list of searches</returns>
         public static List<ISearchStrategy> GenerateSearchesTimeOut(float TimeOut = DEFAULT_TIMEOUT) => GenerateSearches(TerminalStrategies.TimeOut(TimeOut));
 
+        /// <summary>
+        /// Generates a list of available searches
+        /// </summary>
+        /// <param name="numberOfItterations">Number of iterations the searches should run for (may be ignored by some searches eg Greedy Search)</param>
+        /// <returns>A list of searches</returns>
         public static List<ISearchStrategy> GenerateSearchesItterations(int numberOfItterations = DEFAULT_ITTERATIONS) => GenerateSearches(TerminalStrategies.FixedItterations(numberOfItterations));
 
 
@@ -47,7 +62,7 @@ namespace TSP.Solution_Stratergies.LocalSearch
             neighbourhood: new TwoOpt(),
             step: new LowestCost(),
             terminate: ts,
-            name: "Local Search - Random initalisation"
+            name: "Local Search - Random initialisations"
             );
 
 
@@ -69,7 +84,7 @@ namespace TSP.Solution_Stratergies.LocalSearch
             populationSize: populationSize,
             eliteism: elitism,
             mutationRate: mutationRate,
-            name: "Evolutional Search - Tornement"
+            name: "Evolutionary Search - Tournament"
             );
         
     }
