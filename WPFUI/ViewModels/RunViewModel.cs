@@ -19,7 +19,7 @@ namespace WPFUI.ViewModels
 
             var tmp = new PlotModel {
                 Title = Title,
-                Subtitle = "Travling Salesman Problem",
+                Subtitle = "Travelling Salesman Problem",
                 IsLegendVisible = true,           
                 };
             tmp.Legends.Add(new Legend());
