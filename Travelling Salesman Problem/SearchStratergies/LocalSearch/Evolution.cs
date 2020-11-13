@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using TSP.SearchStratergies.LocalSearch.Crossover;
 using TSP.SearchStratergies.LocalSearch.Initilisation;
 using TSP.SearchStratergies.LocalSearch.Neighbourhood;
@@ -74,7 +75,8 @@ namespace TSP.SearchStratergies.LocalSearch
 
             Route? bestRoute = default;
 
-            DateTime startTime = DateTime.Now;
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
             int generationCounter = 0;
             int itterationCounter = 0;
             while (!Terminate())
@@ -101,22 +103,22 @@ namespace TSP.SearchStratergies.LocalSearch
 
                 OnItterationComplete?.Invoke(this, new Log()
                 {
-                    timeToCompute = (float)DateTime.Now.Subtract(startTime).TotalMilliseconds,
                     numberOfRoutesEvaluated = numberOfRoutes,
                     itteration = itterationCounter,
                     bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
-                    bestRoute = bestRoute != null ? bestRoute.ToIdArray() : Array.Empty<int>(),
+                    bestRoute = bestRoute != null ? bestRoute.ToString() : string.Empty,
+                    timeToCompute = timer.ElapsedMilliseconds,
                 });
 
             }
-
+            timer.Stop();
             return new Log()
             {
-                timeToCompute = (float)DateTime.Now.Subtract(startTime).TotalMilliseconds,
+                timeToCompute = timer.ElapsedMilliseconds,
                 numberOfRoutesEvaluated = numberOfRoutes,
                 itteration = itterationCounter,
                 bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
-                bestRoute = bestRoute != null ? bestRoute.ToIdArray() : Array.Empty<int>(),
+                bestRoute = bestRoute != null ? bestRoute.ToString() : string.Empty,
             };
         }
 

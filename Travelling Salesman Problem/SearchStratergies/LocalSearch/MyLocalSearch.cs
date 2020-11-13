@@ -59,7 +59,7 @@ namespace TSP.Solution_Stratergies.LocalSearch
             name: "Local Search - Greedy"
             );
 
-        private static ISearchStrategy GN1(TerminateStrategy ts, uint populationSize, uint k, float elitism = 0.1f, float mutationRate = 0.01f) => new Evolution(
+        private static ISearchStrategy GN1(TerminateStrategy ts, uint populationSize, uint k, float elitism = 0.2f, float mutationRate = 0.04f) => new Evolution(
             initalise: new RandomInitalise(),
             selectionStrategy: new TournamentSelection(k),
             crossoverStratergy: new OrderedCrossover(),

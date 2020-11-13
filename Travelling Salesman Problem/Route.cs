@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-
+using System.Text;
 
 namespace TSP
 {
@@ -12,14 +12,17 @@ namespace TSP
         public List<Node> RouteNodes { get; init; }
         public int ExpectedFinalNodeCount { private get; init; }
 
-        public int[] ToIdArray()
+        public override string ToString()
         {
-            int[] temp = new int[RouteNodes.Count];
-            for(int i = 0; i < RouteNodes.Count; i++)
+            StringBuilder message = new StringBuilder($"{{{RouteNodes[0].id}");
+
+            for(int i = 1; i < RouteNodes.Count; i++)
             {
-                temp[i] = RouteNodes[i].id;
+                message.Append(", ");
+                message.Append(RouteNodes[i].id);
             }
-            return temp;
+            message.Append('}');
+            return message.ToString();
         }
 
         public Route(Node startNode, int expectedFinalNodeCount)

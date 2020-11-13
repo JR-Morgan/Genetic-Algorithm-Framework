@@ -56,9 +56,9 @@ namespace WPFUI.ViewModels
         }
 
         public ISearchStrategy? SearchStrategy { get; set; }
-        public Graph? graph { get; set; }
+        public Graph? Graph { get; set; }
 
-        public bool IsReady => SearchStrategy != null && graph != null;
+        public bool IsReady => SearchStrategy != null && Graph != null;
 
 
         public void Add(float time, float cost)

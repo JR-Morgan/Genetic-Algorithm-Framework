@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using TSP.SearchStratergies.LocalSearch.Initilisation;
 using TSP.SearchStratergies.LocalSearch.Neighbourhood;
@@ -38,8 +39,11 @@ namespace TSP.SearchStratergies.LocalSearch
 
             Route? bestRoute = default;
 
-            DateTime startTime = DateTime.Now;
+            int itterationCounter = 0;
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
 
+            
             while (!terminate())
             {
                 Route parent = initalisationStrategy.Initalise(graph.nodes);
@@ -49,17 +53,20 @@ namespace TSP.SearchStratergies.LocalSearch
 
                 OnItterationComplete?.Invoke(this, new Log() {  numberOfRoutesEvaluated = routesEvaluated,
                                                                 bestRouteCost = bestRoute.Cost(),
-                                                                timeToCompute = (float)DateTime.Now.Subtract(startTime).TotalMilliseconds
-                                                              });
+                                                                itteration = itterationCounter++,
+                                                                bestRoute = bestRoute != null ? bestRoute.ToString() : String.Empty,
+                                                                timeToCompute = timer.ElapsedMilliseconds,
+                });
             }
 
-
+            timer.Stop();
             return new Log()
             {
-                timeToCompute = (float)DateTime.Now.Subtract(startTime).TotalMilliseconds,
+                timeToCompute = timer.ElapsedMilliseconds,
                 numberOfRoutesEvaluated = routesEvaluated,
-                bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
-                bestRoute = bestRoute != null ? bestRoute.ToIdArray() : Array.Empty<int>(),
+                itteration = itterationCounter,
+                bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.PositiveInfinity,
+                bestRoute = bestRoute != null ? bestRoute.ToString() : String.Empty,
             };
 
         }

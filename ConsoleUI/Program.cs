@@ -20,7 +20,15 @@ namespace ConsoleUI
 
         static void Main(string[] args)
         {
-            string fileName = "graph.csv";
+            string fileName;
+            if (args.Length == 0)
+            {
+                fileName = @"GraphFiles\ulysses16.csv";
+            } else
+            {
+                fileName = args[0];
+            }
+            
 
             Console.WriteLine($"Parsing graph from {fileName}");
             Graph graph = Graph.ParseGraphFromFile(fileName);
@@ -36,7 +44,7 @@ namespace ConsoleUI
                 List<ISearchStrategy> searches = MyLocalSearches.GenerateSearchesTimeOut();
                 for(int i = 0; i < searches.Count; i++)
                 {
-                    message.Append($"({i}): {searches[i].ToString()}\n");
+                    message.Append($"({i}): {searches[i]}\n");
                 }
 
                 while (true)

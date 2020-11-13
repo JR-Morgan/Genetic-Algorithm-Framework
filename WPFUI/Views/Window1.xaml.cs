@@ -36,7 +36,7 @@ namespace WPFUI.Views
                 NodeCount = 25,
                 Seed = 255
             };
-            runViewModel.graph = graphViewModel.ToGraph();
+            runViewModel.Graph = graphViewModel.ToGraph();
 
             ReadyToComputeCheck();
         }
@@ -44,10 +44,10 @@ namespace WPFUI.Views
 
         private void Compute()
         {
-            if (runViewModel.SearchStrategy != null && runViewModel.graph != null)
+            if (runViewModel.SearchStrategy != null && runViewModel.Graph != null)
             {
                 runViewModel.NewSeries();
-                Task.Run(() => runViewModel.SearchStrategy.Compute(runViewModel.graph));
+                Task.Run(() => runViewModel.SearchStrategy.Compute(runViewModel.Graph));
             }
                 
         }
@@ -66,7 +66,7 @@ namespace WPFUI.Views
             bool? r = graphDialog.ShowDialog();
             if (r != null && (bool)r)
             {
-                runViewModel.graph = graphDialog.graphViewModel.ToGraph();
+                runViewModel.Graph = graphDialog.graphViewModel.ToGraph();
                 ReadyToComputeCheck();
             }
         }
@@ -103,7 +103,7 @@ namespace WPFUI.Views
 
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    runViewModel.graph = Graph.ParseGraphFromFile(openFileDialog.FileName);
+                    runViewModel.Graph = Graph.ParseGraphFromFile(openFileDialog.FileName);
                 }
             }
         }

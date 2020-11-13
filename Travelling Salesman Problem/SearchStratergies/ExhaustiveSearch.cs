@@ -11,12 +11,14 @@ namespace TSP.Solution_Stratergies
         public event ISearchStrategy.ItterationCompleteEventHandler? OnItterationComplete;
         public override string ToString() => "Exhaustive Search";
 
+        readonly IStepFunction step;
 
-        IStepFunction step;
+        public ExhaustiveSearch() : this(new LowestCost())
+        { }
 
-        public ExhaustiveSearch()
+        internal ExhaustiveSearch(IStepFunction step)
         {
-            step = new LowestCost();
+            this.step = step;
         }
 
 
@@ -41,7 +43,7 @@ namespace TSP.Solution_Stratergies
                     numberOfRoutesEvaluated = routesEvaluated,
                     itteration = routesEvaluated,
                     bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
-                    bestRoute = bestRoute != null ? bestRoute.ToIdArray() : Array.Empty<int>(),
+                    bestRoute = bestRoute != null ? bestRoute.ToString() : string.Empty,
                 });
             }
 
@@ -51,7 +53,7 @@ namespace TSP.Solution_Stratergies
                 numberOfRoutesEvaluated = routesEvaluated,
                 itteration = routesEvaluated,
                 bestRouteCost = bestRoute != null ? bestRoute.Cost() : float.MaxValue,
-                bestRoute = bestRoute != null ? bestRoute.ToIdArray() : Array.Empty<int>(),
+                bestRoute = bestRoute != null ? bestRoute.ToString() : string.Empty,
             };
 
         }

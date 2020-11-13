@@ -7,7 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "ConsoleUI\Cons
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSP", "Travelling Salesman Problem\TSP.csproj", "{15C5B3E6-0424-4B00-9B33-BF15F649DB81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFUI", "WPFUI\WPFUI.csproj", "{0F31CB70-1BB0-4101-B579-51868826EFBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFUI", "WPFUI\WPFUI.csproj", "{0F31CB70-1BB0-4101-B579-51868826EFBF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphFiles", "GraphFiles", "{C63B0A2F-B6BA-4658-BDA7-CBE5AE63D32C}"
+	ProjectSection(SolutionItems) = preProject
+		test.csv = test.csv
+		ulysses16.csv = ulysses16.csv
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
