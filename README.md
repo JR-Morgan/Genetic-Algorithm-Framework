@@ -26,7 +26,7 @@ Note: Exhaustive search is not suitable for graphs over around 10 nodes as it of
 
 To simply evaluate the cost of a route, enter both the file path, and a complete route. For example:
 ```
-ConsoleUI.exe "GraphFiles\test.csv 1 2 3 4 5 6 7 8 9 10 11 12"
+ConsoleUI.exe "GraphFiles\test.csv" 1 2 3 4 5 6 7 8 9 10 11 12
 ```
 All returns are in human readable format.
 
