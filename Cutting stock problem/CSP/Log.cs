@@ -4,7 +4,7 @@
     {
         public int numberOfSolutionsEvaluated;
         public int iteration;
-        public float bestSolutionCost;
+        public float bestSolutionFitness;
         public float timeToCompute;
         public string bestSolution;
 
@@ -12,7 +12,7 @@
         {
             return $"Solutions evaluated: {numberOfSolutionsEvaluated}\n" +
                 $"Time to compute: {timeToCompute}ms\n" +
-                $"Best solution cost: {bestSolutionCost}\n" +
+                $"Best solution cost: {bestSolutionFitness}\n" +
                 $"Best solution : {bestSolution}\n";
 
         }

@@ -2,23 +2,27 @@
 
 namespace CSP
 {
-    class Solution
+    class Solution : ISolution
     {
-        public List<Activity> activities;
+        public readonly Problem problem;
+        public List<Activity> Activities { get; private set; }
 
-        public Solution()
+        public Solution(Problem problem, List<Activity> activities)
         {
-            activities = new();
+            this.problem = problem;
+            Activities = activities;
         }
+
+        public Solution(Problem problem) : this(problem, new List<Activity>()) { }
 
         public float Fitness()
         {
-            float totalCost = 0;
-            foreach(Activity a in activities)
+            float fitness = 0;
+            foreach(Activity a in Activities)
             {
-                totalCost += a.Cost();
+                fitness += a.Cost;
             }
-            return totalCost;
+            return fitness;
         }
     }
 }

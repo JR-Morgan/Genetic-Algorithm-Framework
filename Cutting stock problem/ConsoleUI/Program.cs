@@ -21,7 +21,7 @@ namespace ConsoleUI
             string fileName;
             if (args.Length == 0)
             {
-                fileName = @"ProblemFiles\test.csv";
+                fileName = @"ProblemFiles\test1.txt";
             }
             else
             {
@@ -30,9 +30,9 @@ namespace ConsoleUI
 
 
 
-            Console.WriteLine($"\nParsing graph from {fileName}");
+            Console.WriteLine($"\nParsing problem from {fileName}");
             Problem problem = Problem.ParseFromFile(fileName);
-
+            Console.WriteLine($"\nFinished parsing problem from m:{problem.Stock.Length}, c:{problem.Orders.Count}");
 
             while (true)
             {
