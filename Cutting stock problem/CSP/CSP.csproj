@@ -6,4 +6,12 @@
 	<Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Search\Crossover\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SearchStrategies\SearchStrategies.csproj" />
+  </ItemGroup>
+
 </Project>

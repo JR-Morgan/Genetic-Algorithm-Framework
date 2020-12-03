@@ -1,4 +1,4 @@
-﻿namespace CSP
+﻿namespace SearchStrategies
 {
     public struct Log
     {

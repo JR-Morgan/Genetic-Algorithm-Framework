@@ -1,14 +1,14 @@
 ﻿using System;
 
-namespace CSP.Search.TerminalConditions
+namespace SearchStrategies.TerminalConditions
 {
-    internal delegate bool TerminateCondition();
-    internal delegate TerminateCondition TerminateStrategy();
+    public delegate bool TerminateCondition();
+    public delegate TerminateCondition TerminateStrategy();
 
     /// <summary>
     /// Class contains a series of terminate functions
     /// </summary>
-    static class TerminalStrategies
+    public static class TerminalStrategies
     {
 
         /// <summary>

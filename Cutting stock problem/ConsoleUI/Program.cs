@@ -1,5 +1,7 @@
 ﻿using CSP;
 using CSP.Search;
+using SearchStrategies;
+using SearchStrategies.Operations;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +10,7 @@ namespace ConsoleUI
 {
     class Program
     {
-        private static void ItterationEventHandler(ISearchStrategy s, Log log)
+        private static void ItterationEventHandler(ISearchStrategy<ISolution, Problem> sender, Log log)
         {
             Console.WriteLine(log.ToString());
         }
@@ -37,12 +39,12 @@ namespace ConsoleUI
             while (true)
             {
 
-                ISearchStrategy? solutionStrategy = null;
+                ISearchStrategy<ISolution, Problem>? solutionStrategy = null;
 
                 StringBuilder message = new();
                 message.Append("\nSelect search strategy:\n");
 
-                List<ISearchStrategy> searches = SearchFactory.GenerateSearchesItterations();
+                List<ISearchStrategy<ISolution, Problem>> searches = SearchFactory.GenerateSearchesItterations();
                 for (int i = 0; i < searches.Count; i++)
                 {
                     message.Append($"({i}): {searches[i]}\n");

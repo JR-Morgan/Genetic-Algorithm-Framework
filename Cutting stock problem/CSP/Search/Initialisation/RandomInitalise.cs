@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections;
+﻿using SearchStrategies.Operations;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CSP.Search.Initialisation
 {
-    class RandomInitalise : IInitialise
+    class RandomInitalise : IInitialise<ISolution, Problem>
     {
         private const int TIMEOUT = 50;
 
         private static Random random = new Random(); //TODO determinism
 
-        public Solution Initalise(Problem problem)
+        public ISolution Initalise(Problem problem)
         {
             Activity nextActivity() => new Activity(problem.Stock[random.Next(problem.Stock.Length)]);
 

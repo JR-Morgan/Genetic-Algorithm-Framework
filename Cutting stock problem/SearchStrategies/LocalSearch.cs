@@ -1,22 +1,20 @@
-﻿using CSP.Search.Initialisation;
-using CSP.Search.Neighbourhood;
-using CSP.Search.StepFunctions;
-using CSP.Search.TerminalConditions;
+﻿using SearchStrategies.Operations;
+using SearchStrategies.TerminalConditions;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace CSP.Search
+namespace SearchStrategies
 {
-    class LocalSearch : ISearchStrategy
+    public class LocalSearch<S,P> : ISearchStrategy<S,P>
     {
-        private readonly IInitialise initalisationStrategy;
-        private readonly INeighbourhood neighbourhood;
-        private readonly IStepFunction step;
+        private readonly IInitialise<S,P> initalisationStrategy;
+        private readonly INeighbourhood<S> neighbourhood;
+        private readonly IStepFunction<S> step;
         private readonly TerminateStrategy terminateStrategy;
 
         private int solutionsEvaluated;
 
-        public LocalSearch(IInitialise initalise, INeighbourhood neighbourhood, IStepFunction step, TerminateStrategy terminate, string name = "Local Search")
+        public LocalSearch(IInitialise<S,P> initalise, INeighbourhood<S> neighbourhood, IStepFunction<S> step, TerminateStrategy terminate, string name = "Local Search")
         {
             this.initalisationStrategy = initalise;
             this.neighbourhood = neighbourhood;
@@ -25,14 +23,14 @@ namespace CSP.Search
             this.name = name;
         }
 
-        public event ISearchStrategy.ItterationCompleteEventHandler? OnItterationComplete;
+        public event ISearchStrategy<S,P>.ItterationCompleteEventHandler? OnItterationComplete;
 
 
-        public Log Compute(Problem problem)
+        public Log Compute(P problem)
         {
             TerminateCondition terminate = terminateStrategy();
 
-            ISolution? bestSolution = default;
+            S? bestSolution = default;
 
             int itterationCounter = 0;
             Stopwatch timer = new();
@@ -41,7 +39,7 @@ namespace CSP.Search
                     timeToCompute = timer.ElapsedMilliseconds,
                     numberOfSolutionsEvaluated = solutionsEvaluated,
                     iteration = itterationCounter,
-                    bestSolutionFitness = bestSolution != null ? bestSolution.Fitness() : float.PositiveInfinity,
+                    bestSolutionFitness = bestSolution != null ? step.Fitness(bestSolution) : float.PositiveInfinity,
                     bestSolution = bestSolution != null ? bestSolution.ToString() : string.Empty,
                 };
 
@@ -50,10 +48,10 @@ namespace CSP.Search
 
             while (!terminate())
             {
-                ISolution parent = initalisationStrategy.Initalise(problem);
-                ISolution candidate = Search(parent);
+                S parent = initalisationStrategy.Initalise(problem);
+                S candidate = Search(parent);
 
-                bestSolution = bestSolution == null ? candidate : step.FitnessP(candidate, bestSolution);
+                bestSolution = bestSolution == null ? candidate : step.FittestP(candidate, bestSolution);
 
                 OnItterationComplete?.Invoke(this, GenerateLog());
             }
@@ -68,15 +66,15 @@ namespace CSP.Search
         }
 
 
-        private ISolution Search(ISolution parent)
+        private S Search(S parent)
         {
 
-            List<ISolution> neighbourhood = this.neighbourhood.GenerateNeighbourhood(parent);
+            List<S> neighbourhood = this.neighbourhood.GenerateNeighbourhood(parent);
             solutionsEvaluated += neighbourhood.Count;
 
-            ISolution best = step.Fitness(neighbourhood);
+            S best = step.Fittest(neighbourhood);
 
-            if (best.Fitness() < parent.Fitness()) //TODO this violates step function delegation.
+            if (step.Fitness(best) < step.Fitness(parent)) //TODO this violates step function delegation.
             {
                 return Search(best);
             }

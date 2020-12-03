@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace CSP
 {
-    interface ISolution
+    public interface ISolution
     {
         Problem Problem { get; }
-        List<Activity> Activities { get; }
+        internal List<Activity> Activities { get; }
         float Fitness();
 
         ISolution Copy();

@@ -1,13 +1,11 @@
-﻿using System;
+﻿using SearchStrategies.Operations;
+using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CSP.Search.Neighbourhood
 {
-    class StockSwap : ISwap, INeighbourhood
+    class StockSwap : ISwap<ISolution>, INeighbourhood<ISolution>
     {
-        private const int TIMEOUT_FACTOR = 3;
-
         private static readonly Random random = new Random(); //TODO determinism
 
         private readonly bool allowInvalid;
@@ -16,18 +14,16 @@ namespace CSP.Search.Neighbourhood
             this.allowInvalid = allowInvalid;
         }
 
-
         private ISolution Swap(ISolution parent, int i)
         {
             parent = parent.Copy();
             Stock RandomStock() => parent.Problem.Stock[random.Next(parent.Problem.Stock.Length)];
             Activity activity = parent.Activities[i];
-            int timeout = parent.Problem.Stock.Length * TIMEOUT_FACTOR;
-            int counter = 0;
+
             do
             {
                 activity.Stock = RandomStock();
-            } while ((!allowInvalid) && activity.IsValid && ++counter < timeout);
+            } while ((!allowInvalid) && activity.IsValid );
 
             return parent;
 

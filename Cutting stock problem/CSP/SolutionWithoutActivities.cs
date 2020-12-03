@@ -4,22 +4,24 @@ using System.Linq;
 
 namespace CSP
 {
-    class _Solution
+    class SolutionWithoutActivities
     {
+        public Problem Problem { get; }
         public List<Stock> Stock { get; }
         public List<float> Orders { get; }
         private int LastUnfulfillOrderIndex;
 
         public bool IsCompleted => LastUnfulfillOrderIndex == Orders.Count;
 
-        public _Solution(List<float> orders, List<Stock> stock)
+        public SolutionWithoutActivities(Problem problem, List<float> orders, List<Stock> stock)
         {
+            Problem = problem;
             Stock = stock;
             Orders = orders;
             LastUnfulfillOrderIndex = 0;
         }
 
-        public _Solution(List<float> orders) : this(orders, new()) { }
+        public SolutionWithoutActivities(Problem problem, List<float> orders) : this(problem, orders, new()) { }
 
         /// <summary>
         /// 

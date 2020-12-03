@@ -4,11 +4,12 @@ using System.Linq;
 
 namespace CSP
 {
-    class Activity //TODO might have better performance being a struct
+    class Activity
     {
+        public static float invalidCostFactor = 2f;
         public bool IsValid => RemainingLength >= 0;
         public bool IsEmpty => Orders.Count == 0;
-        public float Cost => Stock.Cost;
+        public float Cost => Stock.Cost + (Math.Max(0, -RemainingLength) * invalidCostFactor);
 
         public Stock Stock { get; set; }
         public List<float> Orders { get; }
