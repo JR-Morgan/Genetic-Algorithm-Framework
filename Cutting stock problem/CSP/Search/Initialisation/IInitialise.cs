@@ -6,6 +6,6 @@ namespace CSP.Search.Initialisation
 {
     interface IInitialise
     {
-        ISolution Initalise(Problem problem);
+        Solution Initalise(Problem problem);
     }
 }

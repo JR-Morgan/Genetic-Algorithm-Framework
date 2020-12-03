@@ -1,19 +1,34 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace CSP
 {
     class Solution : ISolution
     {
-        public readonly Problem problem;
+        public Problem Problem { get; }
         public List<Activity> Activities { get; private set; }
 
         public Solution(Problem problem, List<Activity> activities)
         {
-            this.problem = problem;
+            this.Problem = problem;
             Activities = activities;
         }
 
         public Solution(Problem problem) : this(problem, new List<Activity>()) { }
+
+        public ISolution Copy()
+        {
+            List<Activity> activities = new List<Activity>(Activities);
+            activities.AddRange(activities);
+
+            foreach(Activity a in Activities)
+            {
+                activities.Add(a.Copy());
+            }
+
+            return new Solution(Problem, activities);
+        }
+
 
         public float Fitness()
         {
@@ -24,5 +39,6 @@ namespace CSP
             }
             return fitness;
         }
+
     }
 }

@@ -9,7 +9,7 @@ namespace CSP.Search
     public static class SearchFactory
     {
         private const float DEFAULT_TIMEOUT = 100000f;
-        private const int DEFAULT_ITTERATIONS = 500;
+        private const int DEFAULT_ITTERATIONS = 50000;
 
 
         internal static List<ISearchStrategy> GenerateSearches(TerminateStrategy ts)
@@ -27,7 +27,7 @@ namespace CSP.Search
 
         private static ISearchStrategy LS1(TerminateStrategy ts) => new LocalSearch(
         initalise: new RandomInitalise(),
-        neighbourhood: new TwoOpt(),
+        neighbourhood: new StockSwap(),
         step: new LowestCost(),
         terminate: ts,
         name: "Local Search - Random initialisations"

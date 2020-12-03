@@ -21,7 +21,7 @@ namespace ConsoleUI
             string fileName;
             if (args.Length == 0)
             {
-                fileName = @"ProblemFiles\test1.txt";
+                fileName = @"ProblemFiles\test2.txt";
             }
             else
             {
@@ -42,7 +42,7 @@ namespace ConsoleUI
                 StringBuilder message = new();
                 message.Append("\nSelect search strategy:\n");
 
-                List<ISearchStrategy> searches = SearchFactory.GenerateSearchesTimeOut();
+                List<ISearchStrategy> searches = SearchFactory.GenerateSearchesItterations();
                 for (int i = 0; i < searches.Count; i++)
                 {
                     message.Append($"({i}): {searches[i]}\n");

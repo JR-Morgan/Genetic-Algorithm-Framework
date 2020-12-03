@@ -2,10 +2,8 @@
 using CSP.Search.Neighbourhood;
 using CSP.Search.StepFunctions;
 using CSP.Search.TerminalConditions;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace CSP.Search
 {
@@ -39,12 +37,12 @@ namespace CSP.Search
             int itterationCounter = 0;
             Stopwatch timer = new();
 
-            Log GenerateLog() =>new Log() {
+            Log GenerateLog() => new Log() {
                     timeToCompute = timer.ElapsedMilliseconds,
                     numberOfSolutionsEvaluated = solutionsEvaluated,
                     iteration = itterationCounter,
                     bestSolutionFitness = bestSolution != null ? bestSolution.Fitness() : float.PositiveInfinity,
-                    bestSolution = bestSolution != null ? bestSolution.ToString() : String.Empty,
+                    bestSolution = bestSolution != null ? bestSolution.ToString() : string.Empty,
                 };
 
 

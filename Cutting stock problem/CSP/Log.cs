@@ -12,8 +12,8 @@
         {
             return $"Solutions evaluated: {numberOfSolutionsEvaluated}\n" +
                 $"Time to compute: {timeToCompute}ms\n" +
-                $"Best solution cost: {bestSolutionFitness}\n" +
-                $"Best solution : {bestSolution}\n";
+                $"Best solution cost: {bestSolutionFitness}\n";
+                //$"Best solution : {bestSolution}\n";
 
         }
 

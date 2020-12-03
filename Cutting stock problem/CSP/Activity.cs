@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CSP
@@ -6,10 +7,10 @@ namespace CSP
     class Activity //TODO might have better performance being a struct
     {
         public bool IsValid => RemainingLength >= 0;
+        public bool IsEmpty => Orders.Count == 0;
         public float Cost => Stock.Cost;
 
-        public Stock Stock { get; }
-
+        public Stock Stock { get; set; }
         public List<float> Orders { get; }
 
 
@@ -24,6 +25,13 @@ namespace CSP
             return false;
         }
 
+        public Activity Copy()
+        {
+            List<float> orders = new(Orders);
+            orders.AddRange(Orders);
+            return new Activity(Stock, orders);
+        }
+
         #region RemainingLength
 
         private float? _remainingLength = null;
@@ -31,7 +39,7 @@ namespace CSP
         {
             get
             {
-                float CalculateRemainingLength() => Orders.Sum() - Stock.Length;
+                float CalculateRemainingLength() => Stock.Length - Orders.Sum();
                 return _remainingLength ??= CalculateRemainingLength();
             }
         }
@@ -39,11 +47,14 @@ namespace CSP
         #endregion
 
 
-        public Activity(Stock stock)
+        public Activity(Stock stock) : this(stock, new()) { }
+
+        private Activity(Stock stock, List<float> orders)
         {
-            Orders = new();
+            Orders = orders;
             Stock = stock;
         }
+
 
     }
 }
