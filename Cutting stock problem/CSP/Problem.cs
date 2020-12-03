@@ -15,6 +15,7 @@ namespace CSP
         public Problem(Stock[] stock, List<float> orders)
         {
             Stock = stock;
+            orders.Sort();
             Orders = orders;
         }
 

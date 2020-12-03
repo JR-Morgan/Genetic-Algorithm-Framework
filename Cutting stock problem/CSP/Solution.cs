@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CSP
 {
@@ -40,6 +42,38 @@ namespace CSP
             return fitness;
         }
 
+        public bool IsValid()
+        {
+            foreach(Activity activity in Activities)
+            {
+                if (!activity.IsValid) return false;
+            }
+            return  IsComplete();
+        }
+
+        public bool IsComplete()
+        {
+            List<float> lengths = new(Problem.Orders);
+            foreach (Activity activity in Activities)
+            {
+                foreach(float length in activity.Orders)
+                {
+                    lengths.Add(length);
+                }
+            }
+            lengths.Sort();
+
+//#if DEBUG
+            List<float> orders = new List<float>(Problem.Orders);
+            orders.AddRange(Problem.Orders);
+            orders.Sort();
+            if (orders.SequenceEqual(Problem.Orders)) throw new Exception($"{nameof(Problem)}.{nameof(Problem.Orders)} was not ordered");
+//#endif
+
+
+            return Problem.Orders.SequenceEqual(lengths);
+
+        }
 
     }
 }

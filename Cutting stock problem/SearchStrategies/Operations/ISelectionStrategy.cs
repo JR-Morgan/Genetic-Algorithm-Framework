@@ -1,7 +1,9 @@
-﻿namespace SearchStrategies.Operations
+﻿using System.Collections.Generic;
+
+namespace SearchStrategies.Operations
 {
     public interface ISelectionStrategy<S>
     {
-        S[] Select(S[] population, int selectionSize, IStepFunction<S> stepFunction);
+        S[] Select(IEnumerable<S> population, int selectionSize, IStepFunction<S> stepFunction);
     }
 }

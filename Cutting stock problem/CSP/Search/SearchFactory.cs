@@ -1,5 +1,7 @@
-﻿using CSP.Search.Initialisation;
+﻿using CSP.Search.Crossover;
+using CSP.Search.Initialisation;
 using CSP.Search.Neighbourhood;
+using CSP.Search.Selection;
 using CSP.Search.StepFunctions;
 using SearchStrategies;
 using SearchStrategies.Operations;
@@ -16,9 +18,10 @@ namespace CSP.Search
 
         internal static List<ISearchStrategy<ISolution, Problem>> GenerateSearches(TerminateStrategy ts)
         {
-            return new ()
+            return new()
             {
                 LS1(ts),
+                EA1(ts, 100, 20),
             };
         }
 
@@ -29,14 +32,24 @@ namespace CSP.Search
 
         private static ISearchStrategy<ISolution, Problem> LS1(TerminateStrategy ts) => new LocalSearch<ISolution, Problem>(
         initalise: new RandomInitalise(),
-        neighbourhood: new StockSwap(true),
+        neighbourhood: new StockRandomise(true),
         step: new LowestCost(),
         terminate: ts,
         name: "Local Search - Random initialisations"
         );
 
-
-
+        private static ISearchStrategy<ISolution, Problem> EA1(TerminateStrategy ts, uint populationSize, uint k, float elitism = 0.2f, float mutationRate = 0.04f) => new EvolutionalSearch<ISolution, Problem>(
+            initalise: new RandomInitalise(),
+            selectionStrategy: new TournamentSelection(k),
+            crossoverStratergy: new ActivityOrderedCrossover(),
+            swap: new StockRandomise(),
+            stepFunction: new LowestCost(),
+            terminate: ts,
+            populationSize: populationSize,
+            eliteism: elitism,
+            mutationRate: mutationRate,
+            name: "Evolutionary Search - Tournament"
+            );
 
     }
 }

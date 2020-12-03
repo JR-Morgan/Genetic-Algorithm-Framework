@@ -4,12 +4,13 @@ using System.Collections.Generic;
 
 namespace CSP.Search.Neighbourhood
 {
-    class StockSwap : ISwap<ISolution>, INeighbourhood<ISolution>
+    class StockRandomise : ISwap<ISolution>, INeighbourhood<ISolution>
     {
+        private const int TIMEOUT = 50;
         private static readonly Random random = new Random(); //TODO determinism
 
         private readonly bool allowInvalid;
-        public StockSwap(bool allowInvalid = false)
+        public StockRandomise(bool allowInvalid = false)
         {
             this.allowInvalid = allowInvalid;
         }
@@ -19,11 +20,11 @@ namespace CSP.Search.Neighbourhood
             parent = parent.Copy();
             Stock RandomStock() => parent.Problem.Stock[random.Next(parent.Problem.Stock.Length)];
             Activity activity = parent.Activities[i];
-
+            int counter = 0;
             do
             {
                 activity.Stock = RandomStock();
-            } while ((!allowInvalid) && activity.IsValid );
+            } while ((!allowInvalid) && activity.IsValid && ++counter > TIMEOUT);
 
             return parent;
 
