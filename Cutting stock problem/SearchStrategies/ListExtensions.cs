@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 
-namespace CSP
+namespace SearchExtensions
 {
-    static class ListExtensions
+    public static class ListExtensions
     {
         /// <summary>
         /// Shuffles the contents of a list

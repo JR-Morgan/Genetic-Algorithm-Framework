@@ -1,4 +1,5 @@
-﻿using SearchStrategies.Operations;
+﻿using SearchExtensions;
+using SearchStrategies.Operations;
 using System;
 using System.Collections.Generic;
 

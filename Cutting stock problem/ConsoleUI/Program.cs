@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ConsoleUI
 {
-    class Program
+    static class Program
     {
         private static void ItterationEventHandler(ISearchStrategy<ISolution, Problem> sender, Log log)
         {
