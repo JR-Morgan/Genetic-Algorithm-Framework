@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CSP.Search.StepFunctions
 {
-    class LowestCost : IStepFunction<ISolution>
+    class LowestCost : IFitnessFunction<ISolution>
     {
         public ISolution Fittest(IEnumerable<ISolution> solutions)
         {

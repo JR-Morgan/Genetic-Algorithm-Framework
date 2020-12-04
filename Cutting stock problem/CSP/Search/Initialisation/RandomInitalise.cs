@@ -5,25 +5,24 @@ using System.Collections.Generic;
 
 namespace CSP.Search.Initialisation
 {
-    class RandomInitalise : IInitialise<ISolution, Problem>
+    class RandomInitalise : InitalisationStrategy
     {
         private const int TIMEOUT = 50;
 
         private static Random random = new Random(); //TODO determinism
 
-        public ISolution Initalise(Problem problem)
+        private List<Activity> Activities(Stock[] stock, List<float> orders)
         {
-            Activity nextActivity() => new Activity(problem.Stock[random.Next(problem.Stock.Length)]);
+            Activity nextActivity() => new Activity(stock[random.Next(stock.Length)]);
 
-            List<float> orders = new(problem.Orders);
-            orders.Shuffle(random);
+
             List<Activity> activities = new() { nextActivity() };
             int index = 0;
 
-            foreach(float order in orders)
+            foreach (float order in orders)
             {
                 int counter = 0;
-                while(!activities[index].Add(order))
+                while (!activities[index].Add(order))
                 {
                     if (activities[index].IsEmpty)
                     {
@@ -34,12 +33,29 @@ namespace CSP.Search.Initialisation
                         activities.Add(nextActivity());
                         index++;
                     }
-                    
+
                     if (++counter >= TIMEOUT) throw new Exception($"Could not initalise a valid solution after {counter} tries");
                 }
             }
+            return activities;
+        } 
 
-            return new Solution(problem, activities);
+        public override ISolution Initalise(Problem problem)
+        {
+            
+
+            List<float> orders = new(problem.FlatOrders);
+            orders.Shuffle(random);
+            
+            return new Solution(problem, Activities(problem.Stock, orders));
+
+
+        }
+
+        protected override void Repair(ISolution solution, Dictionary<float, int> missingDict)
+        {
+            List<float> missingOrders = Problem.FlattenDict(missingDict);
+            solution.Activities.AddRange(Activities(solution.Problem.Stock, missingOrders));
 
 
         }

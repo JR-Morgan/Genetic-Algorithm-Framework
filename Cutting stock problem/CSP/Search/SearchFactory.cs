@@ -4,6 +4,7 @@ using CSP.Search.Neighbourhood;
 using CSP.Search.Selection;
 using CSP.Search.StepFunctions;
 using SearchStrategies;
+using SearchStrategies.GenerationStrategies;
 using SearchStrategies.Operations;
 using SearchStrategies.TerminalConditions;
 using System.Collections.Generic;
@@ -33,21 +34,24 @@ namespace CSP.Search
         private static ISearchStrategy<ISolution, Problem> LS1(TerminateStrategy ts) => new LocalSearch<ISolution, Problem>(
         initalise: new RandomInitalise(),
         neighbourhood: new StockRandomise(true),
-        step: new LowestCost(),
+        fitnessFunction: new LowestCost(),
         terminate: ts,
         name: "Local Search - Random initialisations"
         );
 
-        private static ISearchStrategy<ISolution, Problem> EA1(TerminateStrategy ts, uint populationSize, uint k, float elitism = 0.2f, float mutationRate = 0.04f) => new EvolutionalSearch<ISolution, Problem>(
+        private static ISearchStrategy<ISolution, Problem> EA1(TerminateStrategy ts, uint populationSize, uint k, float elitism = 0.2f, float mutationRate = 0.04f) => new EvolutionarySearch<ISolution, Problem>(
             initalise: new RandomInitalise(),
-            selectionStrategy: new TournamentSelection(k),
-            crossoverStratergy: new ActivityOrderedCrossover(),
-            swap: new StockRandomise(),
-            stepFunction: new LowestCost(),
+            generationStrategy: new Generation<ISolution>(
+                new CrossoverFunction(
+                    selectionStrategy: new TournamentSelection(k),
+                    repairStrategy: new RandomInitalise(),
+                    elitism: 0.1f
+                    )
+                //mutation
+                ),
+            fitnessFunction: new LowestCost(),
             terminate: ts,
             populationSize: populationSize,
-            eliteism: elitism,
-            mutationRate: mutationRate,
             name: "Evolutionary Search - Tournament"
             );
 

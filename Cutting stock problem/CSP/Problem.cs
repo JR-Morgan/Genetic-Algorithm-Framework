@@ -9,14 +9,31 @@ namespace CSP
     {
         public Stock[] Stock { get; }
 
-        public List<float> Orders { get; }
+        public List<float> FlatOrders { get; }
+
+        public Dictionary<float, int> Orders { get; }
 
         public Problem(Stock[] stock) : this(stock, new()) { }
-        public Problem(Stock[] stock, List<float> orders)
+        public Problem(Stock[] stock, Dictionary<float, int> orders)
         {
             Stock = stock;
-            orders.Sort();
             Orders = orders;
+            FlatOrders = FlattenDict(Orders);
+        }
+
+        public static List<float> FlattenDict(Dictionary<float, int> orders)
+        {
+            List<float> ordersFlat = new();
+
+            foreach((float order, int quanitity) in orders)
+            {
+                for(int i = 0; i < quanitity; i++)
+                {
+                    ordersFlat.Add(order);
+                }
+            }
+
+            return ordersFlat;
         }
 
         public static Problem ParseFromFile(string file)
@@ -64,7 +81,7 @@ namespace CSP
                 throw new Exception("Failed to parse file, List have inconsistent length");
 
             Stock[] stock = new Stock[stockLengthContent.Count];
-            List<float> order = new(orderLengthContent.Count);
+            Dictionary<float, int> orders = new(orderLengthContent.Count);
 
             for(int i = 0; i < stockLengthContent.Count; i++)
             {
@@ -73,15 +90,12 @@ namespace CSP
 
             for (int i = 0; i < orderLengthContent.Count; i++)
             {
-                for(int j = 0; j< orderQuantityContent[i]; j++)
-                {
-                    order.Add(orderLengthContent[i]);
-                }
+                orders.Add(orderLengthContent[i], orderQuantityContent[i]);
             }
 
 
 
-            return new Problem(stock, order);
+            return new Problem(stock, orders);
         }
     }
 }

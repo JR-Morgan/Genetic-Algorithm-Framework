@@ -26,6 +26,12 @@ namespace CSP
             return false;
         }
 
+        public void Remove(float length)
+        {
+            Orders.Remove(length);
+            InvalidateRemainingLength();
+        }
+
         public Activity Copy()
         {
             List<float> orders = new(Orders);
@@ -45,7 +51,9 @@ namespace CSP
             }
         }
         private void InvalidateRemainingLength() => _remainingLength = null;
+
         #endregion
+
 
 
         public Activity(Stock stock) : this(stock, new()) { }

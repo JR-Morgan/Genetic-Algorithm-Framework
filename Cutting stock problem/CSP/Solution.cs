@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SearchStrategies.Operations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -53,7 +54,7 @@ namespace CSP
 
         public bool IsComplete()
         {
-            List<float> lengths = new(Problem.Orders);
+            List<float> lengths = new(Problem.FlatOrders);
             foreach (Activity activity in Activities)
             {
                 foreach(float length in activity.Orders)
@@ -64,14 +65,14 @@ namespace CSP
             lengths.Sort();
 
 //#if DEBUG
-            List<float> orders = new List<float>(Problem.Orders);
-            orders.AddRange(Problem.Orders);
+            List<float> orders = new List<float>(Problem.FlatOrders);
+            orders.AddRange(Problem.FlatOrders);
             orders.Sort();
-            if (orders.SequenceEqual(Problem.Orders)) throw new Exception($"{nameof(Problem)}.{nameof(Problem.Orders)} was not ordered");
+            if (orders.SequenceEqual(Problem.FlatOrders)) throw new Exception($"{nameof(Problem)}.{nameof(Problem.FlatOrders)} was not ordered");
 //#endif
 
 
-            return Problem.Orders.SequenceEqual(lengths);
+            return Problem.FlatOrders.SequenceEqual(lengths);
 
         }
 

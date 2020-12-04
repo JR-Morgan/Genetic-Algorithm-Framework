@@ -1,10 +1,11 @@
-﻿using SearchStrategies.Operations;
+﻿using SearchStrategies.GenerationStrategies;
+using SearchStrategies.Operations;
 using System;
 using System.Collections.Generic;
 
 namespace CSP.Search.Neighbourhood
 {
-    class StockRandomise : ISwap<ISolution>, INeighbourhood<ISolution>
+    class StockRandomise : IGenerationOperation<ISolution>, INeighbourhood<ISolution>
     {
         private const int TIMEOUT = 50;
         private static readonly Random random = new Random(); //TODO determinism
@@ -14,6 +15,7 @@ namespace CSP.Search.Neighbourhood
         {
             this.allowInvalid = allowInvalid;
         }
+
 
         private ISolution Swap(ISolution parent, int i)
         {
@@ -40,6 +42,11 @@ namespace CSP.Search.Neighbourhood
                 solutions.Add(Swap(parent, i));
             }
             return solutions;
+        }
+
+        public ISolution[] Operate(ISolution[] population, IFitnessFunction<ISolution> fitnessFunction)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace CSP.Search.Selection
             this.k = k;
         }
 
-        public ISolution[] Select(IEnumerable<ISolution> population, int selectionSize, IStepFunction<ISolution> step)
+        public ISolution[] Select(IEnumerable<ISolution> population, int selectionSize, IFitnessFunction<ISolution> fitness)
         {
 
 
@@ -33,7 +33,7 @@ namespace CSP.Search.Selection
                     ISolution candidate = workingPopulation[random.Next(workingPopulation.Count)];
                     workingPopulation.Remove(candidate);
 
-                    bestCandidate = bestCandidate == null ? candidate : step.FittestP(new ISolution[] { candidate, bestCandidate });
+                    bestCandidate = bestCandidate == null ? candidate : fitness.FittestP(new ISolution[] { candidate, bestCandidate });
 
                 }
 

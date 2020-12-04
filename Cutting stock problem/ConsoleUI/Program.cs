@@ -34,7 +34,7 @@ namespace ConsoleUI
 
             Console.WriteLine($"\nParsing problem from {fileName}");
             Problem problem = Problem.ParseFromFile(fileName);
-            Console.WriteLine($"\nFinished parsing problem from m:{problem.Stock.Length}, c:{problem.Orders.Count}");
+            Console.WriteLine($"\nFinished parsing problem from m:{problem.Stock.Length}, c:{problem.FlatOrders.Count}");
 
             while (true)
             {

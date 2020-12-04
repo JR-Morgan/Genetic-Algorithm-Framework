@@ -2,7 +2,7 @@
 
 namespace SearchStrategies.Operations
 {
-    public interface IStepFunction<S>
+    public interface IFitnessFunction<S>
     {
         S Fittest(IEnumerable<S> solutions);
 
