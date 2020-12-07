@@ -9,5 +9,7 @@ namespace CSP
         float Fitness();
 
         ISolution Copy();
+        bool IsValid();
+        bool IsComplete();
     }
 }

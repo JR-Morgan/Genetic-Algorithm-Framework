@@ -35,7 +35,7 @@ namespace SearchStrategies
             
             TerminateCondition Terminate = this.terminateStrategy();
             int solutionsEvaluated = 0;
-            //Initalise population
+            //Initialise population
             for (int i = 0; i < population.Length; i++)
             {
                 population[i] = initalisationStrategy.Initalise(problem);
@@ -65,7 +65,7 @@ namespace SearchStrategies
                 //Create next Generation
                 S[] children = generationStrategy.NextGeneration(population, fitnessFunction);
 
-                //Evaluate the new generation
+                //Evaluate the new generation and replace the oldest in the population
                 for (int i = 0; i < children.Length; i++)
                 {
                     solutionsEvaluated++;

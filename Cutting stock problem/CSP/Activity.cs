@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace CSP
 {
-    class Activity
+    class Activity : IEquatable<Activity>
     {
         public static float invalidCostFactor = 2f;
         public bool IsValid => RemainingLength >= 0;
@@ -52,6 +52,13 @@ namespace CSP
         }
         private void InvalidateRemainingLength() => _remainingLength = null;
 
+        public bool Equals(Activity other)
+        {
+            return this.Stock.Equals(other.Stock)
+                && this.Orders.SequenceEqual(other.Orders)
+                && this.Orders.Count == other.Orders.Count;
+        }
+
         #endregion
 
 
@@ -62,6 +69,15 @@ namespace CSP
         {
             Orders = orders;
             Stock = stock;
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = Stock.GetHashCode();
+
+            foreach(float order in Orders) hash ^= Orders.GetHashCode();
+
+            return hash;
         }
 
 

@@ -1,7 +1,6 @@
 ﻿using SearchStrategies.Operations;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CSP.Search.Initialisation
 {
@@ -12,15 +11,23 @@ namespace CSP.Search.Initialisation
         public void Repair(ISolution solution)
         {
             Dictionary<float, int> ordersDict = new(solution.Problem.Orders);
+            List<Activity> activitiesToRemove = new();
 
             foreach (Activity a in solution.Activities)
             {
-                for(int i = 0; i< a.Orders.Count; i++)
+                for (int i = 0; i< a.Orders.Count; i++)
                 {
                     float length = a.Orders[i];
                     if (ordersDict[length] <= 0)
                     {
-                        a.Remove(length);
+                        if(a.Orders.Count == 1)
+                        {
+                            activitiesToRemove.Add(a);
+                        } else
+                        {
+                            a.Remove(length);
+                            i--;
+                        }
                     }
                     else
                     {
@@ -29,7 +36,18 @@ namespace CSP.Search.Initialisation
                 }
             }
 
+            foreach(Activity b in activitiesToRemove) solution.Activities.Remove(b);
+
+
+
             Repair(solution, ordersDict);
+
+            if (!solution.IsComplete())
+            {
+                throw new Exception("Solution still incomplete after repair");
+            }
+                
+
         }
 
         public abstract ISolution Initalise(Problem problem);

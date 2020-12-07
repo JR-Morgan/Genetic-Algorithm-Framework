@@ -4,10 +4,11 @@ using SearchStrategies.GenerationStrategies;
 using SearchStrategies.Operations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CSP.Search.Crossover
 {
-    class CrossoverFunction : IGenerationOperation<ISolution>
+    class OrderedCrossover : IGenerationOperation<ISolution>
     {
         private static readonly Random random = new Random(); //TODO
 
@@ -16,7 +17,7 @@ namespace CSP.Search.Crossover
 
         private readonly float elitismProportion, selectionProportion;
 
-        public CrossoverFunction(ISelectionStrategy<ISolution> selectionStrategy, InitalisationStrategy repairStrategy, float elitism = 0f, float selectionSize = 0.5f)
+        public OrderedCrossover(ISelectionStrategy<ISolution> selectionStrategy, InitalisationStrategy repairStrategy, float elitism = 0f, float selectionSize = 0.5f)
         {
             this.selectionStrategy = selectionStrategy;
             this.repairStrategy = repairStrategy;
@@ -48,6 +49,7 @@ namespace CSP.Search.Crossover
             for (int i = elitism; i < parents.Length; i++)
             {
                 children[i] = Crossover(parents[i], pool[parents.Length - i - 1]);
+
                 repairStrategy.Repair(children[i]);
             }
 
@@ -63,7 +65,7 @@ namespace CSP.Search.Crossover
             parent2 = parent2.Copy();
 
             int geneA = random.Next(parent1.Activities.Count);
-            int geneB = random.Next(parent1.Activities.Count);
+            int geneB = random.Next(parent1.Activities.Count);//does this assume both parents have the same number of activities?
 
             int startGene = Math.Min(geneA, geneB);
             int endGene = Math.Max(geneA, geneB);
@@ -80,14 +82,18 @@ namespace CSP.Search.Crossover
                 ChildP1.Add(parent1.Activities[i]);
             }
 
-            List<Activity> ChildP2 = new List<Activity>();
-            foreach (Activity node in parent2.Activities)
-            {
-                if (!ChildP1.Contains(node)) ChildP2.Add(node);
-            }
+            IEnumerable<Activity> ChildP2 = parent2.Activities.Except(ChildP1);
+
+
+            //foreach (Activity a in parent2.Activities)
+            //{
+            //    if (!ChildP1.Contains(a)) ChildP2.Add(a);
+            //}
 
 
             ChildP1.AddRange(ChildP2);
+
+            //Console.WriteLine(ChildP1.Count);
 
             return new Solution(parent1.Problem, ChildP1);
         }

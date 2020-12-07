@@ -21,8 +21,7 @@ namespace CSP
 
         public ISolution Copy()
         {
-            List<Activity> activities = new List<Activity>(Activities);
-            activities.AddRange(activities);
+            List<Activity> activities = new List<Activity>(Activities.Count);
 
             foreach(Activity a in Activities)
             {
@@ -43,18 +42,20 @@ namespace CSP
             return fitness;
         }
 
+
         public bool IsValid()
         {
             foreach(Activity activity in Activities)
             {
-                if (!activity.IsValid) return false;
+                if (!activity.IsValid)
+                    return false;
             }
-            return  IsComplete();
+            return IsComplete(); 
         }
 
         public bool IsComplete()
         {
-            List<float> lengths = new(Problem.FlatOrders);
+            List<float> lengths = new(Problem.FlatOrders.Count);
             foreach (Activity activity in Activities)
             {
                 foreach(float length in activity.Orders)
@@ -63,14 +64,6 @@ namespace CSP
                 }
             }
             lengths.Sort();
-
-//#if DEBUG
-            List<float> orders = new List<float>(Problem.FlatOrders);
-            orders.AddRange(Problem.FlatOrders);
-            orders.Sort();
-            if (orders.SequenceEqual(Problem.FlatOrders)) throw new Exception($"{nameof(Problem)}.{nameof(Problem.FlatOrders)} was not ordered");
-//#endif
-
 
             return Problem.FlatOrders.SequenceEqual(lengths);
 

@@ -39,13 +39,14 @@ namespace CSP.Search
         name: "Local Search - Random initialisations"
         );
 
-        private static ISearchStrategy<ISolution, Problem> EA1(TerminateStrategy ts, uint populationSize, uint k, float elitism = 0.2f, float mutationRate = 0.04f) => new EvolutionarySearch<ISolution, Problem>(
+        private static ISearchStrategy<ISolution, Problem> EA1(TerminateStrategy ts, uint populationSize, uint k) => new EvolutionarySearch<ISolution, Problem>(
             initalise: new RandomInitalise(),
             generationStrategy: new Generation<ISolution>(
-                new CrossoverFunction(
+                new OrderedCrossover(
                     selectionStrategy: new TournamentSelection(k),
                     repairStrategy: new RandomInitalise(),
-                    elitism: 0.1f
+                    elitism: 0.1f,
+                    selectionSize: 0.5f
                     )
                 //mutation
                 ),

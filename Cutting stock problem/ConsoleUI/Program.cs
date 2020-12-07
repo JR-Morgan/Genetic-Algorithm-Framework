@@ -23,7 +23,7 @@ namespace ConsoleUI
             string fileName;
             if (args.Length == 0)
             {
-                fileName = @"ProblemFiles\test2.txt";
+                fileName = @"ProblemFiles\test1.txt";
             }
             else
             {

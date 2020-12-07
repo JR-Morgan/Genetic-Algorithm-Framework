@@ -32,7 +32,7 @@ namespace CSP
                     ordersFlat.Add(order);
                 }
             }
-
+            ordersFlat.Sort();
             return ordersFlat;
         }
 

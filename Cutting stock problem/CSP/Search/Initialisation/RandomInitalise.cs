@@ -34,7 +34,7 @@ namespace CSP.Search.Initialisation
                         index++;
                     }
 
-                    if (++counter >= TIMEOUT) throw new Exception($"Could not initalise a valid solution after {counter} tries");
+                    if (++counter >= TIMEOUT) throw new Exception($"Could not initialise a valid solution after {counter} tries");
                 }
             }
             return activities;
@@ -46,16 +46,28 @@ namespace CSP.Search.Initialisation
 
             List<float> orders = new(problem.FlatOrders);
             orders.Shuffle(random);
-            
-            return new Solution(problem, Activities(problem.Stock, orders));
 
+            Solution solution = new Solution(problem, Activities(problem.Stock, orders));
+
+
+            if (!solution.IsValid())
+            {
+                Console.WriteLine("Initalised solution was invalid");
+            }
+            Repair(solution);
+            if (!solution.IsValid()) throw new Exception("Repair invalid");
+            return solution;
+            
 
         }
 
+
+        //TODO somehow activities are becoming incomplete. The repair is not correct.
         protected override void Repair(ISolution solution, Dictionary<float, int> missingDict)
         {
             List<float> missingOrders = Problem.FlattenDict(missingDict);
-            solution.Activities.AddRange(Activities(solution.Problem.Stock, missingOrders));
+            if(missingOrders.Count > 0)
+                solution.Activities.AddRange(Activities(solution.Problem.Stock, missingOrders));
 
 
         }
