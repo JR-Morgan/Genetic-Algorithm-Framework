@@ -2,10 +2,10 @@
 
 namespace SearchStrategies.GenerationStrategies.Selection
 {
-    public class ProabalisticSelection<S> : FunctionSelection<S>
+    public class ProbabilisticSelection<S> : FunctionSelection<S>
     {
 
-        public ProabalisticSelection(float proababilty, Random random) : base(Function(proababilty, random)) { }
+        public ProbabilisticSelection(float proababilty, Random random) : base(Function(proababilty, random)) { }
 
         private static Func<S,bool> Function(float proababilty, Random random)
         {

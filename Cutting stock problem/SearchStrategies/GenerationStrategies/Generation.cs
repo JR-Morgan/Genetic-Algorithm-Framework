@@ -1,28 +1,31 @@
-﻿using SearchStrategies.Operations;
+﻿using SearchStrategies.GenerationStrategies.Replacement;
+using SearchStrategies.Operations;
+using System.Collections.Generic;
 
 namespace SearchStrategies.GenerationStrategies
 {
-    public class Generation<S> : IGenerationOperation<S>
+    public class Generation<S>
     {
         private IGenerationOperation<S>[] operations;
+        private IReplacementStrategy<S> replacementStrategy;
 
-        public Generation(params IGenerationOperation<S>[] operations)
+
+        public Generation(IReplacementStrategy<S> replacementStrategy, params IGenerationOperation<S>[] operations)
         {
             this.operations = operations;
+            this.replacementStrategy = replacementStrategy;
         }
 
-        public S[] Operate(S[] population, ICostFunction<S> fitnessFunction)
+        public IList<S> NextGeneration(IList<S> population, ICostFunction<S> fitnessFunction)
         {
-            return ApplyOperations(operations, population, fitnessFunction);
-        }
-
-        private static S[] ApplyOperations(IGenerationOperation<S>[] operations, S[] population, ICostFunction<S> fitnessFunction, int i = 0)
-        {
-            if(i < operations.Length - 1)
+            foreach (IGenerationOperation<S> operation in operations)
             {
-                return operations[i].Operate(ApplyOperations(operations, population, fitnessFunction, i + 1), fitnessFunction);
+                replacementStrategy.Replace(ref population, operation.Operate(population, fitnessFunction));
             }
-            return operations[i].Operate(population, fitnessFunction);
+
+            return population;
         }
+
+
     }
 }

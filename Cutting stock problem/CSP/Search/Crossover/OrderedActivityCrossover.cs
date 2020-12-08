@@ -22,22 +22,20 @@ namespace CSP.Search.Crossover
         }
 
 
-        protected override ISolution[] OperateOnSelection(ISolution[] selected, ICostFunction<ISolution> fitnessFunction, int elite)
+        protected override IList<ISolution> OperateOnSelection(IList<ISolution> selection, ICostFunction<ISolution> fitnessFunction, int elite)
         {
-            ISolution[] children = new ISolution[selected.Length];
+            ISolution[] children = new ISolution[selection.Count];
 
-            ISolution[] pool = (ISolution[])selected.Clone();
+            List<ISolution> pool = new(selection);
+
+
             pool.Shuffle(random);
 
-            
-            for (int i = 0; i < elite; i++)
-            {
-                children[i] = selected[i];
-            }
 
-            for (int i = elite; i < selected.Length; i++)
+
+            for (int i = elite; i < selection.Count; i++)
             {
-                children[i] = Crossover(selected[i], pool[selected.Length - i - 1]);
+                children[i] = Crossover(selection[i], pool[selection.Count - i - 1]);
 
                 repairStrategy.Repair(children[i]);
             }

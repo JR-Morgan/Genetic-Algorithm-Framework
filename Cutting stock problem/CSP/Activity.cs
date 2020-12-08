@@ -15,12 +15,17 @@ namespace CSP
         public List<float> Orders { get; }
 
 
+        public void AddUnchecked(float length)
+        {
+            Orders.Add(length);
+            InvalidateRemainingLength();
+        }
+
         public bool Add(float length)
         {
             if(length < RemainingLength)
             {
-                Orders.Add(length);
-                InvalidateRemainingLength();
+                AddUnchecked(length);
                 return true;
             }
             return false;

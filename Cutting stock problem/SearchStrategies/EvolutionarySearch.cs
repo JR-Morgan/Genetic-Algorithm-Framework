@@ -3,6 +3,7 @@ using SearchStrategies.GenerationStrategies;
 using SearchStrategies.Operations;
 using SearchStrategies.TerminalConditions;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace SearchStrategies
@@ -13,7 +14,7 @@ namespace SearchStrategies
         private S[] population;
 
         protected readonly IInitialise<S,P> initalisationStrategy;
-        protected readonly IGenerationOperation<S> generationStrategy;
+        protected readonly Generation<S> generationStrategy;
         protected readonly ICostFunction<S> fitnessFunction;
         private readonly TerminateStrategy terminateStrategy;
 
@@ -57,7 +58,7 @@ namespace SearchStrategies
                 numberOfSolutionsEvaluated = solutionsEvaluated,
                 iteration = itterationCounter,
                 bestSolutionFitness = fitnessFunction.Cost(bestSolution),
-                bestSolution = bestSolution.ToString(),
+                bestSolution = bestSolution != null? bestSolution.ToString() : string.Empty,
             };
 
             timer.Start();
@@ -66,10 +67,10 @@ namespace SearchStrategies
             while (!Terminate())
             {
                 //Create next Generation
-                S[] children = generationStrategy.Operate(population, fitnessFunction);
+                IList<S> children = generationStrategy.NextGeneration(population, fitnessFunction);
 
                 //Evaluate the new generation and replace the oldest in the population
-                for (int i = 0; i < children.Length; i++)
+                for (int i = 0; i < children.Count; i++)
                 {
                     //Evaluate
                     solutionsEvaluated++;

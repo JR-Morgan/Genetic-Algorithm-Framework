@@ -1,5 +1,6 @@
 ﻿using SearchStrategies.Operations;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SearchStrategies.GenerationStrategies.Selection
@@ -14,11 +15,20 @@ namespace SearchStrategies.GenerationStrategies.Selection
             this.function = function;
         }
 
-        public S[] Select(S[] population, ICostFunction<S>? fitnessFunction = default)
+        public IList<(S solution, int index)> Select(IList<S> population, ICostFunction<S>? fitnessFunction = default)
         {
-            S[] selection = population.Where(function).ToArray();
+            List<(S, int)> selection = new();
 
-            return selection;
+            for(int i = 0; i < population.Count; i++)
+            {
+                S s = population[i];
+                if (function.Invoke(s))
+                {
+                    selection.Add((s, i));
+                }
+            }
+
+            return selection.ToArray();
         }
     }
 }

@@ -18,29 +18,36 @@ namespace CSP.Search.Selection
             this.selectionSize = selectionSize;
         }
 
-        public S[] Select(S[] population, ICostFunction<S> fitness)
+        public IList<(S, int)> Select(IList<S> population, ICostFunction<S> fitness)
         {
 
-            S[] selection = new S[selectionSize];
+            (S, int)[] selection = new (S, int)[selectionSize];
 
 
             for (int i = 0; i < selectionSize; i++) //For each Round
             {
                 List<S> workingPopulation = new List<S>(population);
                 S? bestCandidate = default;
+                int bestCandidateIndex = default;
 
                 for (int j = 0; j < k; j++)
                 {
-                    S candidate = workingPopulation[random.Next(workingPopulation.Count)];
+                    int index = random.Next(workingPopulation.Count);
+                    S candidate = workingPopulation[index];
                     workingPopulation.Remove(candidate);
 
-                    bestCandidate = bestCandidate == null ? candidate : fitness.FittestP(candidate, bestCandidate );
+                    if (bestCandidate == null
+                        || fitness.Cost(candidate) < fitness.Cost(bestCandidate))
+                    {
+                        bestCandidate = candidate;
+                        bestCandidateIndex = index;
+                    }
 
                 }
 
                 if (bestCandidate == null) throw new Exception();
-
-                selection[i] = bestCandidate;
+                
+                selection[i] = (bestCandidate, bestCandidateIndex);
 
             }
 

@@ -7,7 +7,6 @@ namespace CSP.Search.Neighbourhood
 {
     class StockRandomise : IGenerationOperation<ISolution>, INeighbourhood<ISolution>
     {
-        private const int TIMEOUT = 50;
         private static readonly Random random = new Random(); //TODO determinism
 
         private readonly float mutationRate;
@@ -18,16 +17,18 @@ namespace CSP.Search.Neighbourhood
             this.mutationRate = mutationRate;
         }
 
-        public ISolution[] Operate(ISolution[] population, ICostFunction<ISolution> fitnessFunction)
+        public IList<(ISolution solution, int index)> Operate(IList<ISolution> population, ICostFunction<ISolution>? fitnessFunction = default)
         {
-            for(int i = 0; i > population.Length; i++)
+            (ISolution, int)[] children = new (ISolution, int)[population.Count];
+
+            for (int i = 0; i > population.Count; i++)
             {
                 if (random.NextDouble() < mutationRate)
                 {
-                    population[i] = Swap(population[i]);
+                    children[i] = (Swap(population[i]), i);
                 }
             }
-            return population;
+            return children;
             
         }
 
@@ -37,12 +38,13 @@ namespace CSP.Search.Neighbourhood
         {
             parent = parent.Copy(); //This copy is pointless for mutation, but required for neighbourhood
             Stock RandomStock() => parent.Problem.Stock[random.Next(parent.Problem.Stock.Length)];
-            Activity activity = parent.Activities[i];
-            int counter = 0;
+            Activity activity = parent.Activities[i].Copy();
             do
             {
                 activity.Stock = RandomStock();
-            } while ((!allowInvalid) && activity.IsValid && ++counter > TIMEOUT);
+            } while (!(allowInvalid || activity.IsValid));
+
+
 
             return parent;
         }
