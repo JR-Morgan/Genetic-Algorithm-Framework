@@ -35,7 +35,6 @@ namespace CSP
         public Activity Copy()
         {
             List<float> orders = new(Orders);
-            orders.AddRange(Orders);
             return new Activity(Stock, orders);
         }
 

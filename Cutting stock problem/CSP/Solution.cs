@@ -1,5 +1,4 @@
-﻿using SearchStrategies.Operations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,6 +9,14 @@ namespace CSP
         public Problem Problem { get; }
         List<Activity> ISolution.Activities => Activities;
         internal List<Activity> Activities { get; private set; }
+
+
+
+        public override string ToString()
+        {
+            return $"Solution f = {Cost()}, ac = {Activities.Count}, av = {AreActivitiesValid()}, com = { IsComplete()}";
+        }
+
 
         public Solution(Problem problem, List<Activity> activities)
         {
@@ -32,25 +39,29 @@ namespace CSP
         }
 
 
-        public float Fitness()
+        public float Cost()
         {
-            float fitness = 0;
+            float totalCost = 0;
             foreach(Activity a in Activities)
             {
-                fitness += a.Cost;
+                totalCost += a.Cost;
             }
-            return fitness;
+            return totalCost;
         }
 
-
-        public bool IsValid()
+        public bool AreActivitiesValid()
         {
-            foreach(Activity activity in Activities)
+            foreach (Activity activity in Activities)
             {
                 if (!activity.IsValid)
                     return false;
             }
-            return IsComplete(); 
+            return true;
+        }
+
+        public bool IsValid()
+        {
+            return AreActivitiesValid() && IsComplete(); 
         }
 
         public bool IsComplete()

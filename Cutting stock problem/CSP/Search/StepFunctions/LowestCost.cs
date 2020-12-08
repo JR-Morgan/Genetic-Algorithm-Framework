@@ -4,26 +4,26 @@ using System.Collections.Generic;
 
 namespace CSP.Search.StepFunctions
 {
-    class LowestCost : IFitnessFunction<ISolution>
+    class LowestCost : ICostFunction<ISolution>
     {
         public ISolution Fittest(IEnumerable<ISolution> solutions)
         {
-            Solution? bestRoute = null;
-            float bestRouteCost = float.MaxValue;
+            ISolution? bestSolution = null;
+            float bestSolutionCost = float.PositiveInfinity;
 
-            foreach (Solution s in solutions)
+            foreach (ISolution s in solutions)
             {
-                float cost = s.Fitness();
-                if (cost < bestRouteCost)
+                float cost = s.Cost();
+                if (cost < bestSolutionCost)
                 {
-                    bestRoute = s;
-                    bestRouteCost = cost;
+                    bestSolution = s;
+                    bestSolutionCost = cost;
                 }
             }
 
-            return bestRoute ?? throw new Exception("Could not find best route");
+            return bestSolution ?? throw new Exception("Could not find best solution");
         }
 
-        public float Fitness(ISolution solution) => solution.Fitness();
+        public float Cost(ISolution solution) => solution.Cost();
     }
 }

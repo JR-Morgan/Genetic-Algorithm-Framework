@@ -2,12 +2,12 @@
 
 namespace SearchStrategies.Operations
 {
-    public interface IFitnessFunction<S>
+    public interface ICostFunction<S>
     {
         S Fittest(IEnumerable<S> solutions);
 
         S FittestP(params S[] solutions) => Fittest(solutions);
 
-        float Fitness(S solution);
+        float Cost(S solution);
     }
 }

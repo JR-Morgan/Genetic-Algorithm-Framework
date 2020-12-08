@@ -6,7 +6,7 @@ namespace CSP
     {
         Problem Problem { get; }
         internal List<Activity> Activities { get; }
-        float Fitness();
+        float Cost();
 
         ISolution Copy();
         bool IsValid();

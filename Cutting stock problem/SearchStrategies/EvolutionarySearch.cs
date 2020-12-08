@@ -13,11 +13,11 @@ namespace SearchStrategies
         private S[] population;
 
         protected readonly IInitialise<S,P> initalisationStrategy;
-        protected readonly IGenerationStrategy<S> generationStrategy;
-        protected readonly IFitnessFunction<S> fitnessFunction;
+        protected readonly IGenerationOperation<S> generationStrategy;
+        protected readonly ICostFunction<S> fitnessFunction;
         private readonly TerminateStrategy terminateStrategy;
 
-        public EvolutionarySearch(IInitialise<S, P> initalise, Generation<S> generationStrategy, TerminateStrategy terminate, IFitnessFunction<S> fitnessFunction, uint populationSize, string name = "Evolution Search")
+        public EvolutionarySearch(IInitialise<S, P> initalise, Generation<S> generationStrategy, TerminateStrategy terminate, ICostFunction<S> fitnessFunction, uint populationSize, string name = "Evolution Search")
         {
             this.initalisationStrategy = initalise;
             this.generationStrategy = generationStrategy;
@@ -41,8 +41,10 @@ namespace SearchStrategies
                 population[i] = initalisationStrategy.Initalise(problem);
             }
 
+            //TESTING ONLY
+            S bestSolution = fitnessFunction.FittestP(population);
+            Console.WriteLine(population[1]);
 
-            S? bestSolution = default;
 
             Stopwatch timer = new Stopwatch();
             
@@ -54,25 +56,32 @@ namespace SearchStrategies
                 timeToCompute = timer.ElapsedMilliseconds,
                 numberOfSolutionsEvaluated = solutionsEvaluated,
                 iteration = itterationCounter,
-                bestSolutionFitness = bestSolution != null ? fitnessFunction.Fitness(bestSolution) : float.PositiveInfinity,
-                bestSolution = bestSolution != null ? bestSolution.ToString() : string.Empty,
+                bestSolutionFitness = fitnessFunction.Cost(bestSolution),
+                bestSolution = bestSolution.ToString(),
             };
 
             timer.Start();
+            OnItterationComplete?.Invoke(this, GenerateLog());
 
             while (!Terminate())
             {
                 //Create next Generation
-                S[] children = generationStrategy.NextGeneration(population, fitnessFunction);
+                S[] children = generationStrategy.Operate(population, fitnessFunction);
 
                 //Evaluate the new generation and replace the oldest in the population
                 for (int i = 0; i < children.Length; i++)
                 {
+                    //Evaluate
                     solutionsEvaluated++;
-                    bestSolution = bestSolution == null ? children[i] : fitnessFunction.FittestP(children[i], bestSolution);
+                    bestSolution = fitnessFunction.FittestP(children[i], bestSolution);
+
+                    //Replace
                     population[generationCounter] = children[i];
                     generationCounter = (generationCounter + 1) % population.Length;
                 }
+
+                //TESTING ONLY
+                Console.WriteLine(children[^1]);
 
                 OnItterationComplete?.Invoke(this, GenerateLog());
 

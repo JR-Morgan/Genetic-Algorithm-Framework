@@ -8,47 +8,36 @@ using System.Linq;
 
 namespace CSP.Search.Crossover
 {
-    class OrderedCrossover : IGenerationOperation<ISolution>
+    class OrderedActivityCrossover : GenerationOperation<ISolution>
     {
         private static readonly Random random = new Random(); //TODO
 
-        private readonly ISelectionStrategy<ISolution> selectionStrategy;
         private readonly InitalisationStrategy repairStrategy;
 
-        private readonly float elitismProportion, selectionProportion;
 
-        public OrderedCrossover(ISelectionStrategy<ISolution> selectionStrategy, InitalisationStrategy repairStrategy, float elitism = 0f, float selectionSize = 0.5f)
+        public OrderedActivityCrossover(ISelectionStrategy<ISolution> selectionStrategy, InitalisationStrategy repairStrategy, float elitismProportion = DEFAULT_ELITEISM_PROPORTION, IGenerationOperation<ISolution>? next = default)
+            :base(selectionStrategy, elitismProportion, next)
         {
-            this.selectionStrategy = selectionStrategy;
             this.repairStrategy = repairStrategy;
-            this.elitismProportion = elitism;
-            this.selectionProportion = selectionSize;
         }
 
 
-        public ISolution[] Operate(ISolution[] population, IFitnessFunction<ISolution> fitnessFunction)
+        protected override ISolution[] OperateOnSelection(ISolution[] selected, ICostFunction<ISolution> fitnessFunction, int elite)
         {
-            int ToCount(float proportion) => (int)Math.Ceiling(population.Length * proportion);
-            int elitism = ToCount(elitismProportion);
-            int selection = ToCount(selectionProportion);
+            ISolution[] children = new ISolution[selected.Length];
 
-
-            ISolution[] parents = selectionStrategy.Select(population, selection, fitnessFunction);
-
-            ISolution[] children = new ISolution[parents.Length];
-
-            ISolution[] pool = (ISolution[])parents.Clone();
+            ISolution[] pool = (ISolution[])selected.Clone();
             pool.Shuffle(random);
 
             
-            for (int i = 0; i < elitism; i++)
+            for (int i = 0; i < elite; i++)
             {
-                children[i] = parents[i];
+                children[i] = selected[i];
             }
 
-            for (int i = elitism; i < parents.Length; i++)
+            for (int i = elite; i < selected.Length; i++)
             {
-                children[i] = Crossover(parents[i], pool[parents.Length - i - 1]);
+                children[i] = Crossover(selected[i], pool[selected.Length - i - 1]);
 
                 repairStrategy.Repair(children[i]);
             }
@@ -58,8 +47,7 @@ namespace CSP.Search.Crossover
         }
 
 
-
-        public ISolution Crossover(ISolution parent1, ISolution parent2)
+        private ISolution Crossover(ISolution parent1, ISolution parent2)
         {
             parent1 = parent1.Copy();
             parent2 = parent2.Copy();
@@ -84,20 +72,11 @@ namespace CSP.Search.Crossover
 
             IEnumerable<Activity> ChildP2 = parent2.Activities.Except(ChildP1);
 
-
-            //foreach (Activity a in parent2.Activities)
-            //{
-            //    if (!ChildP1.Contains(a)) ChildP2.Add(a);
-            //}
-
-
             ChildP1.AddRange(ChildP2);
 
-            //Console.WriteLine(ChildP1.Count);
 
             return new Solution(parent1.Problem, ChildP1);
         }
 
-        
     }
 }

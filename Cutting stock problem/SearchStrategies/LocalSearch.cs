@@ -9,12 +9,12 @@ namespace SearchStrategies
     {
         private readonly IInitialise<S,P> initalisationStrategy;
         private readonly INeighbourhood<S> neighbourhood;
-        private readonly IFitnessFunction<S> fitnessFunction;
+        private readonly ICostFunction<S> fitnessFunction;
         private readonly TerminateStrategy terminateStrategy;
 
         private int solutionsEvaluated;
 
-        public LocalSearch(IInitialise<S,P> initalise, INeighbourhood<S> neighbourhood, IFitnessFunction<S> fitnessFunction, TerminateStrategy terminate, string name = "Local Search")
+        public LocalSearch(IInitialise<S,P> initalise, INeighbourhood<S> neighbourhood, ICostFunction<S> fitnessFunction, TerminateStrategy terminate, string name = "Local Search")
         {
             this.initalisationStrategy = initalise;
             this.neighbourhood = neighbourhood;
@@ -39,7 +39,7 @@ namespace SearchStrategies
                     timeToCompute = timer.ElapsedMilliseconds,
                     numberOfSolutionsEvaluated = solutionsEvaluated,
                     iteration = itterationCounter,
-                    bestSolutionFitness = bestSolution != null ? fitnessFunction.Fitness(bestSolution) : float.PositiveInfinity,
+                    bestSolutionFitness = bestSolution != null ? fitnessFunction.Cost(bestSolution) : float.PositiveInfinity,
                     bestSolution = bestSolution != null ? bestSolution.ToString() : string.Empty,
                 };
 
@@ -74,7 +74,7 @@ namespace SearchStrategies
 
             S best = fitnessFunction.Fittest(neighbourhood);
 
-            if (fitnessFunction.Fitness(best) < fitnessFunction.Fitness(parent))
+            if (fitnessFunction.Cost(best) < fitnessFunction.Cost(parent))
             {
                 return Search(best);
             }

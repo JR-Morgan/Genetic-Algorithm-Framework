@@ -4,6 +4,6 @@ namespace SearchStrategies.Operations
 {
     public interface ISelectionStrategy<S>
     {
-        S[] Select(IEnumerable<S> population, int selectionSize, IFitnessFunction<S> fitnessFunction);
+        S[] Select(S[] population, ICostFunction<S> fitnessFunction);
     }
 }

@@ -13,8 +13,8 @@ namespace CSP.Search
 {
     public static class SearchFactory
     {
-        private const float DEFAULT_TIMEOUT = 100000f;
-        private const int DEFAULT_ITTERATIONS = 5000;
+        private const float DEFAULT_TIMEOUT = 1000f;
+        private const int DEFAULT_ITTERATIONS = 500;
 
 
         internal static List<ISearchStrategy<ISolution, Problem>> GenerateSearches(TerminateStrategy ts)
@@ -42,13 +42,12 @@ namespace CSP.Search
         private static ISearchStrategy<ISolution, Problem> EA1(TerminateStrategy ts, uint populationSize, uint k) => new EvolutionarySearch<ISolution, Problem>(
             initalise: new RandomInitalise(),
             generationStrategy: new Generation<ISolution>(
-                new OrderedCrossover(
-                    selectionStrategy: new TournamentSelection(k),
+                new OrderedActivityCrossover(
+                    selectionStrategy: new TournamentSelection<ISolution>(k, populationSize / 5),
                     repairStrategy: new RandomInitalise(),
-                    elitism: 0.1f,
-                    selectionSize: 0.5f
+                    elitismProportion: 0.1f,
+                    next: new StockRandomise(false, mutationRate: 0.1f)
                     )
-                //mutation
                 ),
             fitnessFunction: new LowestCost(),
             terminate: ts,

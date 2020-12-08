@@ -1,10 +1,8 @@
-﻿using SearchExtensions;
-using SearchStrategies.Operations;
-using System;
+﻿using SearchStrategies.Operations;
 
 namespace SearchStrategies.GenerationStrategies
 {
-    public class Generation<S> : IGenerationStrategy<S>
+    public class Generation<S> : IGenerationOperation<S>
     {
         private IGenerationOperation<S>[] operations;
 
@@ -13,12 +11,12 @@ namespace SearchStrategies.GenerationStrategies
             this.operations = operations;
         }
 
-        public S[] NextGeneration(S[] population, IFitnessFunction<S> fitnessFunction)
+        public S[] Operate(S[] population, ICostFunction<S> fitnessFunction)
         {
             return ApplyOperations(operations, population, fitnessFunction);
         }
 
-        private static S[] ApplyOperations(IGenerationOperation<S>[] operations, S[] population, IFitnessFunction<S> fitnessFunction, int i = 0)
+        private static S[] ApplyOperations(IGenerationOperation<S>[] operations, S[] population, ICostFunction<S> fitnessFunction, int i = 0)
         {
             if(i < operations.Length - 1)
             {

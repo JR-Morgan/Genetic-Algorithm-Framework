@@ -1,43 +1,42 @@
 ﻿using SearchStrategies.Operations;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CSP.Search.Selection
 {
-    class TournamentSelection : ISelectionStrategy<ISolution>
+    class TournamentSelection<S> : ISelectionStrategy<S>
     {
         private static Random random = new Random(); //TODO
 
 
         private readonly uint k;
-        public TournamentSelection(uint k)
+        private readonly uint selectionSize;
+
+        public TournamentSelection(uint k, uint selectionSize)
         {
             this.k = k;
+            this.selectionSize = selectionSize;
         }
 
-        public ISolution[] Select(IEnumerable<ISolution> population, int selectionSize, IFitnessFunction<ISolution> fitness)
+        public S[] Select(S[] population, ICostFunction<S> fitness)
         {
 
-
-            ISolution[] selection = new ISolution[selectionSize];
+            S[] selection = new S[selectionSize];
 
 
             for (int i = 0; i < selectionSize; i++) //For each Round
             {
-                List<ISolution> workingPopulation = new List<ISolution>(population);
-                ISolution? bestCandidate = null;
+                List<S> workingPopulation = new List<S>(population);
+                S? bestCandidate = default;
 
                 for (int j = 0; j < k; j++)
                 {
-                    ISolution candidate = workingPopulation[random.Next(workingPopulation.Count)];
+                    S candidate = workingPopulation[random.Next(workingPopulation.Count)];
                     workingPopulation.Remove(candidate);
 
-                    bestCandidate = bestCandidate == null ? candidate : fitness.FittestP(new ISolution[] { candidate, bestCandidate });
+                    bestCandidate = bestCandidate == null ? candidate : fitness.FittestP(candidate, bestCandidate );
 
                 }
-
-
 
                 if (bestCandidate == null) throw new Exception();
 
