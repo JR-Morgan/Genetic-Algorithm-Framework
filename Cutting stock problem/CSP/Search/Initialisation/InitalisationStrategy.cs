@@ -11,22 +11,27 @@ namespace CSP.Search.Initialisation
         public void Repair(ISolution solution)
         {
             Dictionary<float, int> ordersDict = new(solution.Problem.Orders);
-            List<Activity> activitiesToRemove = new();
 
-            foreach (Activity a in solution.Activities)
+            for (int i = 0; i < solution.Activities.Count; i++)
             {
-                for (int i = 0; i< a.Orders.Count; i++)
+                Activity a = solution.Activities[i];
+                for (int j = 0; j< a.Orders.Count; j++)
                 {
-                    float length = a.Orders[i];
+                    float length = a.Orders[j];
                     if (ordersDict[length] <= 0)
                     {
                         if(a.Orders.Count == 1)
                         {
-                            activitiesToRemove.Add(a);
+                            //TODO you would have thought that the two below statements are the same, but they are not.
+                            //solution.Activities.RemoveAt(i);
+                            if (solution.Activities.Remove(a))
+                                i--;
+                            
+                            
                         } else
                         {
                             a.Remove(length);
-                            i--;
+                            j--;
                         }
                     }
                     else
@@ -35,8 +40,6 @@ namespace CSP.Search.Initialisation
                     }
                 }
             }
-
-            foreach(Activity b in activitiesToRemove) solution.Activities.Remove(b);
 
 
 

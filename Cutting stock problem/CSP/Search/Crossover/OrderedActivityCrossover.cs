@@ -47,9 +47,6 @@ namespace CSP.Search.Crossover
 
         private ISolution Crossover(ISolution parent1, ISolution parent2)
         {
-            parent1 = parent1.Copy();
-            parent2 = parent2.Copy();
-
             int geneA = random.Next(parent1.Activities.Count);
             int geneB = random.Next(parent1.Activities.Count);//does this assume both parents have the same number of activities?
 
@@ -65,10 +62,10 @@ namespace CSP.Search.Crossover
 
             for (int i = start; i < end; i++)
             {
-                ChildP1.Add(parent1.Activities[i]);
+                ChildP1.Add(parent1.Activities[i].Copy());
             }
 
-            IEnumerable<Activity> ChildP2 = parent2.Activities.Except(ChildP1);
+            IEnumerable<Activity> ChildP2 = parent2.Copy().Activities.Except(ChildP1);
 
             ChildP1.AddRange(ChildP2);
 
