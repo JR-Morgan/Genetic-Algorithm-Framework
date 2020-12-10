@@ -1,5 +1,6 @@
 ﻿using CSP;
 using CSP.Search;
+using CSP.ParameterOptimiser;
 using SearchStrategies;
 using SearchStrategies.Operations;
 using System;
@@ -10,7 +11,7 @@ namespace ConsoleUI
 {
     static class Program
     {
-        private static void ItterationEventHandler(ISearchStrategy<ISolution, Problem> sender, Log log)
+        private static void ItterationEventHandler<S, P>(ISearchStrategy<S, P> sender, Log log)
         {
             Console.WriteLine(log.ToString());
         }
@@ -56,11 +57,22 @@ namespace ConsoleUI
                     string? s = Console.ReadLine();
                     if (s != null)
                     {
-                        int index = int.Parse(s);
-                        if (index >= 0 && index < searches.Count)
+                        if (s.StartsWith('o'))
                         {
-                            solutionStrategy = searches[index];
-                            break;
+                            var optimisation = SearchFactory.EAOptimiser(problem);
+                            optimisation.OnItterationComplete += ItterationEventHandler;
+
+                            optimisation.Compute(new AlgorithmProblem());
+
+                        }
+                        else
+                        {
+                            int index = int.Parse(s);
+                            if (index >= 0 && index < searches.Count)
+                            {
+                                solutionStrategy = searches[index];
+                                break;
+                            }
                         }
                     }
                 }

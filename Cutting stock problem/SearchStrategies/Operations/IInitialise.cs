@@ -2,6 +2,6 @@
 {
     public interface IInitialise<S,P>
     {
-        S Initalise(P problem);
+        S Initialise(P problem);
     }
 }

@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace CSP.Search.Crossover
 {
-    class OrderedOrderCrossover : GenerationOperation<ISolution>
+    class SingleOrderCrossover : GenerationOperation<ISolution>
     {
         private const int TIMEOUT = 20;
         private static readonly Random random = new Random(); //TODO
 
         private bool allowInvalid;
-        public OrderedOrderCrossover(ISelectionStrategy<ISolution> selectionStrategy, bool allowInvalid = false, float eliteismProportion = DEFAULT_ELITEISM_PROPORTION, IGenerationOperation<ISolution>? next = default)
+        public SingleOrderCrossover(ISelectionStrategy<ISolution> selectionStrategy, bool allowInvalid = false, float eliteismProportion = DEFAULT_ELITEISM_PROPORTION, IGenerationOperation<ISolution>? next = default)
         : base(selectionStrategy, eliteismProportion, next)
         {
             this.allowInvalid = allowInvalid;

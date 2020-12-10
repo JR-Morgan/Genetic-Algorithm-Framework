@@ -14,7 +14,7 @@ namespace CSP
 
         public override string ToString()
         {
-            return $"Solution f = {Cost()}, ac = {Activities.Count}, av = {AreActivitiesValid()}, com = { IsComplete()}";
+            return $"Solution co = {Cost()}, ac = {Activities.Count}, av = {AreActivitiesValid()}, com = { IsComplete()}";
         }
 
 

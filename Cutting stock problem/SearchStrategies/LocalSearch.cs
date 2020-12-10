@@ -48,7 +48,7 @@ namespace SearchStrategies
 
             while (!terminate())
             {
-                S parent = initalisationStrategy.Initalise(problem);
+                S parent = initalisationStrategy.Initialise(problem);
                 S candidate = Search(parent);
 
                 bestSolution = bestSolution == null ? candidate : fitnessFunction.FittestP(candidate, bestSolution);

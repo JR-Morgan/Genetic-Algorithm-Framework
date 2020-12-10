@@ -40,7 +40,7 @@ namespace CSP.Search.Initialisation
             return activities;
         } 
 
-        public override ISolution Initalise(Problem problem)
+        public override ISolution Initialise(Problem problem)
         {
             
 

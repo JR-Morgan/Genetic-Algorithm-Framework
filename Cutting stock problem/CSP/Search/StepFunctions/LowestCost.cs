@@ -13,8 +13,9 @@ namespace CSP.Search.StepFunctions
 
             foreach (ISolution s in solutions)
             {
-                float cost = s.Cost();
-                if (cost < bestSolutionCost)
+                float cost = Cost(s);
+                if (cost < bestSolutionCost
+                    && s.IsValid())
                 {
                     bestSolution = s;
                     bestSolutionCost = cost;

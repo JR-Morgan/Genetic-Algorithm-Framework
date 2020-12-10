@@ -36,7 +36,7 @@ namespace SearchStrategies
             //Initialise population
             for (int i = 0; i < population.Count; i++)
             {
-                population[i] = initalisationStrategy.Initalise(problem);
+                population[i] = initalisationStrategy.Initialise(problem);
             }
 
 
@@ -66,9 +66,6 @@ namespace SearchStrategies
 
             TerminateCondition Terminate = this.terminateStrategy();
 
-            //TESTING ONLY
-            Console.WriteLine(population[1]);
-
 
            
             timer.Start();
@@ -82,8 +79,8 @@ namespace SearchStrategies
                 //Replace generation
                 population = generationStrategy.NextGeneration(population, fitnessFunction, Evaluate);
 
-
-                //TODO Evaluate the new generation
+                //TESTING
+                Console.WriteLine(population[1]);
 
 
 

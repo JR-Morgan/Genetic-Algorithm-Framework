@@ -50,6 +50,6 @@ namespace CSP.Search.Initialisation
 
         }
 
-        public abstract ISolution Initalise(Problem problem);
+        public abstract ISolution Initialise(Problem problem);
     }
 }
