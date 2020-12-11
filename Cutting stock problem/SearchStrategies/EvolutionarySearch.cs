@@ -11,7 +11,7 @@ namespace SearchStrategies
     public class EvolutionarySearch<S, P> : ISearchStrategy<S, P>
     {
         protected static readonly Random random = new Random();
-        private IList<S> population;
+        public IList<S> population { get; private set; }
 
         protected readonly IInitialise<S,P> initalisationStrategy;
         protected readonly Generation<S> generationStrategy;
@@ -78,9 +78,7 @@ namespace SearchStrategies
             {
                 //Replace generation
                 population = generationStrategy.NextGeneration(population, fitnessFunction, Evaluate);
-
-                //TESTING
-                Console.WriteLine(population[1]);
+             
 
 
 

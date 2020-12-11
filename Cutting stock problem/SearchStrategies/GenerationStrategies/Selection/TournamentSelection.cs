@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CSP.Search.Selection
 {
-    class TournamentSelection<S> : ISelectionStrategy<S>
+    public class TournamentSelection<S> : ISelectionStrategy<S>
     {
         private static Random random = new Random(); //TODO
 

@@ -11,8 +11,37 @@ namespace ConsoleUI
 {
     static class Program
     {
+
         private static void ItterationEventHandler<S, P>(ISearchStrategy<S, P> sender, Log log)
         {
+            Console.WriteLine(log.ToString());
+        }
+
+
+        private static void AverageEA(ISearchStrategy<ISolution, Problem> sender, Log log)
+        {
+            var ea = (EvolutionarySearch<ISolution, Problem>)sender;
+
+            float averageCost = 0;
+            float averageActivities = 0;
+            float proportionValid = 1f;
+            float proportionComplete = 1f;
+            int counter = 0;
+
+            float set(float val, float prop) => (val * counter + prop) / (counter + 1);
+
+            foreach (ISolution s in ea.population)
+            {
+                averageCost = set(averageCost, s.Cost());
+                averageActivities = set(averageActivities, s.ActivitiesCount);
+                proportionValid = set(proportionValid, s.IsValid()? 1f : 0f);
+                proportionValid = set(proportionComplete, s.IsComplete() ? 1f : 0f);
+
+                counter++;
+            }
+            Console.WriteLine("Avg:");
+            Console.WriteLine($"\tACost: {averageCost},\n\tAActiv: {averageActivities},\n\tPV: {proportionValid},\n\tPC {proportionComplete}");
+
             Console.WriteLine(log.ToString());
         }
 
@@ -79,7 +108,7 @@ namespace ConsoleUI
 
 
 
-                solutionStrategy.OnItterationComplete += ItterationEventHandler;
+                solutionStrategy.OnItterationComplete += AverageEA;
                 solutionStrategy.Compute(problem);
 
 

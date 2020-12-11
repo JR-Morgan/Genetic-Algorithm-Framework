@@ -10,8 +10,6 @@ namespace CSP
         List<Activity> ISolution.Activities => Activities;
         internal List<Activity> Activities { get; private set; }
 
-
-
         public override string ToString()
         {
             return $"Solution co = {Cost()}, ac = {Activities.Count}, av = {AreActivitiesValid()}, com = { IsComplete()}";

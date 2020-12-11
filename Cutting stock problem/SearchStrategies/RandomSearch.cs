@@ -11,8 +11,6 @@ namespace SearchStrategies
         private readonly ICostFunction<S> fitnessFunction;
         private readonly TerminateStrategy terminateStrategy;
 
-        private int solutionsEvaluated;
-
         public RandomSearch(IInitialise<S, P> initalise, ICostFunction<S> fitnessFunction, TerminateStrategy terminate, string name = "random Search")
         {
             this.initalisationStrategy = initalise;
@@ -37,7 +35,7 @@ namespace SearchStrategies
             Log GenerateLog() => new Log()
             {
                 timeToCompute = timer.ElapsedMilliseconds,
-                numberOfSolutionsEvaluated = solutionsEvaluated,
+                numberOfSolutionsEvaluated = itterationCounter,
                 iteration = itterationCounter,
                 bestSolutionFitness = bestCost,
                 bestSolution = bestSolution != null ? bestSolution.ToString() : string.Empty,
@@ -51,6 +49,8 @@ namespace SearchStrategies
                 S parent = initalisationStrategy.Initialise(problem);
                 //S candidate = Search(parent);
 
+
+                itterationCounter++;
                 float cost = fitnessFunction.Cost(parent);
                 if (cost < bestCost)
                 {

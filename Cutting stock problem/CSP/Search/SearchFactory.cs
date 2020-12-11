@@ -83,6 +83,7 @@ namespace CSP.Search
             generationStrategy: new Generation<ISolution>(new ReplaceParents<ISolution>(),
                 new OrderedActivityCrossover(
                     selectionStrategy: new TournamentSelection<ISolution>((uint)Math.Max(2, populationSize * 0.08f), (uint)Math.Max(2, populationSize * 0.2f)),
+                    //selectionStrategy: new FitnessProportionateSelection<ISolution>(),
                     repairStrategy: new RandomInitalise(),
                     elitismProportion: 0.04f,
                     //next: new StockRandomise(false,  0.01f)
