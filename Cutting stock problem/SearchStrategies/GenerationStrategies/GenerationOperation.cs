@@ -16,18 +16,18 @@ namespace SearchStrategies.GenerationStrategies
         protected const float DEFAULT_ELITEISM_PROPORTION = 0f;
         private static readonly IReplacementStrategy<S> replaceParents = new ReplaceParents<S>();
 
-        private IGenerationOperation<S>? next;
+        private IList<IGenerationOperation<S>> next;
         private ISelectionStrategy<S> selectionStrategy;
         private float elitismProportion;
 
-        public GenerationOperation(ISelectionStrategy<S> selectionStrategy, float elitismProportion = DEFAULT_ELITEISM_PROPORTION, IGenerationOperation<S>? next = default)
+        public GenerationOperation(ISelectionStrategy<S> selectionStrategy, float elitismProportion = DEFAULT_ELITEISM_PROPORTION, IList<IGenerationOperation<S>>? next = default)
         {
             this.selectionStrategy = selectionStrategy;
-            this.next = next;
+            this.next = next?? new IGenerationOperation<S>[0];
             this.elitismProportion = elitismProportion;
         }
 
-        public GenerationOperation(float elitismProportion = DEFAULT_ELITEISM_PROPORTION, IGenerationOperation<S>? next = default) : this(new SelectAll<S>(), elitismProportion, next) { }
+        public GenerationOperation(float elitismProportion = DEFAULT_ELITEISM_PROPORTION, IList<IGenerationOperation<S>>? next = default) : this(new SelectAll<S>(), elitismProportion, next) { }
 
 
         public IList<(S solution, int index)> Operate(IList<S> population, ICostFunction<S> fitnessFunction)
@@ -40,9 +40,9 @@ namespace SearchStrategies.GenerationStrategies
 
             
 
-            if (next != null)
+            foreach(IGenerationOperation<S> n in next)
             {
-                replaceParents.Replace(ref children, next.Operate(children, fitnessFunction));
+                replaceParents.Replace(ref children, n.Operate(children, fitnessFunction));
             }
 
             return children.Select((item, index) => (item, parents[index].Item2)).ToArray();
@@ -54,8 +54,7 @@ namespace SearchStrategies.GenerationStrategies
         /// <param name="selection">An array of <typeparamref name="S"/></param>
         /// <param name="fitnessFunction">The fitness function to use</param>
         /// <param name="elite">The number of elite</param>
-        /// <remarks>The fact that <paramref name="selection"/> it is a tuple is a performance optimisation, most likely implementing methods will not need the second element</remarks>
-        /// <returns>An array of equal size to selection, of the modified offspring</returns>
+        /// <returns>An array of equal size to selection, of new solutions that form the offspring</returns>
         protected abstract IList<S> OperateOnSelection(IList<S> selection, ICostFunction<S> fitnessFunction, int elite);
 
 

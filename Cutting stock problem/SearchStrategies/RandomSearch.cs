@@ -58,7 +58,7 @@ namespace SearchStrategies
                     bestCost = cost;
                 }
 
-                System.Console.WriteLine(parent + " | " + cost);
+                System.Console.WriteLine(parent + "," + cost);
                 //OnItterationComplete?.Invoke(this, GenerateLog());
             }
 

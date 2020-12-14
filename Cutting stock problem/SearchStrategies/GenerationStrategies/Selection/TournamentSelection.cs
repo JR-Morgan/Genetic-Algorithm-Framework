@@ -6,7 +6,7 @@ namespace CSP.Search.Selection
 {
     public class TournamentSelection<S> : ISelectionStrategy<S>
     {
-        private static Random random = new Random(); //TODO
+        private Random random = new Random(); //TODO
 
 
         private readonly uint k;

@@ -10,7 +10,7 @@ namespace SearchStrategies
 {
     public class EvolutionarySearch<S, P> : ISearchStrategy<S, P>
     {
-        protected static readonly Random random = new Random();
+        protected readonly Random random = new Random();
         public IList<S> population { get; private set; }
 
         protected readonly IInitialise<S,P> initalisationStrategy;
@@ -44,7 +44,7 @@ namespace SearchStrategies
             //Setup Run
             int solutionsEvaluated = 0, itterationCounter = 0;
 
-            S bestSolution = fitnessFunction.Fittest(population);
+            S bestSolution = fitnessFunction.Fittest(population); //Assumes that atleast one member of the population is valid
 
             Stopwatch timer = new Stopwatch();
 
@@ -60,7 +60,7 @@ namespace SearchStrategies
             void Evaluate(S child)
             {
                 solutionsEvaluated++;
-                bestSolution = fitnessFunction.FittestP(child, bestSolution);
+                bestSolution = fitnessFunction.Fittest(child, bestSolution);
             }
 
 

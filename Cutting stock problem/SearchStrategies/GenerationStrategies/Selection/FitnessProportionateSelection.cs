@@ -4,10 +4,9 @@ using System.Collections.Generic;
 
 namespace SearchStrategies.GenerationStrategies.Selection
 {
-    public class FitnessProportionateSelection<S> : ISelectionStrategy<S>
+    public class FitnessProportionateSelection<S> : ProportionalSelection<S>
     {
-        private static Random random = new();
-        public IList<(S solution, int index)> Select(IList<S> population, ICostFunction<S> fitnessFunction)
+        public override IList<(S solution, int index)> Select(IList<S> population, ICostFunction<S> fitnessFunction)
         {
             float fitnessSum = FitnessSum(population, fitnessFunction);
 
@@ -19,7 +18,7 @@ namespace SearchStrategies.GenerationStrategies.Selection
             for(int i = 0; i< population.Count; i++)
             {
                 S solution = population[i];
-                if (proababilty(solution) < random.NextDouble())
+                if (proababilty(solution) > random.NextDouble())
                 {
                     selection.Add((solution, i));
                 }
@@ -29,14 +28,5 @@ namespace SearchStrategies.GenerationStrategies.Selection
             return selection;
         }
 
-        private static float FitnessSum(IList<S> population, ICostFunction<S> fitnessFunction)
-        {
-            float fitnessSum = 0;
-            foreach (S s in population)
-            {
-                fitnessSum += fitnessFunction.Cost(s);
-            }
-            return fitnessSum;
-        }
     }
 }

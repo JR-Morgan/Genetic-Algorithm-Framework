@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CSP.ParameterOptimiser
 {
-    class AlgorithmCost : ICostFunction<Parameters>
+    class AlgorithmCost : ICostFunction<EAParams>
     {
         private float timeOut;
         private Problem problem;
@@ -19,19 +19,19 @@ namespace CSP.ParameterOptimiser
             this.problem = problem;
         }
 
-        public float Cost(Parameters solution)
+        public float Cost(EAParams solution)
         {
-            var ea = SearchFactory.EA1(TerminalStrategies.TimeOut(timeOut), solution);
+            var ea = SearchFactory.EAA(TerminalStrategies.TimeOut(timeOut), solution);
             Log log = ea.Compute(problem);
             return log.bestSolutionFitness;
         }
 
-        public Parameters Fittest(IEnumerable<Parameters> solutions)
+        public EAParams Fittest(IEnumerable<EAParams> solutions)
         {
-            Parameters? bestSolution = null;
+            EAParams? bestSolution = null;
             float bestSolutionCost = float.PositiveInfinity;
 
-            foreach (Parameters s in solutions)
+            foreach (EAParams s in solutions)
             {
                 float cost = Cost(s);
                 if (cost < bestSolutionCost)
@@ -43,5 +43,7 @@ namespace CSP.ParameterOptimiser
 
             return bestSolution ?? throw new Exception("Could not find best solution");
         }
+
+        public EAParams LowestCost(IEnumerable<EAParams> solutions) => Fittest(solutions);
     }
 }

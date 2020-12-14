@@ -3,11 +3,11 @@ using SearchStrategies.Operations;
 using System;
 using System.Collections.Generic;
 
-namespace CSP.Search.Neighbourhood
+namespace CSP.Search.Mutation
 {
     class StockRandomise : IGenerationOperation<ISolution>, INeighbourhood<ISolution>
     {
-        private static readonly Random random = new Random(); //TODO determinism
+        private readonly Random random = new Random(); //TODO determinism
 
         private readonly float mutationRate;
         private readonly bool allowInvalid;
@@ -19,13 +19,13 @@ namespace CSP.Search.Neighbourhood
 
         public IList<(ISolution solution, int index)> Operate(IList<ISolution> population, ICostFunction<ISolution>? fitnessFunction = default)
         {
-            (ISolution, int)[] children = new (ISolution, int)[population.Count];
+            List<(ISolution, int )> children = new();
 
-            for (int i = 0; i > population.Count; i++)
+            for (int i = 0; i < population.Count; i++)
             {
                 if (random.NextDouble() < mutationRate)
                 {
-                    children[i] = (Swap(population[i]), i);
+                    children.Add((Swap(population[i]), i));
                 }
             }
             return children;
@@ -34,11 +34,11 @@ namespace CSP.Search.Neighbourhood
 
         public ISolution Swap(ISolution parent) => Swap(parent, random.Next(parent.Activities.Count));
 
-        private ISolution Swap(ISolution parent, int i) //TODO optimisation - consider extracting a non-copy swap
+        private ISolution Swap(ISolution parent, int i)
         {
-            parent = parent.Copy(); //This copy is pointless for mutation, but required for neighbourhood
+            parent = parent.Copy();
             Stock RandomStock() => parent.Problem.Stock[random.Next(parent.Problem.Stock.Length)];
-            Activity activity = parent.Activities[i].Copy();
+            Activity activity = parent.Activities[i];
             do
             {
                 activity.Stock = RandomStock();

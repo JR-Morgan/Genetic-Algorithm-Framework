@@ -6,6 +6,8 @@ using SearchStrategies.Operations;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace ConsoleUI
 {
@@ -88,10 +90,13 @@ namespace ConsoleUI
                     {
                         if (s.StartsWith('o'))
                         {
-                            var optimisation = SearchFactory.EAOptimiser(problem);
-                            optimisation.OnItterationComplete += ItterationEventHandler;
-
-                            optimisation.Compute(new AlgorithmProblem());
+                            for (int i = 0; i < 6; i++) 
+                            {
+                                var optimisation = SearchFactory.EAOptimiser(problem);
+                                optimisation.OnItterationComplete += ItterationEventHandler;
+                                Thread.Sleep(10);
+                                Task.Run(() => optimisation.Compute(new AlgorithmProblem()));
+                            }
 
                         }
                         else

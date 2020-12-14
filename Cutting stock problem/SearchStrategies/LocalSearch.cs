@@ -51,7 +51,7 @@ namespace SearchStrategies
                 S parent = initalisationStrategy.Initialise(problem);
                 S candidate = Search(parent);
 
-                bestSolution = bestSolution == null ? candidate : fitnessFunction.FittestP(candidate, bestSolution);
+                bestSolution = bestSolution == null ? candidate : fitnessFunction.Fittest(candidate, bestSolution);
 
                 OnItterationComplete?.Invoke(this, GenerateLog());
             }
