@@ -7,12 +7,13 @@ namespace CSP.Search.Mutation
 {
     class StockRandomise : IGenerationOperation<ISolution>, INeighbourhood<ISolution>
     {
-        private readonly Random random = new Random(); //TODO determinism
+        private readonly Random random;
 
         private readonly float mutationRate;
         private readonly bool allowInvalid;
-        public StockRandomise(bool allowInvalid = false, float mutationRate = 1f)
+        public StockRandomise(Random random, bool allowInvalid = false, float mutationRate = 1f)
         {
+            this.random = random;
             this.allowInvalid = allowInvalid;
             this.mutationRate = mutationRate;
         }

@@ -7,7 +7,12 @@ namespace SearchStrategies.GenerationStrategies.Selection
 {
     public abstract class ProportionalSelection<S> : ISelectionStrategy<S>
     {
-        protected Random random = new();
+        protected readonly Random random;
+
+        public ProportionalSelection(Random random)
+        {
+            this.random = random;
+        }
 
         public abstract IList<(S solution, int index)> Select(IList<S> population, ICostFunction<S> fitnessFunction);
 

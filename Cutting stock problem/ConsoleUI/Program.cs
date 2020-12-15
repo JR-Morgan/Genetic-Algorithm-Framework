@@ -22,7 +22,6 @@ namespace ConsoleUI
 
         private static void AverageEA(ISearchStrategy<ISolution, Problem> sender, Log log)
         {
-            var ea = (EvolutionarySearch<ISolution, Problem>)sender;
 
             float averageCost = 0;
             float averageActivities = 0;
@@ -32,17 +31,22 @@ namespace ConsoleUI
 
             float set(float val, float prop) => (val * counter + prop) / (counter + 1);
 
-            foreach (ISolution s in ea.population)
+            if (sender is EvolutionarySearch<ISolution, Problem>)
             {
-                averageCost = set(averageCost, s.Cost());
-                averageActivities = set(averageActivities, s.ActivitiesCount);
-                proportionValid = set(proportionValid, s.IsValid()? 1f : 0f);
-                proportionValid = set(proportionComplete, s.IsComplete() ? 1f : 0f);
+                var ea = (EvolutionarySearch <ISolution, Problem> )sender;
+                foreach (ISolution s in ea.Population)
+                {
+                    averageCost = set(averageCost, s.Cost());
+                    averageActivities = set(averageActivities, s.ActivitiesCount);
+                    proportionValid = set(proportionValid, s.IsValid() ? 1f : 0f);
+                    proportionValid = set(proportionComplete, s.IsComplete() ? 1f : 0f);
 
-                counter++;
+                    counter++;
+                } 
+                Console.WriteLine("Avg:");
+                Console.WriteLine($"\tACost: {averageCost},\n\tAActiv: {averageActivities},\n\tPV: {proportionValid},\n\tPC {proportionComplete}");
             }
-            Console.WriteLine("Avg:");
-            Console.WriteLine($"\tACost: {averageCost},\n\tAActiv: {averageActivities},\n\tPV: {proportionValid},\n\tPC {proportionComplete}");
+
 
             Console.WriteLine(log.ToString());
         }
@@ -90,7 +94,7 @@ namespace ConsoleUI
                     {
                         if (s.StartsWith('o'))
                         {
-                            for (int i = 0; i < 6; i++) 
+                            for (int i = 0; i < 1; i++) 
                             {
                                 var optimisation = SearchFactory.EAOptimiser(problem);
                                 optimisation.OnItterationComplete += ItterationEventHandler;

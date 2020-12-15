@@ -7,8 +7,21 @@ namespace CSP
     class Solution : ISolution
     {
         public Problem Problem { get; }
-        List<Activity> ISolution.Activities => Activities;
-        internal List<Activity> Activities { get; private set; }
+
+
+
+
+
+
+
+        List<Activity> ISolution.Activities {
+            get {
+                InvalidateCost();
+                return Activities;
+            } 
+        }
+        private List<Activity> Activities { get; set; }
+       
 
         public override string ToString()
         {
@@ -36,15 +49,21 @@ namespace CSP
             return new Solution(Problem, activities);
         }
 
-
+        public void InvalidateCost() => cost = null;
+        private float? cost = null;
         public float Cost()
         {
-            float totalCost = 0;
-            foreach(Activity a in Activities)
+            if(cost == null)
             {
-                totalCost += a.Cost;
+                float totalCost = 0;
+                foreach (Activity a in Activities)
+                {
+                    totalCost += a.Cost;
+                }
+                cost = totalCost;
             }
-            return totalCost;
+            return (float)cost;
+            
         }
 
         public bool AreActivitiesValid()

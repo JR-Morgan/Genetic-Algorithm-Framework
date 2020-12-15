@@ -6,6 +6,8 @@ namespace SearchStrategies.GenerationStrategies.Selection
 {
     public class FitnessProportionateSelection<S> : ProportionalSelection<S>
     {
+
+        public FitnessProportionateSelection(Random random) : base(random) {}
         public override IList<(S solution, int index)> Select(IList<S> population, ICostFunction<S> fitnessFunction)
         {
             float fitnessSum = FitnessSum(population, fitnessFunction);

@@ -9,7 +9,12 @@ namespace CSP.Search.Initialisation
     {
         private const int TIMEOUT = 50;
 
-        private Random random = new Random(); //TODO determinism
+        private readonly Random random;
+
+        public RandomInitalise(Random random)
+        {
+            this.random = random;
+        }
 
         private List<Activity> Activities(Stock[] stock, List<float> orders)
         {

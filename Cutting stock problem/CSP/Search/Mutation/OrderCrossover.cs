@@ -9,16 +9,17 @@ namespace CSP.Search.Mutation
     {
         private const int DEFAULT_MUTATION_RATE = 1;
         private readonly int mutationScale;
-        private readonly Random random = new Random(); //TODO
+        private readonly Random random;
 
         private bool allowInvalid;
-        internal OrderCrossover(ISelectionStrategy<ISolution> selectionStrategy, int mutationScale = 10, bool allowInvalid = true, float eliteismProportion = DEFAULT_ELITEISM_PROPORTION, params IGenerationOperation<ISolution>[] next)
-        : this(selectionStrategy, mutationScale, allowInvalid, eliteismProportion, (IList<IGenerationOperation<ISolution>>)next)
+        internal OrderCrossover(ISelectionStrategy<ISolution> selectionStrategy, Random random, int mutationScale = 10, bool allowInvalid = true, float eliteismProportion = DEFAULT_ELITEISM_PROPORTION, params IGenerationOperation<ISolution>[] next)
+        : this(selectionStrategy, random, mutationScale, allowInvalid, eliteismProportion, (IList<IGenerationOperation<ISolution>>)next)
         { }
 
-        public OrderCrossover(ISelectionStrategy<ISolution> selectionStrategy, int mutationScale = DEFAULT_MUTATION_RATE, bool allowInvalid = true, float eliteismProportion = DEFAULT_ELITEISM_PROPORTION, IList<IGenerationOperation<ISolution>>? next = default)
+        public OrderCrossover(ISelectionStrategy<ISolution> selectionStrategy, Random random, int mutationScale = DEFAULT_MUTATION_RATE, bool allowInvalid = true, float eliteismProportion = DEFAULT_ELITEISM_PROPORTION, IList<IGenerationOperation<ISolution>>? next = default)
         : base(selectionStrategy, eliteismProportion, next)
         {
+            this.random = random;
             this.mutationScale = mutationScale;
             this.allowInvalid = allowInvalid;
         }

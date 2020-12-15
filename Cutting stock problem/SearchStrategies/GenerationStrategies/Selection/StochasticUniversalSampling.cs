@@ -1,4 +1,5 @@
 ﻿using SearchStrategies.Operations;
+using System;
 using System.Collections.Generic;
 
 namespace SearchStrategies.GenerationStrategies.Selection
@@ -6,7 +7,7 @@ namespace SearchStrategies.GenerationStrategies.Selection
     public class StochasticUniversalSampling<S> : FitnessProportionateSelection<S>
     {
         private uint selectionSize;
-        public StochasticUniversalSampling(uint selectionSize)
+        public StochasticUniversalSampling(Random random, uint selectionSize) : base(random)
         {
             this.selectionSize = selectionSize;
         }

@@ -19,9 +19,10 @@ namespace CSP.ParameterOptimiser
             this.problem = problem;
         }
 
+        int counter = 255;
         public float Cost(EAParams solution)
         {
-            var ea = SearchFactory.EAA(TerminalStrategies.TimeOut(timeOut), solution);
+            var ea = SearchFactory.EAA(TerminalStrategies.TimeOut(timeOut), solution, counter++);
             Log log = ea.Compute(problem);
             return log.bestSolutionFitness;
         }

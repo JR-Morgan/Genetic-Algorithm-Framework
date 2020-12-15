@@ -6,16 +6,17 @@ namespace CSP.Search.Selection
 {
     public class TournamentSelection<S> : ISelectionStrategy<S>
     {
-        private Random random = new Random(); //TODO
+        private readonly Random random;
 
 
         private readonly uint k;
         private readonly uint selectionSize;
 
-        public TournamentSelection(uint k, uint selectionSize)
+        public TournamentSelection(uint k, uint selectionSize, Random random)
         {
             this.k = k;
             this.selectionSize = selectionSize;
+            this.random = random;
         }
 
         public IList<(S, int)> Select(IList<S> population, ICostFunction<S> fitness)

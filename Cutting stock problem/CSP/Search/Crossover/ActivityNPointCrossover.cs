@@ -11,18 +11,19 @@ namespace CSP.Search.Crossover
 {
     class ActivityNPointCrossover : GenerationOperation<ISolution>
     {
-        private readonly Random random = new Random(); //TODO
+        private readonly Random random;
 
         private readonly InitalisationStrategy repairStrategy;
         private readonly int n;
 
-        internal ActivityNPointCrossover(int n, ISelectionStrategy<ISolution> selectionStrategy, InitalisationStrategy repairStrategy, float elitismProportion = DEFAULT_ELITEISM_PROPORTION, params IGenerationOperation<ISolution>[] next)
-            : this(n, selectionStrategy, repairStrategy, elitismProportion, (IList<IGenerationOperation<ISolution>>) next)
+        internal ActivityNPointCrossover(int n, ISelectionStrategy<ISolution> selectionStrategy, InitalisationStrategy repairStrategy, Random random, float elitismProportion = DEFAULT_ELITEISM_PROPORTION, params IGenerationOperation<ISolution>[] next)
+            : this(n, selectionStrategy, repairStrategy, random, elitismProportion, (IList<IGenerationOperation<ISolution>>) next)
         { }
 
-        public ActivityNPointCrossover(int n, ISelectionStrategy<ISolution> selectionStrategy, InitalisationStrategy repairStrategy, float elitismProportion = DEFAULT_ELITEISM_PROPORTION, IList<IGenerationOperation<ISolution>>? next = default)
+        public ActivityNPointCrossover(int n, ISelectionStrategy<ISolution> selectionStrategy, InitalisationStrategy repairStrategy, Random random, float elitismProportion = DEFAULT_ELITEISM_PROPORTION, IList<IGenerationOperation<ISolution>>? next = default)
             :base(selectionStrategy, elitismProportion, next)
         {
+            this.random = random;
             this.repairStrategy = repairStrategy;
             this.n = n;
         }

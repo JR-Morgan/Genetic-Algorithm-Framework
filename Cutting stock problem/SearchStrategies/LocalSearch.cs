@@ -13,6 +13,7 @@ namespace SearchStrategies
         private readonly TerminateStrategy terminateStrategy;
 
         private int solutionsEvaluated;
+        public S? BestSolution { get; private set; } = default;
 
         public LocalSearch(IInitialise<S,P> initalise, INeighbourhood<S> neighbourhood, ICostFunction<S> fitnessFunction, TerminateStrategy terminate, string name = "Local Search")
         {
@@ -30,7 +31,6 @@ namespace SearchStrategies
         {
             TerminateCondition terminate = terminateStrategy();
 
-            S? bestSolution = default;
 
             int itterationCounter = 0;
             Stopwatch timer = new();
@@ -39,8 +39,8 @@ namespace SearchStrategies
                     timeToCompute = timer.ElapsedMilliseconds,
                     numberOfSolutionsEvaluated = solutionsEvaluated,
                     iteration = itterationCounter,
-                    bestSolutionFitness = bestSolution != null ? fitnessFunction.Cost(bestSolution) : float.PositiveInfinity,
-                    bestSolution = bestSolution != null ? bestSolution.ToString() : string.Empty,
+                    bestSolutionFitness = BestSolution != null ? fitnessFunction.Cost(BestSolution) : float.PositiveInfinity,
+                    bestSolution = BestSolution != null ? BestSolution.ToString() : string.Empty,
                 };
 
 
@@ -51,7 +51,7 @@ namespace SearchStrategies
                 S parent = initalisationStrategy.Initialise(problem);
                 S candidate = Search(parent);
 
-                bestSolution = bestSolution == null ? candidate : fitnessFunction.Fittest(candidate, bestSolution);
+                BestSolution = BestSolution == null ? candidate : fitnessFunction.Fittest(candidate, BestSolution);
 
                 OnItterationComplete?.Invoke(this, GenerateLog());
             }
