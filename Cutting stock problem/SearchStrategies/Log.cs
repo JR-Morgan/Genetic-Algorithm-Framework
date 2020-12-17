@@ -1,7 +1,11 @@
-﻿namespace SearchStrategies
+﻿using System;
+using System.Collections.Generic;
+
+namespace SearchStrategies
 {
     public struct Log
     {
+        public static readonly string CSV_TITLE = "EvalS, Time, Cost, Best";
         public int numberOfSolutionsEvaluated;
         public int iteration;
         public float bestSolutionFitness;
@@ -17,5 +21,6 @@
 
         }
 
+        public string ToCSV() => $"{numberOfSolutionsEvaluated},{timeToCompute},{bestSolutionFitness},{bestSolution}";
     }
 }

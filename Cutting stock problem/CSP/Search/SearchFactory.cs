@@ -21,7 +21,7 @@ namespace CSP.Search
         private const float DEFAULT_TIMEOUT = 10000000f;
         private const int DEFAULT_ITTERATIONS = 1000;
 
-        private static readonly EAParams pa = new EAParams()
+        internal static readonly EAParams pa = new EAParams()
         {
             n = 2,
             populationSize = 50,
@@ -33,19 +33,19 @@ namespace CSP.Search
             mutationScale = 5,
         };
 
-        private static readonly EAParams a = new EAParams()
+        internal static readonly EAParams b = new EAParams()
         {
-            n = 3,
-            populationSize = 50,
+            n = 1,
+            populationSize = 140,
             selectionProportion = 0.2f,
             comparisionProportion = 0.08f,
             eliteProportion = 0.04f,
-            mutationRate = 0.12f,
-            mutationRate2 = 0.02f,
+            mutationRate = 0.09f,
+            mutationRate2 = 0f,
             mutationScale = 2,
         };
 
-        private static readonly EAParams b = new EAParams()
+        internal static readonly EAParams a = new EAParams()
         {
             n = 3,
             populationSize = 75,
@@ -66,7 +66,7 @@ namespace CSP.Search
                 RND(ts),
                 LS1(ts),
                 EAO(ts, a, 255),
-                EAA(ts, b, 255),
+                EAA(ts, 1000, a, 255),
                 EAB(ts, b, 255),
             };
         }
@@ -130,25 +130,26 @@ namespace CSP.Search
                 populationSize: p.populationSize,
                 random: random,
                 name: "Evolutionary Search - O"
-            );;;
+            );
         }
 
 
 
-
-        internal static ISearchStrategy<ISolution, Problem> EAA(TerminateStrategy ts, EAParams p, int seed)
+        public static ISearchStrategy<ISolution, Problem> AlgorithmA(float time, int seed) => EAA(TerminalStrategies.TimeOut(time), time / 5, a, seed);
+        internal static ISearchStrategy<ISolution, Problem> EAA(TerminateStrategy ts, float internalTimeOut, EAParams p, int seed)
         {
             Random random = Random(seed);
 
             return new IslandSearch(
                 p: p,
                 terminate: ts,
+                internalTimeOut: internalTimeOut,
                 fitnessFunction: new LowestCostFunction(),
-                populationSize: p.populationSize,
                 numberOfIslands: 6,
-                seed: seed);
+                seed: seed);;
         }
 
+        public static ISearchStrategy<ISolution, Problem> AlgorithmB(float time, int seed) => EAB(TerminalStrategies.TimeOut(time), b, seed);
         internal static ISearchStrategy<ISolution, Problem> EAB(TerminateStrategy ts, EAParams p, int? seed = null)
         {
             Random random = Random(seed);

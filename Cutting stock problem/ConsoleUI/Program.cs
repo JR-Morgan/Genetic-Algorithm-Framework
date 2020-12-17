@@ -13,7 +13,6 @@ namespace ConsoleUI
 {
     static class Program
     {
-
         private static void ItterationEventHandler<S, P>(ISearchStrategy<S, P> sender, Log log)
         {
             Console.WriteLine(log.ToString());
@@ -59,7 +58,7 @@ namespace ConsoleUI
             string fileName;
             if (args.Length == 0)
             {
-                fileName = @"ProblemFiles\test2.txt";
+                fileName = @"ProblemFiles\test3.txt";
             }
             else
             {
@@ -102,6 +101,10 @@ namespace ConsoleUI
                                 Task.Run(() => optimisation.Compute(new AlgorithmProblem()));
                             }
 
+                        }
+                        else if (s.StartsWith('r'))
+                        {
+                            AlgorithmTester.Run(problem);
                         }
                         else
                         {

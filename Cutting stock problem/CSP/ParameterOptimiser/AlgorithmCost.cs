@@ -22,7 +22,7 @@ namespace CSP.ParameterOptimiser
         int counter = 255;
         public float Cost(EAParams solution)
         {
-            var ea = SearchFactory.EAA(TerminalStrategies.TimeOut(timeOut), solution, counter++);
+            var ea = SearchFactory.EAA(TerminalStrategies.TimeOut(timeOut), timeOut / 5, solution, counter++);
             Log log = ea.Compute(problem);
             return log.bestSolutionFitness;
         }

@@ -36,24 +36,50 @@ namespace CSP.Island
 
         private (List<ISolution> c1, List<ISolution>c2) Crossover(IList<ISolution> parent1, IList<ISolution> parent2)
         {
-            List<ISolution> pool = new(parent1.Count + parent2.Count);
-            pool.AddRange(parent1);
-            pool.AddRange(parent2);
 
+            List<ISolution> pool = new(parent1.Count / 2 + parent2.Count / 2);
+
+            //c1 = half of parent 1, half random
+            List<ISolution> c1 = new(parent1.Count);
+            //Add the first half
+            for (int i = 0; i < parent1.Count / 2; i++)
+            {
+                c1.Add(parent1[i]);
+            }
+
+            for (int i = parent1.Count / 2; i < parent1.Count; i++)
+            {
+                pool.Add(parent1[i]);
+            }
+
+            //c2 = half of parent 2, half random
+            List<ISolution> c2 = new(parent1.Count);
+            //Add the first half
+            for (int i = 0; i < parent2.Count / 2; i++)
+            {
+                c2.Add(parent2[i]);
+            }
+
+            for (int i = parent2.Count / 2; i < parent2.Count; i++)
+            {
+                pool.Add(parent2[i]);
+            }
+
+
+            //Add the random
             pool.Shuffle(random);
 
-            List<ISolution> c1 = new(parent1.Count);
-            for(int i = 0; i < parent1.Count; i++)
+            for (int i = 0; i < parent1.Count / 2; i++)
             {
                 c1.Add(pool[i]);
             }
 
-            List<ISolution> c2 = new(parent1.Count);
-            int sum = parent1.Count + parent2.Count;
-            for (int i = parent1.Count; i < sum; i++)
+            for (int i = pool.Count - (parent2.Count / 2); i < pool.Count; i++)
             {
                 c2.Add(pool[i]);
             }
+
+
 
             return (c1, c2);
         }

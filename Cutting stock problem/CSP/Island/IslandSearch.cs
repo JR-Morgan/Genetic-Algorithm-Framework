@@ -31,11 +31,11 @@ namespace CSP.Island
         public event ISearchStrategy<ISolution, Problem>.ItterationCompleteEventHandler? OnItterationComplete;
 
 
-        public IslandSearch(EAParams p, TerminateStrategy terminate, ICostFunction<ISolution> fitnessFunction, uint populationSize, uint numberOfIslands, int seed, string name = "Island")
+        public IslandSearch(EAParams p, TerminateStrategy terminate, float internalTimeOut, ICostFunction<ISolution> fitnessFunction, uint numberOfIslands, int seed, string name = "Island")
         {
             islandCrossover = new IslandCrossover(new Random(seed));
             this.externalTerminate = terminate;
-            this.populationSize = populationSize;
+            this.populationSize = p.populationSize;
             this.fitnessFunction = fitnessFunction;
 
             islands = new List<EvolutionarySearch<ISolution, Problem>>((int)numberOfIslands);
@@ -45,7 +45,7 @@ namespace CSP.Island
                 islands.Add(new EvolutionarySearch<ISolution, Problem>(
                     initalise: new RandomInitalise(random),
                     generationStrategy: new Generation<ISolution>(new ReplaceParents<ISolution>(),
-                        new CustomCrossover(
+                        new ActivityNPointCrossover(p.n,
                             selectionStrategy: new TournamentSelection<ISolution>(p.K, p.selectionSize, random),
                             repairStrategy: new RandomInitalise(random),
                             random: random,
@@ -54,7 +54,7 @@ namespace CSP.Island
                             )
                         ),
                 fitnessFunction: new LowestCostFunction(),
-                terminate: TerminalStrategies.TimeOut(2000),
+                terminate: TerminalStrategies.TimeOut(internalTimeOut),
                 populationSize: p.populationSize,
                 random: random,
                 name: "Evolutionary Search - A"
