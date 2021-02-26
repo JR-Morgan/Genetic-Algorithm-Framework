@@ -7,7 +7,7 @@ using TSP;
 using TSP.Solution_Stratergies;
 using TSP.Solution_Stratergies.LocalSearch;
 
-namespace ConsoleUI
+namespace TSP_CLI
 {
     class Program
     {

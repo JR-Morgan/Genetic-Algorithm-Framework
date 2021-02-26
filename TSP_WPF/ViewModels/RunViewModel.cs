@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using TSP;
 using TSP.Solution_Stratergies;
 
-namespace WPFUI.ViewModels
+namespace TSP_WPF.ViewModels
 {
     public class RunViewModel
     {

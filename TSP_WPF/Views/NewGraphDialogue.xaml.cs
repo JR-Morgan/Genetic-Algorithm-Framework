@@ -4,9 +4,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TSP;
-using WPFUI.ViewModels;
+using TSP_WPF.ViewModels;
 
-namespace WPFUI.Views
+namespace TSP_WPF.Views
 {
     /// <summary>
     /// Interaction logic for NewGraphDialogue.xaml

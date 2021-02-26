@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using TSP;
 
-namespace WPFUI.ViewModels
+namespace TSP_WPF.ViewModels
 {
     public class GraphViewModel
     {

@@ -7,9 +7,9 @@ using System.Windows.Documents;
 using TSP;
 using TSP.Solution_Stratergies;
 using TSP.Solution_Stratergies.LocalSearch;
-using WPFUI.ViewModels;
+using TSP_WPF.ViewModels;
 
-namespace WPFUI.Views
+namespace TSP_WPF.Views
 {
     /// <summary>
     /// Interaction logic for Window1.xaml

@@ -3,17 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{CD80C377-B46B-4A42-BE85-FC86B686F546}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSP_CLI", "TSP_CLI\TSP_CLI.csproj", "{CD80C377-B46B-4A42-BE85-FC86B686F546}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSP", "Travelling Salesman Problem\TSP.csproj", "{15C5B3E6-0424-4B00-9B33-BF15F649DB81}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFUI", "WPFUI\WPFUI.csproj", "{0F31CB70-1BB0-4101-B579-51868826EFBF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphFiles", "GraphFiles", "{C63B0A2F-B6BA-4658-BDA7-CBE5AE63D32C}"
-	ProjectSection(SolutionItems) = preProject
-		test.csv = test.csv
-		ulysses16.csv = ulysses16.csv
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSP_WPF", "TSP_WPF\TSP_WPF.csproj", "{0F31CB70-1BB0-4101-B579-51868826EFBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
