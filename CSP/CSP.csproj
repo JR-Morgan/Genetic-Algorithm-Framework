@@ -4,6 +4,14 @@
     <TargetFramework>net5.0</TargetFramework>
 	<LangVersion>9.0</LangVersion>
 	<Nullable>enable</Nullable>
+	<SignAssembly>true</SignAssembly>
+	<AssemblyOriginatorKeyFile>JRMKey.pfx</AssemblyOriginatorKeyFile>
+	<Authors>Jedd Morgan</Authors>
+	<Copyright>© Jedd Morgan 2020</Copyright>
+	<PackageLicenseExpression>MIT Licence</PackageLicenseExpression>
+	<PackageProjectUrl>https://github.com/JR-Morgan/Genetic-Algorithm-Framework</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/JR-Morgan/Genetic-Algorithm-Framework.git</RepositoryUrl>
+	<NeutralLanguage>en-GB</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

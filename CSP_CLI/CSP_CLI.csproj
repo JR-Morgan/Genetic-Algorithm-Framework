@@ -4,6 +4,14 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <StartupObject>CSP_CLI.Program</StartupObject>
+    <Authors>Jedd Morgan</Authors>
+    <PackageProjectUrl>https://github.com/JR-Morgan/Genetic-Algorithm-Framework</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JR-Morgan/Genetic-Algorithm-Framework.git</RepositoryUrl>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+    <PackageLicenseExpression>MIT Licence</PackageLicenseExpression>
+    <Product>CSP</Product>
+    <Copyright>© Jedd Morgan 2020</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

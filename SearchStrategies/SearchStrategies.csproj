@@ -5,6 +5,16 @@
 	<LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <OutputType>Library</OutputType>
+    <Authors>Jedd Morgan</Authors>
+    <Company>Jedd Morgan</Company>
+    <Product>Genetic Algorithm Framework</Product>
+    <Copyright>© Jedd Morgan 2020</Copyright>
+    <PackageLicenseExpression>MIT Licence</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/JR-Morgan/Genetic-Algorithm-Framework</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JR-Morgan/Genetic-Algorithm-Framework.git</RepositoryUrl>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>JRMKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
 </Project>

@@ -6,16 +6,20 @@
 	<Nullable>enable</Nullable>
     <RootNamespace>ConsoleUI</RootNamespace>
     <LangVersion>preview</LangVersion>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>JRMKey.pfx</AssemblyOriginatorKeyFile>
     <Version>0.1.0</Version>
-    <RepositoryUrl>https://github.com/JR-Morgan/Travelling-Salesman-Problem.git</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/JR-Morgan/Travelling-Salesman-Problem</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JR-Morgan/Genetic-Algorithm-Framework.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/JR-Morgan/Genetic-Algorithm-Framework</PackageProjectUrl>
     <RepositoryType></RepositoryType>
     <PackageLicenseExpression>MIT Licence</PackageLicenseExpression>
     <Authors>Jedd Morgan</Authors>
     <Product>TSP</Product>
     <Copyright>© Jedd Morgan 2020</Copyright>
+    <StartupObject>TSP_CLI.Program</StartupObject>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
