@@ -4,7 +4,7 @@
 	  <TargetFramework>net5.0</TargetFramework>
 	  <Nullable>enable</Nullable>
     <OutputType>Library</OutputType>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>JRMKey.pfx</AssemblyOriginatorKeyFile>
     <Authors>Jedd Morgan</Authors>
     <Company />

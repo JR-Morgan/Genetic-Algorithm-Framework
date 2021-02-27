@@ -6,7 +6,7 @@
 	<Nullable>enable</Nullable>
     <RootNamespace>ConsoleUI</RootNamespace>
     <LangVersion>preview</LangVersion>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>JRMKey.pfx</AssemblyOriginatorKeyFile>
     <Version>0.1.0</Version>
     <RepositoryUrl>https://github.com/JR-Morgan/Travelling-Salesman-Problem.git</RepositoryUrl>

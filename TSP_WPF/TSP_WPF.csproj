@@ -5,8 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
 	  <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <StartupObject>WPFUI.App</StartupObject>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>JRMKey.pfx</AssemblyOriginatorKeyFile>
     <Version>0.1.0</Version>
     <Authors>Jedd Morgan</Authors>

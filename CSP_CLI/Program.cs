@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace ConsoleUI
+namespace CSP_CLI
 {
     static class Program
     {
