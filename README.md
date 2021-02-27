@@ -11,6 +11,7 @@ What is the Cutting Stock Problem? https://en.wikipedia.org/wiki/Cutting_stock_p
 This framework can be used to implement new algorithms for TSP or CSP, or extended to other optimisation problems.
 
 ## How to run the algorithms
+Builds can be downloaded from https://github.com/JR-Morgan/Genetic-Algorithm-Framework/releases
 ### TSP
 
 To run the console user interface simply run. This will load the default graph.
