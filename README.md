@@ -2,7 +2,7 @@
 This software is a basic framework for creating genetic, evolutionary, local search, and other heuristic optimisation algorithms.
 This project was created as part of my Undergraduate Computational Intelligence  module.
 
-The project demonstrates Genetic, Evolutional, and Local search algorithms for the Travelling Salesman Problem (TSP), and for 2D Multiple-Stock Size Cutting Stock Problem (CSP). 
+The project demonstrates Genetic, Evolutional, and Local search algorithms for the Travelling Salesman Problem (TSP), and for 1D Multiple-Stock Size Cutting Stock Problem (CSP). 
 
 What is the Travelling salesman problem? https://en.wikipedia.org/wiki/Travelling_salesman_problem
 
